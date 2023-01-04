@@ -1,0 +1,46 @@
+{
+  "title": "HITOKOTO",
+  "excerpt": "つぶやきSNS",
+  "featureNumber": 1,
+  "featureTitle": "HITOKOTO",
+  "featureExcerpt": "Twitter clone application.",
+  "otherImage": true,
+  "date": "2022-02-07",
+  "launch": "https://react-auth0-laravel-twitter.herokuapp.com",
+  "source": "https://github.com/yuuki1036/react-auth0-laravel-twitter",
+  "tag": ["React", "TypeScript", "Laravel"],
+  "overView": [
+    "React x Laravel Twitterクローンです。LaravelはAPIとして使用しています。Auth0による認証を組み込んでいますが、匿名でも投稿できます。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
+  ],
+  "chronology": [
+    "PHPフレームワーク Laravel 及び、React によるSPAを学習するため。"
+  ],
+  "spec": {
+    "動作環境": "ブラウザ（pcのみ）",
+    "言語": "TypeScript, PHP",
+    "フロントエンド": "React",
+    "バックエンド": "Laravel",
+    "スタイリング": "Material-UI",
+    "DB": "PostgreSQL",
+    "認証": "Auth0",
+    "コンテナ": "Docker",
+    "Pass": "Heroku",
+    "バージョン管理": "Git, GitHub"
+  },
+  "main": [
+    "ツィートする（匿名も可能）",
+    "投稿に対して「いいね」する",
+    "投稿に対して「リツイート」する",
+    "投稿に対して「リプライ」する"
+  ],
+  "others": [
+    "Auth0を利用した認証機能（ソーシャルログイン可）",
+    "ログイン中に行ったアクションを記録する"
+  ],
+  "learned": [
+    "Dockerを使ったLaravel開発環境構築",
+    "Laravelの基本的な機能・構造",
+    "LaravelとReactの連携",
+    "ReactHooksの取り扱い"
+  ]
+}

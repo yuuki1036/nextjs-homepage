@@ -1,13 +1,23 @@
-export type Post = {
-  _id: string;
+export type TSpec = {
+  [key: string]: string;
+};
+
+export type TPost = {
   slug: string;
-  content: any;
   title: string;
-  date: string;
   excerpt: string;
-  coverImage: string;
-  readingTime: string;
-  tweets: any[];
+  featureNumber?: number;
+  otherImage: boolean;
+  date: string;
+  launch?: string;
+  source?: string;
+  tag: string[];
+  overView: string[];
+  chronology?: string[];
+  spec: TSpec;
+  main: string[];
+  others?: string[];
+  learned?: string[];
 };
 
 export type Snippet = {

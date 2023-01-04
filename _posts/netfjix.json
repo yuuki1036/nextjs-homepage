@@ -1,0 +1,31 @@
+{
+  "title": "Netfjix",
+  "excerpt": "映画情報サイト",
+  "otherImage": true,
+  "date": "2021-08-18",
+  "launch": "https://nextjs-netflix-clone-ten.vercel.app/",
+  "source": "https://github.com/yuuki1036/nextjs-netflix-clone",
+  "tag": ["Next.js", "TypeScript", "Vercel"],
+  "overView": [
+    "Netflixを模したNext.js製映画情報サイト。映画情報API「TMDb」から取得したデータを表示します。予告動画が存在すれば自動再生します。"
+  ],
+  "chronology": ["Reactコンポーネント及びReact Hooksを学習するため。"],
+  "spec": {
+    "動作環境": "ブラウザ（pc/tablet/mobile）",
+    "言語": "TypeScript",
+    "フレームワーク": "React, Next.js, Tailwind CSS",
+    "web API": "TMDb",
+    "Pass": "Vercel",
+    "バージョン管理": "Git, GitHub"
+  },
+  "main": [
+    "ジャンルごとに話題の映画を表示します。",
+    "映画をクリックすると詳細を表示し、予告動画があれば自動再生します。",
+    "メインビジュアルに表示される映画は読み込むたびにランダムで選ばれます。"
+  ],
+  "others": [
+    "全ての画像はNext.jsのImageコンポーネントにより最適化され高速で表示します。",
+    "レスポンシブデザイン。"
+  ],
+  "learned": ["React Hooksの実装", "RESTful APIの実装", "動画埋め込み"]
+}

@@ -1,0 +1,30 @@
+{
+  "title": "53ST",
+  "excerpt": "ごみ捨て支援LINEボット",
+  "otherImage": true,
+  "date": "2021-12-13",
+  "launch": "",
+  "source": "https://github.com/yuuki1036/trash-disposal-notification",
+  "tag": ["Python3", "AWS", "LINE"],
+  "overView": [
+    "LINEを使って毎日のごみ捨てをサポート。曜日ごとに設定した内容を毎朝7時に通知します。画像のQRコードより友だち追加が可能です。"
+  ],
+  "chronology": ["AWSを用いたサーバレスアーキテクチャを学習するため。"],
+  "spec": {
+    "プラットフォーム": "LINE",
+    "言語": "Python3",
+    "AWSアーキテクチャ": "Lambda, API Gateway",
+    "DB": "DynamoDB",
+    "バージョン管理": "Git, GitHub"
+  },
+  "main": [
+    "曜日ごとに指定した内容のLINE通知を受け取れます。",
+    "指定内容は自由に設定できます。"
+  ],
+  "others": ["全ての操作はLINEトーク画面上で完結します。"],
+  "learned": [
+    "AWS Lambdaを用いたサーバレスアーキテクチャの実装",
+    "LINEBOTの実装",
+    "NoSQLの構築/実装"
+  ]
+}

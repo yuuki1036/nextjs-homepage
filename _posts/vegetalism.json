@@ -1,0 +1,37 @@
+{
+  "title": "VEGETALISM",
+  "excerpt": "野菜ショップサイト",
+  "otherImage": true,
+  "date": "2019-02-02",
+  "launch": "",
+  "source": "https://github.com/yuuki1036/vegetalism",
+  "tag": ["PHP"],
+  "overView": [
+    "デモECサイトです。商品を野菜にしぼり、実際に想定されるような機能を追加しました。"
+  ],
+  "chronology": ["ECサイトの構造とCRUD処理を学ぶため。"],
+  "spec": {
+    "動作環境": "ブラウザ（pc/tablet/mobile）",
+    "言語": "PHP, JavaScript, HTML/CSS",
+    "フレームワーク": "Bootstrap",
+    "WEBサーバー": "Apache",
+    "DB": "MySQL",
+    "バージョン管理": "Git, GitHub"
+  },
+  "main": [
+    "注文時に確認メール送信",
+    "条件を指定して商品検索",
+    "料理から野菜を検索",
+    "管理画面から商品・料理を編集"
+  ],
+  "others": [
+    "季節に応じた旬の野菜を表示します。",
+    "毎週安売り商品が入れ替わります。"
+  ],
+  "learned": [
+    "検索機能",
+    "フォーム入力値の処理",
+    "MySQL 静的プレースホルダ使用",
+    "管理画面の実装"
+  ]
+}

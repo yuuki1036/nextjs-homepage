@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'blue-opaque': 'rgb(13 42 148 / 18%)',
+        'magenta-icon': '#ff6666',
         gray: {
           0: '#fff',
           100: '#fafafa',
@@ -21,7 +22,7 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans]
+        sans: ['var(--font-inter)', ...fontFamily.sans]
       },
       typography: (theme) => ({
         DEFAULT: {
