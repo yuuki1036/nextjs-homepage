@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { TypeFlags } from 'typescript';
 
-export default function BlogPost({
+export default function WorksPost({
   slug,
   title,
   excerpt,
@@ -18,7 +17,7 @@ export default function BlogPost({
       <div className="w-full mb-9">
         <div className="flex flex-col justify-between md:flex-row">
           <div>
-            <h4 className="w-full mb-1 text-lg font-medium text-gray-900 md:text-xl dark:text-gray-100">
+            <h4 className="w-full text-lg font-medium text-gray-900 md:text-xl dark:text-gray-100">
               {title}
             </h4>
             <p className="text-gray-600 dark:text-gray-400">{excerpt}</p>

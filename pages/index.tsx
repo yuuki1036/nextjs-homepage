@@ -89,7 +89,7 @@ export default function Home() {
             index="01"
             href="https://www.youtube.com/watch?v=MxR5I5_hOKk&list=PL6bwFJ82M6FXgctyoWXqj7H0GK8_YIeF1&index=2"
             length=""
-            title="ホームページ・ランディングページ制作"
+            title="ホームページ制作"
           />
           <VideoCard
             index="02"

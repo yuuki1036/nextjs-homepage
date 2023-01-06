@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 
 import Container from 'components/Container';
-import BlogPost from 'components/BlogPost';
 import { InferGetStaticPropsType } from 'next';
 
 import { getAllPosts } from 'lib/api';
+import WorksPost from 'components/WorksPost';
 
 export const getStaticProps = async () => {
   const posts = getAllPosts();
@@ -38,7 +38,7 @@ export default function Works({
             </p>
           )}
           {posts.map((post) => (
-            <BlogPost
+            <WorksPost
               key={post.title}
               slug={post.slug}
               title={post.title}

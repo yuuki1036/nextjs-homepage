@@ -1,4 +1,4 @@
-import BlogLayout from 'layouts/blog';
+import WorksLayout from 'layouts/works';
 import { getAllPosts, getPostBySlug } from 'lib/api';
 import { TPost } from 'lib/types';
 import { NextPage } from 'next';
@@ -16,7 +16,7 @@ const WorksPage: NextPage<Props> = ({ post }) => {
     return <Error statusCode={404} />;
   }
 
-  return <BlogLayout post={post} />;
+  return <WorksLayout post={post} />;
 };
 
 export default WorksPage;
