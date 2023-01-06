@@ -1,10 +1,8 @@
-import { Suspense } from 'react';
-
-import Container from 'components/Container';
-import { InferGetStaticPropsType } from 'next';
-
-import { getAllPosts } from 'lib/api';
-import WorksPost from 'components/WorksPost';
+import { Suspense } from "react";
+import Container from "components/Container";
+import { InferGetStaticPropsType } from "next";
+import { getAllPosts } from "lib/api";
+import WorksCard from "components/WorksCard";
 
 export const getStaticProps = async () => {
   const posts = getAllPosts();
@@ -32,13 +30,8 @@ export default function Works({
             Use the search below to filter by title.`}
         </p>
         <Suspense fallback={null}>
-          {!posts.length && (
-            <p className="mb-4 text-gray-600 dark:text-gray-400">
-              No works found.
-            </p>
-          )}
           {posts.map((post) => (
-            <WorksPost
+            <WorksCard
               key={post.title}
               slug={post.slug}
               title={post.title}

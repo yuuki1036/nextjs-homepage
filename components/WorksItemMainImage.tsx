@@ -1,4 +1,5 @@
-import Image from 'next/image';
+import { DARK_IMAGE_CLASS, IMAGE_BORDER_CLASS } from "lib/constants";
+import Image from "next/image";
 
 type Props = {
   title: string;
@@ -13,11 +14,10 @@ const WorksItemMainImage = ({ title, slug, launch, source }: Props) => {
     <>
       <Image
         alt={title}
-        height={252}
         width={448}
+        height={252}
         src={src}
-        priority
-        className="rounded-lg border-2 border-gray-300"
+        className={`${IMAGE_BORDER_CLASS} ${DARK_IMAGE_CLASS}`}
       />
 
       <div className="flex flex-row flex-start mt-4">
@@ -29,7 +29,7 @@ const WorksItemMainImage = ({ title, slug, launch, source }: Props) => {
             href={launch}
           >
             <div className="flex items-center text-sm mr-7 text-gray-700 dark:text-gray-300">
-              {'View demo'}
+              {"View demo"}
               <svg
                 className="h-4 w-4 ml-1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ const WorksItemMainImage = ({ title, slug, launch, source }: Props) => {
             href={source}
           >
             <div className="flex items-center text-sm text-gray-700 dark:text-gray-300">
-              {'View source'}
+              {"View source"}
               <svg
                 className="h-4 w-4 ml-1"
                 xmlns="http://www.w3.org/2000/svg"

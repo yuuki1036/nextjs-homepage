@@ -1,11 +1,6 @@
-import { Suspense } from 'react';
-
-import Container from 'components/Container';
-import { InferGetStaticPropsType, NextPage } from 'next';
-import { getAllPosts } from 'lib/api';
-import WorksPost from 'components/WorksPost';
-import Image from 'next/image';
-import { Opacity } from '@mui/icons-material';
+import Container from "components/Container";
+import { NextPage } from "next";
+import Image from "next/image";
 
 const Service: NextPage = () => {
   return (
@@ -17,13 +12,13 @@ const Service: NextPage = () => {
         <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
           Service
         </h1>
-        <p className="mb-16 text-gray-600 dark:text-gray-400">
+        <p className="mb-14 text-gray-600 dark:text-gray-400">
           {`I've been writing online since 2014, mostly about web development and tech careers.
             In total, I've written articles on my blog.
             Use the search below to filter by title.`}
         </p>
 
-        <div className="mb-16">
+        <div id="homepage" className="pt-2 mb-14">
           <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
             ホームページ作成
           </h3>
@@ -31,7 +26,7 @@ const Service: NextPage = () => {
             用途や規模に応じたホームページを作成いたします。JavaScriptを使用した動きのあるサイトや問い合わせフォームなど、様々なサイトに対応しております。
           </p>
           <Image
-            className="mb-4 rounded-lg border-2 border-gray-300"
+            className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
             alt="homepage"
             src={`/images/service/homepage.png`}
             width={400}
@@ -50,7 +45,7 @@ const Service: NextPage = () => {
           </div>
         </div>
 
-        <div className="mb-16">
+        <div id="ec" className="pt-2 mb-14">
           <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
             ECサイト構築
           </h3>
@@ -58,7 +53,7 @@ const Service: NextPage = () => {
             サイト内で商品を選択・決済可能なECサイト（ショッピングサイト）を構築いたします。アカウント機能を実装してサイトの利便性をより高めることも可能です。
           </p>
           <Image
-            className="mb-4 rounded-lg border-2 border-gray-300"
+            className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
             alt="shopping"
             src={`/images/service/shopping.png`}
             width={400}
@@ -77,7 +72,7 @@ const Service: NextPage = () => {
           </div>
         </div>
 
-        <div className="mb-16">
+        <div id="system" className="pt-2 mb-14">
           <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
             業務用WEBシステム構築
           </h3>
@@ -85,33 +80,9 @@ const Service: NextPage = () => {
             業務に特化したオリジナルのWEBシステムを構築いたします。要望をヒアリングした上で方法・技術を選択しますので、まずはお気軽にご相談ください。
           </p>
           <Image
-            className="mb-4 rounded-lg border-2 border-gray-300"
+            className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
             alt="web system"
             src={`/images/service/system.png`}
-            width={400}
-            height={400}
-          />
-          <div className="text-gray-600 dark:text-gray-400">
-            <p className="mb-2">
-              PC・タブレット・スマートフォンでアクセス可能なWEBシステムを構築いたします。既存のシステムとの連携も可能です。
-            </p>
-            <p className="">
-              サーバーはオンプレミス・クラウドなど用途に応じて選択可能です。事業の拡大に合わせてフレキシブルに対応できるクラウドサーバーをお勧めしています。
-            </p>
-          </div>
-        </div>
-
-        <div className="mb-16">
-          <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
-            モバイルアプリ開発
-          </h3>
-          <p className="mb-3 text-gray-600 dark:text-gray-400">
-            業務に特化したオリジナルのWEBシステムを構築いたします。要望をヒアリングした上で方法・技術を選択しますので、まずはお気軽にご相談ください。
-          </p>
-          <Image
-            className="mb-4 rounded-lg border-2 border-gray-300"
-            alt="mobile app"
-            src={`/images/service/mobile.png`}
             width={400}
             height={400}
           />

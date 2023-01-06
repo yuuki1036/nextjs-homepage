@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import { Suspense } from 'react';
-import Container from 'components/Container';
-import BlogPostCard from 'components/BlogPostCard';
-import Link from 'next/link';
-import VideoCard from 'components/VideoCard';
-import Subscribe from 'components/Subscribe';
+import Image from "next/image";
+import { Suspense } from "react";
+import Container from "components/Container";
+import BlogPostCard from "components/BlogPostCard";
+import Link from "next/link";
+import VideoCard from "components/ServiceCard";
+import Subscribe from "components/Subscribe";
+import ServiceCard from "components/ServiceCard";
 
 export default function Home() {
   return (
@@ -20,7 +21,7 @@ export default function Home() {
                 WEB/Application Engineer
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-16">
-                北陸在住フリーランスエンジニアです。WEBサイトの制作や業務用WEBシステムの開発を行っています。
+                北陸在住のフリーランスエンジニアです。WEBサイトの制作や業務用WEBシステムの開発を行っています。
               </p>
             </div>
             <div className="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
@@ -61,7 +62,7 @@ export default function Home() {
             className="flex items-center mt-8 text-gray-600 dark:text-gray-400 leading-7 rounded-lg hover:text-gray-800 dark:hover:text-gray-200 transition-all h-6"
           >
             <>
-              {'Check all works'}
+              {"Check all works"}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -85,36 +86,15 @@ export default function Home() {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             WEBサービスの開発に特化しています。ご要望を実現するための適切な方法・技術を選択し開発を進めていきます。
           </p>
-          <VideoCard
-            index="01"
-            href="https://www.youtube.com/watch?v=MxR5I5_hOKk&list=PL6bwFJ82M6FXgctyoWXqj7H0GK8_YIeF1&index=2"
-            length=""
-            title="ホームページ制作"
-          />
-          <VideoCard
-            index="02"
-            href="https://www.youtube.com/watch?v=AGl52moyISU&list=PL6bwFJ82M6FXgctyoWXqj7H0GK8_YIeF1&index=3"
-            length=""
-            title="ECサイト構築"
-          />
-          <VideoCard
-            index="03"
-            href="https://www.youtube.com/watch?v=3g6-v3_BNbM&list=PL6bwFJ82M6FXgctyoWXqj7H0GK8_YIeF1&index=4"
-            length=""
-            title="業務用WEBシステム構築"
-          />
-          <VideoCard
-            index="04"
-            href="https://www.youtube.com/watch?v=u8iv_yhSRI8&list=PL6bwFJ82M6FXgctyoWXqj7H0GK8_YIeF1&index=5"
-            length=""
-            title="WEB・モバイルアプリ開発"
-          />
-          <Link
+          <ServiceCard index="01" id="homepage" title="ホームページ作成" />
+          <ServiceCard index="02" id="ec" title="ECサイト構築" />
+          <ServiceCard index="03" id="system" title="業務用WEBシステム構築" />
+          <a
             href="/service"
             className="flex items-center mt-8 text-gray-600 dark:text-gray-400 leading-7 rounded-lg hover:text-gray-800 dark:hover:text-gray-200 transition-all h-6"
           >
             <>
-              {'More info'}
+              {"More info"}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -130,7 +110,7 @@ export default function Home() {
                 />
               </svg>
             </>
-          </Link>
+          </a>
           <span className="h-16" />
           {/* <Subscribe /> */}
         </div>
