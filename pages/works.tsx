@@ -4,14 +4,6 @@ import { InferGetStaticPropsType } from "next";
 import { getAllPosts } from "lib/api";
 import WorksCard from "components/WorksCard";
 
-export const getStaticProps = async () => {
-  const posts = getAllPosts();
-
-  return {
-    props: { posts }
-  };
-};
-
 export default function Works({
   posts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -44,3 +36,11 @@ export default function Works({
     </Container>
   );
 }
+
+export const getStaticProps = async () => {
+  const posts = getAllPosts();
+
+  return {
+    props: { posts }
+  };
+};

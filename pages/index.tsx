@@ -1,10 +1,8 @@
-import Image from "next/image";
 import { Suspense } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Container from "components/Container";
 import BlogPostCard from "components/BlogPostCard";
-import Link from "next/link";
-import VideoCard from "components/ServiceCard";
-import Subscribe from "components/Subscribe";
 import ServiceCard from "components/ServiceCard";
 
 export default function Home() {
@@ -89,7 +87,7 @@ export default function Home() {
           <ServiceCard index="01" id="homepage" title="ホームページ作成" />
           <ServiceCard index="02" id="ec" title="ECサイト構築" />
           <ServiceCard index="03" id="system" title="業務用WEBシステム構築" />
-          <a
+          <Link
             href="/service"
             className="flex items-center mt-8 text-gray-600 dark:text-gray-400 leading-7 rounded-lg hover:text-gray-800 dark:hover:text-gray-200 transition-all h-6"
           >
@@ -110,7 +108,7 @@ export default function Home() {
                 />
               </svg>
             </>
-          </a>
+          </Link>
           <span className="h-16" />
           {/* <Subscribe /> */}
         </div>

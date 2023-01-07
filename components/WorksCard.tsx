@@ -14,7 +14,7 @@ const WorksCard = ({ slug, title, excerpt, tag }: Props) => {
   const src = `/images/works/${slug}-preview.png`;
   return (
     <a href={href} className="w-full">
-      <div className="w-full mb-9">
+      <div className="w-full mb-9 transform hover:scale-[1.01] transition-all">
         <div className="flex flex-col justify-between md:flex-row">
           <div>
             <h4 className="w-full text-lg font-medium text-gray-900 md:text-xl dark:text-gray-100">

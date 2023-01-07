@@ -1,18 +1,18 @@
-import fs from 'fs';
-import { join } from 'path';
-import TPost from './types';
+import fs from "fs";
+import { join } from "path";
+import { TPost } from "./types";
 
-const postsDirectory = join(process.cwd(), '_posts');
+const postsDirectory = join(process.cwd(), "_posts");
 
 export const getPostSlugs = () => {
   return fs.readdirSync(postsDirectory);
 };
 
 export const getPostBySlug = (slug: string) => {
-  const realSlug = slug.replace(/\.json$/, '');
+  const realSlug = slug.replace(/\.json$/, "");
   const fullPath = join(postsDirectory, `${realSlug}.json`);
 
-  const fileContent: string = fs.readFileSync(fullPath, 'utf8');
+  const fileContent: string = fs.readFileSync(fullPath, "utf8");
   const post: TPost = {
     slug: realSlug,
     ...JSON.parse(fileContent)
