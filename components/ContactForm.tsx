@@ -52,7 +52,7 @@ const ContactForm = () => {
             htmlFor="name"
             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            name
+            お名前
           </label>
           <p className="mt-2 text-sm text-red-600 dark:text-red-700">
             {errors.name?.message}
@@ -70,7 +70,7 @@ const ContactForm = () => {
             htmlFor="email"
             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            email
+            メールアドレス
           </label>
           <p className="mt-2 text-sm text-red-600 dark:text-red-700">
             {errors.email?.message}
@@ -88,7 +88,7 @@ const ContactForm = () => {
             htmlFor="comment"
             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            comment
+            お問い合わせ内容
           </label>
           <p className="mt-2 text-sm text-red-600 dark:text-red-700">
             {errors.comment?.message}
