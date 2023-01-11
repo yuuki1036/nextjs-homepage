@@ -18,25 +18,53 @@ const About: NextPage = () => {
           About Me
         </h1>
         <div className="mb-8 prose dark:prose-dark leading-6">
+          <h2>Bio</h2>
+          <h3>{MY_NAME}</h3>
+          <p>webサービスの設計・開発</p>
+          <p>
+            福井県出身。<br></br>
+            2016年にExcelで簡易会計ソフトを自作。プログラミングの面白さに気づく。
+            <br></br>
+            2017年よりHTML, CSS, JavaScript等のweb系言語を学ぶ。<br></br>
+            2019年から3年間IT機器レンタル会社が運営するECサイトの開発・保守を担当する。
+            <br></br>
+            2022年よりフリーランスへ転向。
+          </p>
+          <h2>Skill Map</h2>
+          <SkillMap />
+          <h2>Certification</h2>
+          <ul>
+            <li>
+              <Link
+                href={
+                  "https://www.credly.com/badges/122e88cb-c759-469d-908b-d5a010882623/public_url"
+                }
+                target={"_blank"}
+              >
+                AWS認定ソリューションアーキテクト - アソシエイト
+              </Link>
+            </li>
+          </ul>
+
           <h2>Links</h2>
           <ul>
             <li>
-              GitHub: <a href="https://github.com/leerob">@leerob</a>
+              GitHub:{" "}
+              <Link href="https://github.com/yuuuki1036">@yuuki1036</Link>
             </li>
             <li>
-              Website: <Link href="https://leerob.io">https://leerob.io</Link>
+              Stackshare:{" "}
+              <Link href="https://stackshare.io/yuuki1036/my-stack">
+                https://stackshare.io/yuuki1036/my-stack
+              </Link>
+            </li>
+            <li>
+              Website:{" "}
+              <Link href="https://www.yuuki1036.ml">
+                https://www.yuuki1036.ml
+              </Link>
             </li>
           </ul>
-          <h2>Bio</h2>
-          <h3>{MY_NAME}</h3>
-          <p>web enngineer</p>
-          <p>
-            2017年より独学でプログラミングを学ぶ。<br></br>
-            2019年よりECサイト運営企業で開発・保守を行う。<br></br>
-            2022年より独立。東京の案件に参加しながら地元企業・個人の依頼をこなしています。
-          </p>
-          <h2>Mind Map</h2>
-          <SkillMap />
         </div>
       </div>
     </Container>
