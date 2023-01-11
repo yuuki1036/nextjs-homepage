@@ -14,7 +14,6 @@ const Contact: NextPage = () => {
         </h1>
         <p className="mb-16 text-gray-600 dark:text-gray-400">
           開発依頼・ご相談などお気軽にお問い合わせください。
-          下記フォームよりわかる範囲でご記入ください。必須の項目は必ずご記入お願いします。
         </p>
         <ContactForm />
       </div>

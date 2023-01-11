@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useState } from "react";
 
 type TInput = {
   name: string;
@@ -28,12 +29,13 @@ const ContactForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors }
   } = useForm<TInput>({
     resolver: yupResolver(schema)
   });
+
+  const [isSend, setIsSend] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<TInput> = async (data) => {
     try {
@@ -46,8 +48,8 @@ const ContactForm = () => {
         body: JSON.stringify(data)
       });
       console.log("res ", res);
+      setIsSend(true);
       reset();
-      alert("送信OK");
     } catch (err) {
       console.log("fetch error", err);
       alert(JSON.stringify(err));
@@ -55,69 +57,69 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="w-full">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="relative z-0 w-full mb-6 group">
-          <input
-            type="text"
-            id="name"
-            placeholder=" "
-            className="max-w-xs block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            {...register("name")}
-          />
-          <label
-            htmlFor="name"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            お名前
-          </label>
-          <p className="mt-2 text-sm text-red-600 dark:text-red-700">
-            {errors.name?.message}
+    <div className="mb-16 w-full">
+      {isSend ? (
+        <div className="h-96 text-gray-600 dark:text-gray-400">
+          <p>
+            お問い合わせを送信しました。<br></br>
+            後ほど折り返しご連絡いたします。今しばらくお待ちくださいませ。
           </p>
         </div>
-        <div className="relative z-0 w-full mb-6 group">
-          <input
-            type="text"
-            id="email"
-            placeholder=" "
-            className="max-w-xs block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            {...register("email")}
-          />
-          <label
-            htmlFor="email"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              id="name"
+              placeholder=" "
+              className="contact-input max-w-xs peer"
+              {...register("name")}
+            />
+            <label htmlFor="name" className="contact-label">
+              お名前
+            </label>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-700">
+              {errors.name?.message}
+            </p>
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              id="email"
+              placeholder=" "
+              className="contact-input max-w-xs peer"
+              {...register("email")}
+            />
+            <label htmlFor="email" className="contact-label">
+              メールアドレス
+            </label>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-700">
+              {errors.email?.message}
+            </p>
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <textarea
+              id="inquiry"
+              placeholder=" "
+              rows={10}
+              className="contact-input peer"
+              {...register("inquiry")}
+            />
+            <label htmlFor="inquiry" className="contact-label">
+              お問い合わせ内容
+            </label>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-700">
+              {errors.inquiry?.message}
+            </p>
+          </div>
+          <button
+            type="submit"
+            className="text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-600 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:ring-2 ring-gray-300 "
           >
-            メールアドレス
-          </label>
-          <p className="mt-2 text-sm text-red-600 dark:text-red-700">
-            {errors.email?.message}
-          </p>
-        </div>
-        <div className="relative z-0 w-full mb-6 group">
-          <textarea
-            id="inquiry"
-            placeholder=" "
-            rows={10}
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            {...register("inquiry")}
-          />
-          <label
-            htmlFor="inquiry"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            お問い合わせ内容
-          </label>
-          <p className="mt-2 text-sm text-red-600 dark:text-red-700">
-            {errors.inquiry?.message}
-          </p>
-        </div>
-        <button
-          type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Send
-        </button>
-      </form>
+            Send
+          </button>
+        </form>
+      )}
     </div>
   );
 };
