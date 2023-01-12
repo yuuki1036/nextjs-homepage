@@ -34,7 +34,7 @@ const SkillMap = () => {
         centerStrength: 0.8
       })
     );
-    series.get("colors").setAll({
+    series.get("colors")?.setAll({
       step: 2
     });
     series.links.template.set("strength", 0.5);

@@ -41,7 +41,7 @@ const About: NextPage = () => {
                 }
                 target={"_blank"}
               >
-                AWS認定ソリューションアーキテクト - アソシエイト
+                AWS Certified Solutions Architect – Associate
               </Link>
             </li>
           </ul>
