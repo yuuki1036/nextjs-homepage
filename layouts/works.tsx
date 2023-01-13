@@ -1,6 +1,6 @@
-import { PropsWithChildren, Suspense } from "react";
+import { Suspense } from "react";
 import Container from "components/Container";
-import { TPost } from "lib/types";
+import { TWorks } from "lib/types";
 import WorksItemNormal from "components/WorksItemNormal";
 import WorksItemSpec from "components/WorksItemSpec";
 import WorksItemTitle from "components/WorksItemTitle";
@@ -8,7 +8,7 @@ import WorksItemMainImage from "components/WorksItemMainImage";
 import WorksItemOtherImage from "components/WorksItemOtherImage";
 
 type Props = {
-  post: TPost;
+  post: TWorks;
 };
 
 const WorksLayout = ({ post }: Props) => (
@@ -38,14 +38,15 @@ const WorksLayout = ({ post }: Props) => (
       )}
 
       <WorksItemSpec spec={post.spec} />
+      {post.otherImage && (
+        <Suspense fallback={null}>
+          <WorksItemOtherImage title={post.title} slug={post.slug} />
+        </Suspense>
+      )}
 
       {post.others && (
         <WorksItemNormal title="その他機能" sentences={post.others} />
       )}
-
-      <Suspense fallback={null}>
-        <WorksItemOtherImage title={post.title} slug={post.slug} />
-      </Suspense>
     </article>
   </Container>
 );

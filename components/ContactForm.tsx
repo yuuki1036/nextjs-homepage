@@ -141,15 +141,13 @@ const ContactForm = () => {
               {...register("inquiry")}
             />
 
-            <p className="mt-2 text-sm text-red-600 dark:text-red-700">
+            <p className="mt-2 mb-2 text-sm text-red-600 dark:text-red-700">
               {errors.inquiry?.message}
             </p>
           </div>
 
-          <div className="mb-8 text-gray-600 dark:text-gray-400 text-xs">
-            <p className="">
-              This site is protected by reCAPTCHA and the Google
-            </p>
+          <div className="mb-12 text-gray-600 dark:text-gray-400 text-xs">
+            <p>This site is protected by reCAPTCHA and the Google</p>
             <Link
               className="text-blue-500 hover:text-blue-700"
               href="https://policies.google.com/privacy"

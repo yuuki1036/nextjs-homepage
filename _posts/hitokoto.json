@@ -8,37 +8,26 @@
   "source": "https://github.com/yuuki1036/react-auth0-laravel-twitter",
   "tag": ["React", "TypeScript", "Laravel"],
   "overView": [
-    "React x Laravel Twitterクローンです。LaravelはAPIとして使用しています。Auth0による認証を組み込んでいますが、匿名でも投稿できます。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
+    "ReactとLaravelによるTwitterクローンアプリ。LaravelはAPIとして使用しています。認証はAuth0を採用、ソーシャルログインも可能です。Twitterとの違いはゲストでも投稿できるところです。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
   ],
   "chronology": [
-    "PHPフレームワーク Laravel 及び、React によるSPAを学習するため。"
+    "Twitterを作ってみたい。",
+    "LaravelとReactによるSPAを学ぶ。",
+    "Dockerを学ぶ。"
   ],
   "spec": {
-    "動作環境": "ブラウザ（pcのみ）",
-    "言語": "TypeScript, PHP",
-    "フロントエンド": "React",
-    "バックエンド": "Laravel",
-    "スタイリング": "Material-UI",
+    "Platform": "web browser (PC size only)",
+    "Language": "TypeScript, PHP",
+    "FrontEnd": "React",
+    "BackEnd": "Laravel",
+    "Styling": "Material-UI",
     "DB": "PostgreSQL",
-    "認証": "Auth0",
-    "コンテナ": "Docker",
-    "Pass": "Heroku",
-    "バージョン管理": "Git, GitHub"
+    "Authentication": "Auth0",
+    "container": "Docker",
+    "Pass": "Heroku"
   },
-  "main": [
-    "ツィートする（匿名も可能）",
-    "投稿に対して「いいね」する",
-    "投稿に対して「リツイート」する",
-    "投稿に対して「リプライ」する"
-  ],
   "others": [
-    "Auth0を利用した認証機能（ソーシャルログイン可）",
-    "ログイン中に行ったアクションを記録する"
-  ],
-  "learned": [
-    "Dockerを使ったLaravel開発環境構築",
-    "Laravelの基本的な機能・構造",
-    "LaravelとReactの連携",
-    "ReactHooksの取り扱い"
+    "匿名投稿可能なので実際にはTwitterと動作が異なる。",
+    "ログイン中に行ったアクションは記録され、再ログイン時に復元される。"
   ]
 }

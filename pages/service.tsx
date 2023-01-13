@@ -13,9 +13,7 @@ const Service: NextPage = () => {
           Service
         </h1>
         <p className="mb-14 text-gray-600 dark:text-gray-400">
-          {`I've been writing online since 2014, mostly about web development and tech careers.
-            In total, I've written articles on my blog.
-            Use the search below to filter by title.`}
+          お客様のご要望をもとに、設計・開発までを一貫して行います。
         </p>
 
         <div id="homepage" className="pt-2 mb-14">

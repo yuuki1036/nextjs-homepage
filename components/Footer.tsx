@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 type TExternalLink = { href: string; children: any };
 
@@ -26,6 +26,20 @@ export default function Footer() {
             Home
           </Link>
           <Link
+            href="/works"
+            className="text-gray-500 hover:text-gray-600 transition"
+          >
+            Works
+          </Link>
+        </div>
+        <div className="flex flex-col space-y-4">
+          <Link
+            href="/service"
+            className="text-gray-500 hover:text-gray-600 transition"
+          >
+            Service
+          </Link>
+          <Link
             href="/about"
             className="text-gray-500 hover:text-gray-600 transition"
           >
@@ -33,33 +47,15 @@ export default function Footer() {
           </Link>
         </div>
         <div className="flex flex-col space-y-4">
-          <ExternalLink href="https://github.com/leerob">GitHub</ExternalLink>
-        </div>
-        <div className="flex flex-col space-y-4">
           <Link
-            href="/uses"
+            href="/contact"
             className="text-gray-500 hover:text-gray-600 transition"
           >
-            Uses
+            Contact
           </Link>
-          <Link
-            href="/guestbook"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Guestbook
-          </Link>
-          <Link
-            href="/snippets"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Snippets
-          </Link>
-          <Link
-            href="/tweets"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Tweets
-          </Link>
+          <ExternalLink href="https://github.com/yuuki1036">
+            GitHub
+          </ExternalLink>
         </div>
       </div>
     </footer>

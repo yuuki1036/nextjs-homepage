@@ -8,24 +8,26 @@
   "source": "https://github.com/yuuki1036/nextjs-netflix-clone",
   "tag": ["Next.js", "TypeScript", "Vercel"],
   "overView": [
-    "Netflixを模したNext.js製映画情報サイト。映画情報API「TMDb」から取得したデータを表示します。予告動画が存在すれば自動再生します。"
+    "Netflixを模したNext.js製映画情報サイト。映画情報API TMDb からジャンルごとの人気作を取得しジャケット画像を一覧で表示します。画像をクリックすると映画のあらすじが表示され、予告動画が存在する場合は自動再生されます。ページ上部のヒーローイメージは現在の人気作からランダムで選ばれます。"
   ],
-  "chronology": ["Reactコンポーネント及びReact Hooksを学習するため。"],
+  "chronology": [
+    "Netflixのようなアプリライクなサイトを作ってみたい。",
+    "画像や動画のfetchを学ぶ。",
+    "React x TypeScriptを学ぶ。",
+    "Next.jsを学ぶ。"
+  ],
   "spec": {
-    "動作環境": "ブラウザ（pc/tablet/mobile）",
-    "言語": "TypeScript",
-    "フレームワーク": "React, Next.js, Tailwind CSS",
-    "web API": "TMDb",
-    "Pass": "Vercel",
-    "バージョン管理": "Git, GitHub"
+    "Platform": "web browser",
+    "Language": "TypeScript",
+    "FrontEnd": "React",
+    "AppFrameWork": "Next.js",
+    "Styling": "Tailwind CSS",
+    "WebAPI": "TMDb",
+    "Pass": "Vercel"
   },
-  "main": [
-    "ジャンルごとに話題の映画を表示します。",
-    "映画をクリックすると詳細を表示し、予告動画があれば自動再生します。",
-    "メインビジュアルに表示される映画は読み込むたびにランダムで選ばれます。"
-  ],
   "others": [
-    "全ての画像はNext.jsのImageコンポーネントにより最適化され高速で表示します。",
+    "映画情報は自動で更新される。",
+    "全ての画像はNext.jsのImageコンポーネントにより最適化され高速で表示される。",
     "レスポンシブデザイン。"
   ],
   "learned": ["React Hooksの実装", "RESTful APIの実装", "動画埋め込み"]

@@ -7,31 +7,26 @@
   "source": "https://github.com/yuuki1036/vegetalism",
   "tag": ["PHP"],
   "overView": [
-    "デモECサイトです。商品を野菜にしぼり、実際に想定されるような機能を追加しました。"
+    "野菜販売ECサイトです。商品をカートに保存して注文すると入力したメールアドレスに注文完了メールが送信されます。条件検索、フリーワード検索、料理から野菜を絞り込む機能など、実際に想定されるような機能を実装しました。"
   ],
-  "chronology": ["ECサイトの構造とCRUD処理を学ぶため。"],
+  "chronology": [
+    "ECサイトを作ってみたい。",
+    "PHPを学ぶ。",
+    "ECサイトの構造とCRUD処理を学ぶ。",
+    "LAMPスタックを学ぶ。"
+  ],
   "spec": {
-    "動作環境": "ブラウザ（pc/tablet/mobile）",
-    "言語": "PHP, JavaScript, HTML/CSS",
-    "フレームワーク": "Bootstrap",
-    "WEBサーバー": "Apache",
-    "DB": "MySQL",
-    "バージョン管理": "Git, GitHub"
+    "Platform": "web browser",
+    "Language": "PHP, JavaScript, HTML",
+    "FrontEnd": "JavaScript, HTML",
+    "BackEnd": "PHP",
+    "Styling": "Bootstrap",
+    "WebServer": "Apache",
+    "DB": "MySQL"
   },
-  "main": [
-    "注文時に確認メール送信",
-    "条件を指定して商品検索",
-    "料理から野菜を検索",
-    "管理画面から商品・料理を編集"
-  ],
   "others": [
-    "季節に応じた旬の野菜を表示します。",
-    "毎週安売り商品が入れ替わります。"
-  ],
-  "learned": [
-    "検索機能",
-    "フォーム入力値の処理",
-    "MySQL 静的プレースホルダ使用",
-    "管理画面の実装"
+    "管理画面から商品の登録・編集・削除ができる。",
+    "閲覧時の季節に応じた旬の野菜をピックアップ表示。",
+    "毎週特売商品が入れ替わる。"
   ]
 }
