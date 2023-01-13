@@ -20,6 +20,24 @@ export type TPost = {
   learned?: string[];
 };
 
+export enum TForm {
+  Initial,
+  Loading,
+  Success,
+  Error
+}
+
+export type TFormState = {
+  state: TForm;
+  message?: string;
+};
+
+export type TInput = {
+  name: string;
+  email: string;
+  inquiry: string;
+};
+
 export type Snippet = {
   _id: string;
   slug: string;
