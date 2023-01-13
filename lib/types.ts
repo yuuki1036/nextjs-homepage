@@ -2,11 +2,11 @@ export type TSpec = {
   [key: string]: string;
 };
 
-export type TPost = {
+export type TWorks = {
   slug: string;
   title: string;
+  featureTitle?: string;
   excerpt: string;
-  featureNumber?: number;
   otherImage: boolean;
   date: string;
   launch?: string;
@@ -18,6 +18,12 @@ export type TPost = {
   main: string[];
   others?: string[];
   learned?: string[];
+  gradient?: string;
+};
+
+export type TFeatureWorks = {
+  slug: string;
+  gradient: string;
 };
 
 export enum TForm {

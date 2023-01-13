@@ -1,8 +1,26 @@
-export const SITE_NAME = "yuuki1036";
-export const MY_NAME = "yuuki1036";
+import { TFeatureWorks } from "./types";
 
-export const IMAGE_BORDER_CLASS = "rounded-lg border-2 border-gray-300";
-export const DARK_IMAGE_CLASS = "dark:saturate-[80%] dark:brightness-[80%]";
+export const SITE_NAME: string = "yuuki1036";
+export const MY_NAME: string = "yuuki1036";
+
+export const IMAGE_BORDER_CLASS: string = "rounded-lg border-2 border-gray-300";
+export const DARK_IMAGE_CLASS: string =
+  "dark:saturate-[80%] dark:brightness-[80%]";
+
+export const FEATURE_WORKS: TFeatureWorks[] = [
+  {
+    slug: "hitokoto",
+    gradient: "from-[#D8B4FE] to-[#818CF8]"
+  },
+  {
+    slug: "netfjix",
+    gradient: "from-[#6EE7B7] via-[#3B82F6] to-[#9333EA]"
+  },
+  {
+    slug: "53st",
+    gradient: "from-[#FDE68A] via-[#FCA5A5] to-[#FECACA]"
+  }
+];
 
 export const SKILL_MAP_DATA = {
   value: 0,

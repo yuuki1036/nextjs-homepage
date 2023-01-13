@@ -2,10 +2,15 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "components/Container";
-import BlogPostCard from "components/BlogPostCard";
+import BlogPostCard from "components/WorksFeatuteCard";
 import ServiceCard from "components/ServiceCard";
+import { InferGetStaticPropsType } from "next";
+import { homedir } from "os";
+import { getPostBySlug } from "lib/api";
+import { FEATURE_WORKS } from "lib/constants";
+import { TWorks } from "lib/types";
 
-export default function Home() {
+const Home = ({ works }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Suspense fallback={null}>
       <Container>
@@ -39,21 +44,15 @@ export default function Home() {
             Works
           </h3>
           <div className="flex gap-6 flex-col md:flex-row">
-            <BlogPostCard
-              title="Twitter clone application."
-              slug="style-guides-component-libraries-design-systems"
-              gradient="from-[#D8B4FE] to-[#818CF8]"
-            />
-            <BlogPostCard
-              title="Netflix clone application"
-              slug="rust"
-              gradient="from-[#6EE7B7] via-[#3B82F6] to-[#9333EA]"
-            />
-            <BlogPostCard
-              title="Past, Present, and Future of React State Management"
-              slug="react-state-management"
-              gradient="from-[#FDE68A] via-[#FCA5A5] to-[#FECACA]"
-            />
+            {works.map((work, idx) => (
+              <BlogPostCard
+                key={idx}
+                title={work.featureTitle!}
+                slug={work.slug}
+                tag={work.tag}
+                gradient={work.gradient!}
+              />
+            ))}
           </div>
           <Link
             href="/works"
@@ -115,4 +114,21 @@ export default function Home() {
       </Container>
     </Suspense>
   );
+};
+
+export default Home;
+
+export async function getStaticProps() {
+  const works: TWorks[] = [];
+
+  FEATURE_WORKS.map((work) => {
+    const post = getPostBySlug(work.slug);
+    post.gradient = work.gradient;
+    post.tag = post.tag.slice(0, 2);
+    works.push(post);
+  });
+
+  return {
+    props: { works }
+  };
 }

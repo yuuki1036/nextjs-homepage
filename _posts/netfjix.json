@@ -1,6 +1,7 @@
 {
   "title": "Netfjix",
   "excerpt": "映画情報サイト",
+  "featureTitle": "Netflix clone App.",
   "otherImage": true,
   "date": "2021-08-18",
   "launch": "https://nextjs-netflix-clone-ten.vercel.app/",
