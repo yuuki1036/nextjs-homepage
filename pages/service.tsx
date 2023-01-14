@@ -1,6 +1,8 @@
 import Container from "components/Container";
+import LoadingSpinner from "components/LoadingSpinner";
 import { NextPage } from "next";
 import Image from "next/image";
+import { Suspense } from "react";
 
 const Service: NextPage = () => {
   return (
@@ -23,13 +25,15 @@ const Service: NextPage = () => {
           <p className="mb-3 text-gray-600 dark:text-gray-400">
             用途や規模に応じたホームページを作成いたします。JavaScriptを使用した動きのあるサイトや問い合わせフォームなど、様々なサイトに対応しております。
           </p>
-          <Image
-            className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-            alt="homepage"
-            src={`/images/service/homepage.png`}
-            width={400}
-            height={469}
-          />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Image
+              className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
+              alt="homepage"
+              src={`/images/service/homepage.png`}
+              width={400}
+              height={279}
+            />
+          </Suspense>
           <div className="text-gray-600 dark:text-gray-400">
             <p className="mb-2">
               モバイルファーストな現代に合わせてレスポンシブ（画面サイズに依らない）な画面設計を心がけています。
@@ -55,7 +59,7 @@ const Service: NextPage = () => {
             alt="shopping"
             src={`/images/service/shopping.png`}
             width={400}
-            height={469}
+            height={278}
           />
           <div className="text-gray-600 dark:text-gray-400">
             <p className="mb-2">
@@ -82,7 +86,7 @@ const Service: NextPage = () => {
             alt="web system"
             src={`/images/service/system.png`}
             width={400}
-            height={400}
+            height={234}
           />
           <div className="text-gray-600 dark:text-gray-400">
             <p className="mb-2">
