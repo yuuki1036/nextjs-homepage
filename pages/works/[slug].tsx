@@ -1,12 +1,12 @@
-import WorksLayout from 'layouts/works';
-import { getAllPosts, getPostBySlug } from 'lib/api';
-import { TPost } from 'lib/types';
-import { NextPage } from 'next';
-import Error from 'next/error';
-import { useRouter } from 'next/router';
+import WorksLayout from "layouts/works";
+import { getAllPosts, getPostBySlug } from "lib/api";
+import { TWorks } from "lib/types";
+import { NextPage } from "next";
+import Error from "next/error";
+import { useRouter } from "next/router";
 
 type Props = {
-  post: TPost;
+  post: TWorks;
 };
 
 const WorksPage: NextPage<Props> = ({ post }) => {

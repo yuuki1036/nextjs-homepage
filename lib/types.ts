@@ -15,9 +15,7 @@ export type TWorks = {
   overView: string[];
   chronology?: string[];
   spec: TSpec;
-  main: string[];
   others?: string[];
-  learned?: string[];
   gradient?: string;
 };
 

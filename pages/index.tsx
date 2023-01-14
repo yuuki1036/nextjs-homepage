@@ -2,13 +2,12 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "components/Container";
-import BlogPostCard from "components/WorksFeatuteCard";
 import ServiceCard from "components/ServiceCard";
 import { InferGetStaticPropsType } from "next";
-import { homedir } from "os";
 import { getPostBySlug } from "lib/api";
 import { FEATURE_WORKS } from "lib/constants";
 import { TWorks } from "lib/types";
+import WorksFeatureCard from "components/WorksFeatuteCard";
 
 const Home = ({ works }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -46,7 +45,7 @@ const Home = ({ works }: InferGetStaticPropsType<typeof getStaticProps>) => {
           <Suspense fallback={null}>
             <div className="flex gap-6 flex-col md:flex-row">
               {works.map((work, idx) => (
-                <BlogPostCard
+                <WorksFeatureCard
                   key={idx}
                   title={work.featureTitle!}
                   slug={work.slug}

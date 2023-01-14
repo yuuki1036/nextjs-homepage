@@ -46,7 +46,7 @@ https://www.yuuki1036.com
 
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
   const msgToCst: MailDataRequired = {
-    to: process.env.MAIL_TO,
+    to: req.body.email,
     from: process.env.MAIL_FROM as EmailData,
     subject: subjectToCst,
     text: bodyToCst
