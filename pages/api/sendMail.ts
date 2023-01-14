@@ -16,7 +16,6 @@ ${req.body.inquiry}
 
   const subjectToCst: string = "【yuuki1036】お問い合わせありがとうございます";
   const bodyToCst: string = `
-※このメールはシステムからの自動返信です
 
 ${req.body.name} 様
 
@@ -28,19 +27,20 @@ yuuki1036へのお問い合わせありがとうございました。
 今しばらくお待ちくださいませ。
 
 ━━━━━━　お問い合わせ内容　━━━━━━
-お名前：${req.body.name}
-email：${req.body.email}
+お名前　　　　　：${req.body.name}
+メールアドレス　：${req.body.email}
 お問い合わせ内容：
 ${req.body.inquiry}
 ━━━━━━━━━━━━━━━━━━━━━━
 
+このメールは配信専用です。返信しないようお願いいたします。
 
 ——————————————————————
 yuuki1036
 藤岡勇樹
-tel：111-1111-1111
-mail：222-2222-2222
-https://www.yuuki1036.com
+tel：${process.env.PHONE_NUMBER}
+mail：${process.env.MAIL_ADDRESS}
+https://yuuki1036.com
 ———————————————————————
   `;
 

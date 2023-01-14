@@ -25,15 +25,14 @@ const Service: NextPage = () => {
           <p className="mb-3 text-gray-600 dark:text-gray-400">
             用途や規模に応じたホームページを作成いたします。JavaScriptを使用した動きのあるサイトや問い合わせフォームなど、様々なサイトに対応しております。
           </p>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Image
-              className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-              alt="homepage"
-              src={`/images/service/homepage.png`}
-              width={400}
-              height={279}
-            />
-          </Suspense>
+          <Image
+            className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
+            src={`/images/service/homepage.png`}
+            alt="homepage"
+            priority
+            width={400}
+            height={279}
+          />
           <div className="text-gray-600 dark:text-gray-400">
             <p className="mb-2">
               モバイルファーストな現代に合わせてレスポンシブ（画面サイズに依らない）な画面設計を心がけています。
@@ -56,8 +55,9 @@ const Service: NextPage = () => {
           </p>
           <Image
             className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-            alt="shopping"
             src={`/images/service/shopping.png`}
+            alt="shopping"
+            priority
             width={400}
             height={278}
           />
@@ -83,8 +83,9 @@ const Service: NextPage = () => {
           </p>
           <Image
             className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-            alt="web system"
             src={`/images/service/system.png`}
+            alt="web system"
+            priority
             width={400}
             height={234}
           />

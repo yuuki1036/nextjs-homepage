@@ -7,6 +7,8 @@ import avatar from "public/avatar.jpg";
 import avatarBW from "public/avatar-bw.jpg";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import LoadingSpinner from "components/LoadingSpinner";
 
 const SkillMap = dynamic(() => import("components/SkillMap"), { ssr: false });
 
@@ -31,7 +33,9 @@ const About: NextPage = () => {
             2022年よりフリーランスへ転向。
           </p>
           <h2>Skill Map</h2>
-          <SkillMap />
+          <Suspense fallback={"Loading..."}>
+            <SkillMap />
+          </Suspense>
           <h2>Certification</h2>
           <ul>
             <li>
