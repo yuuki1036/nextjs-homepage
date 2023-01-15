@@ -5,7 +5,7 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Link from "next/link";
 import { checkResponse } from "lib/util";
 import { contactFailedMsg, contactFormSchema } from "lib/validation";
-import { Form, FormState, TInput } from "lib/types";
+import { TForm, TFormState, TInput } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
 
 const ContactForm = () => {
@@ -18,7 +18,7 @@ const ContactForm = () => {
     resolver: yupResolver(contactFormSchema)
   });
 
-  const [form, setForm] = useState<FormState>({ state: Form.Initial });
+  const [form, setForm] = useState<TFormState>({ state: TForm.Initial });
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const recaptchaHandler = async () => {
@@ -59,10 +59,10 @@ const ContactForm = () => {
       .then((res) => {
         checkResponse(res);
         if (res.status === 200) {
-          setForm({ state: Form.Success });
+          setForm({ state: TForm.Success });
           reset();
         } else {
-          setForm({ state: Form.Initial });
+          setForm({ state: TForm.Initial });
           alert(contactFailedMsg);
           reset();
         }
@@ -73,12 +73,12 @@ const ContactForm = () => {
   };
 
   const onSubmit: SubmitHandler<TInput> = async (data) => {
-    if (form.state === Form.Loading) return;
-    setForm({ state: Form.Loading });
+    if (form.state === TForm.Loading) return;
+    setForm({ state: TForm.Loading });
     // Google ReCaptchaによるbot判定
     const decitionRecaptcha = await recaptchaHandler();
     if (!decitionRecaptcha) {
-      setForm({ state: Form.Initial });
+      setForm({ state: TForm.Initial });
       alert(contactFailedMsg);
       reset();
       return;
@@ -89,7 +89,7 @@ const ContactForm = () => {
 
   return (
     <div className="mb-16 w-full">
-      {form.state === Form.Success ? (
+      {form.state === TForm.Success ? (
         <div className="h-96 text-gray-600 dark:text-gray-400">
           <p>
             お問い合わせを送信しました。<br></br>
@@ -170,7 +170,7 @@ const ContactForm = () => {
             type="submit"
             className="text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center hover:ring-2 ring-gray-300 "
           >
-            {form.state === Form.Loading ? <LoadingSpinner /> : "Send"}
+            {form.state === TForm.Loading ? <LoadingSpinner /> : "Send"}
           </button>
         </form>
       )}

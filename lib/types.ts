@@ -53,35 +53,6 @@ export type TInput = {
   inquiry: string;
 };
 
-export type Snippet = {
-  _id: string;
-  slug: string;
-  content: any;
-  title: string;
-  description: string;
-  logo: string;
-};
-
-export enum Form {
-  Initial,
-  Loading,
-  Success,
-  Error
-}
-
-export type FormState = {
-  state: Form;
-  message?: string;
-};
-
-export type Subscribers = {
-  count: number;
-};
-
-export type Views = {
-  total: number;
-};
-
 export type Song = {
   songUrl: string;
   artist: string;
@@ -99,18 +70,4 @@ export type NowPlayingSong = {
 
 export type TopTracks = {
   tracks: Song[];
-};
-
-export type YouTube = {
-  subscriberCount: number;
-  viewCount: number;
-};
-
-export type GitHub = {
-  stars: number;
-};
-
-export type Unsplash = {
-  downloads: number;
-  views: number;
 };
