@@ -1,14 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-
 import { MY_NAME } from "lib/constants";
 import Container from "components/Container";
-import avatar from "public/avatar.jpg";
-import avatarBW from "public/avatar-bw.jpg";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import LoadingSpinner from "components/LoadingSpinner";
+import ExternalLink from "components/ExternalLink";
 
 const SkillMap = dynamic(() => import("components/SkillMap"), { ssr: false });
 
@@ -21,8 +18,18 @@ const About: NextPage = () => {
         </h1>
         <div className="mb-8 prose dark:prose-dark leading-6">
           <h2>Bio</h2>
-          <h3>{MY_NAME}</h3>
-          <p>webサービスの設計・開発</p>
+          <div className="flex items-end">
+            <h3 className="my-0 mr-2">{MY_NAME}</h3>
+            <Image
+              className="rounded-full filter bg-gray-100 dark-image-layer"
+              alt={MY_NAME}
+              height={35}
+              width={35}
+              src="/avatar.png"
+              priority
+            />
+          </div>
+          <p className="mt-1">webサービスの設計・開発</p>
           <p>
             福井県出身。<br></br>
             2016年にExcelで簡易会計ソフトを自作。プログラミングの面白さに気づく。
@@ -32,10 +39,14 @@ const About: NextPage = () => {
             <br></br>
             2022年よりフリーランスへ転向。
           </p>
+
           <h2>Skill Map</h2>
-          <Suspense fallback={"Loading..."}>
-            <SkillMap />
+          <Suspense fallback={null}>
+            <div className="w-full h-[25rem] md:h-[35rem]">
+              <SkillMap />
+            </div>
           </Suspense>
+
           <h2>Certification</h2>
           <ul>
             <li>
@@ -54,19 +65,21 @@ const About: NextPage = () => {
           <ul>
             <li>
               GitHub:{" "}
-              <Link href="https://github.com/yuuuki1036">@yuuki1036</Link>
+              <ExternalLink href="https://github.com/yuuki1036">
+                @yuuki1036
+              </ExternalLink>
             </li>
             <li>
               Stackshare:{" "}
-              <Link href="https://stackshare.io/yuuki1036/my-stack">
+              <ExternalLink href="https://stackshare.io/yuuki1036/my-stack">
                 https://stackshare.io/yuuki1036/my-stack
-              </Link>
+              </ExternalLink>
             </li>
             <li>
               Website:{" "}
-              <Link href="https://www.yuuki1036.ml">
-                https://www.yuuki1036.ml
-              </Link>
+              <ExternalLink href="https://yuuki1036.com">
+                https://yuuki1036.com
+              </ExternalLink>
             </li>
           </ul>
         </div>

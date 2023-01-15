@@ -3,10 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "components/Container";
 import ServiceCard from "components/ServiceCard";
-import { InferGetStaticPropsType, NextPage } from "next";
-import { getPostBySlug } from "lib/api";
-import { FEATURE_WORKS } from "lib/constants";
-import { TWorks } from "lib/types";
+import { NextPage } from "next";
 import WorksFeatureCard from "components/WorksFeatuteCard";
 
 const Home: NextPage = () => (
@@ -33,7 +30,7 @@ const Home: NextPage = () => (
               src="/avatar.png"
               sizes="30vw"
               priority
-              className="rounded-full filter bg-magenta-icon"
+              className="rounded-full filter bg-magenta-icon dark-image-layer"
             />
           </div>
         </div>
@@ -45,7 +42,7 @@ const Home: NextPage = () => (
           <WorksFeatureCard
             title={"Twitter clone App."}
             slug={"hitokoto"}
-            tag={["React", "TypeScript"]}
+            tag={["React", "Laravel"]}
             gradient={"from-[#D8B4FE] to-[#818CF8]"}
           />
           <WorksFeatureCard

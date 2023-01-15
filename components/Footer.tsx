@@ -1,19 +1,7 @@
 import Link from "next/link";
+import ExternalLink from "./ExternalLink";
 
-type TExternalLink = { href: string; children: any };
-
-const ExternalLink = ({ href, children }: TExternalLink) => (
-  <a
-    className="text-gray-500 hover:text-gray-600 transition"
-    target="_blank"
-    rel="noopener noreferrer"
-    href={href}
-  >
-    {children}
-  </a>
-);
-
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className="flex flex-col justify-center items-start max-w-2xl mx-auto w-full mb-8">
       <hr className="w-full border-1 border-gray-200 dark:border-gray-800 mb-8" />
@@ -32,6 +20,7 @@ export default function Footer() {
             Works
           </Link>
         </div>
+
         <div className="flex flex-col space-y-4">
           <Link
             href="/service"
@@ -46,6 +35,7 @@ export default function Footer() {
             About
           </Link>
         </div>
+
         <div className="flex flex-col space-y-4">
           <Link
             href="/contact"
@@ -53,11 +43,16 @@ export default function Footer() {
           >
             Contact
           </Link>
-          <ExternalLink href="https://github.com/yuuki1036">
+          <ExternalLink
+            href="https://github.com/yuuki1036"
+            className="text-gray-500 hover:text-gray-600 transition"
+          >
             GitHub
           </ExternalLink>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

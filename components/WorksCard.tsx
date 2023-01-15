@@ -1,4 +1,3 @@
-import { DARK_IMAGE_CLASS, IMAGE_BORDER_CLASS } from "lib/constants";
 import Image from "next/image";
 import Tag from "./Tag";
 
@@ -26,11 +25,12 @@ const WorksCard = ({ slug, title, excerpt, tag }: Props) => {
 
           <div className="hidden md:inline-block">
             <Image
+              className={"image-border dark-image-layer"}
+              src={src}
               alt={title}
+              priority
               height={100}
               width={100}
-              src={src}
-              className={`${IMAGE_BORDER_CLASS} ${DARK_IMAGE_CLASS}`}
             />
           </div>
         </div>

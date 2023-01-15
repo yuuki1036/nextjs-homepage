@@ -46,7 +46,12 @@ const SkillMap = () => {
     return () => root.dispose();
   }, []);
 
-  return <div id="chartdiv" style={{ width: "100%", height: "600px" }}></div>;
+  return (
+    <div
+      id="chartdiv"
+      className="w-full h-[25rem] md:h-[35rem] dark-image-layer"
+    ></div>
+  );
 };
 
 export default SkillMap;

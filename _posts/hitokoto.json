@@ -11,23 +11,23 @@
     "ReactとLaravelによるTwitterクローンアプリ。LaravelはAPIとして使用しています。認証はAuth0を採用、ソーシャルログインも可能です。Twitterとの違いはゲストでも投稿できるところです。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
   ],
   "chronology": [
-    "Twitterを作ってみたい。",
-    "LaravelとReactによるSPAを学ぶ。",
-    "Dockerを学ぶ。"
+    "Twitterを作ってみたい",
+    "LaravelとReactによるSPAを学ぶ",
+    "Dockerを学ぶ"
   ],
   "spec": {
-    "Platform": "web browser (PC size only)",
+    "Platform": "web browser (PC)",
     "Language": "TypeScript, PHP",
     "FrontEnd": "React",
     "BackEnd": "Laravel",
     "Styling": "Material-UI",
     "DB": "PostgreSQL",
     "Authentication": "Auth0",
-    "container": "Docker",
+    "Container": "Docker",
     "Pass": "Heroku"
   },
   "others": [
-    "匿名投稿可能なので実際にはTwitterと動作が異なる。",
-    "ログイン中に行ったアクションは記録され、再ログイン時に復元される。"
+    "匿名投稿可能なので実際にはTwitterと動作が異なる",
+    "ログイン中に行ったアクションは記録され、再ログイン時に復元される"
   ]
 }

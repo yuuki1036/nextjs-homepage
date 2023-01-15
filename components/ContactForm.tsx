@@ -136,7 +136,7 @@ const ContactForm = () => {
             <textarea
               id="inquiry"
               placeholder=" "
-              rows={10}
+              rows={9}
               className="contact-input"
               {...register("inquiry")}
             />
@@ -168,7 +168,7 @@ const ContactForm = () => {
 
           <button
             type="submit"
-            className="text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-600 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:ring-2 ring-gray-300 "
+            className="text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center hover:ring-2 ring-gray-300 "
           >
             {form.state === Form.Loading ? <LoadingSpinner /> : "Send"}
           </button>

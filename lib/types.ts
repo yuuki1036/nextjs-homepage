@@ -1,3 +1,14 @@
+export type TMeta = {
+  title: string;
+  description: string;
+  image?: string;
+  type: string;
+};
+
+export type TCustomMeta = {
+  [key: string]: string;
+};
+
 export type TSpec = {
   [key: string]: string;
 };

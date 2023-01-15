@@ -16,10 +16,10 @@ const WorksItemSpec = ({ spec }: Props) => {
         {rows.map((row, i) => (
           <div
             key={i}
-            className="flex flex-row border-b border-gray-200 dark:border-gray-700 py-[0.2rem]"
+            className="flex flex-row border-b border-gray-200 dark:border-gray-700"
           >
-            <p className="basis-2/5">{row.name}</p>
-            <p className="basis-3/5">{row.value}</p>
+            <p className="basis-2/5 my-[0.3rem]">{row.name}</p>
+            <p className="basis-3/5 my-[0.3rem]">{row.value}</p>
           </div>
         ))}
       </div>

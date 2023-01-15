@@ -4,16 +4,14 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import NextLink from "next/link";
 import cn from "classnames";
-
 import MobileMenu from "components/MobileMenu";
 import Footer from "./Footer";
 
 type TNavItem = { href: string; text: string };
 
-function NavItem({ href, text }: TNavItem) {
+const NavItem = ({ href, text }: TNavItem) => {
   const router = useRouter();
   const isActive = router.asPath === href;
-
   return (
     <NextLink
       href={href}
@@ -27,9 +25,9 @@ function NavItem({ href, text }: TNavItem) {
       <span className="capsize">{text}</span>
     </NextLink>
   );
-}
+};
 
-export default function Container(props: any) {
+const Container = (props: any) => {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -39,9 +37,9 @@ export default function Container(props: any) {
   const { children, ...customMeta } = props;
   const router = useRouter();
   const meta = {
-    title: "Lee Robinson – Developer, writer, creator.",
-    description: `Front-end developer, JavaScript enthusiast, and course creator.`,
-    image: "https://leerob.io/static/images/lee-banner.png",
+    title: "yuuki1036 – Web engineer",
+    description: `WEBに特化したフリーランスエンジニアです。`,
+    image: "",
     type: "website",
     ...customMeta
   };
@@ -50,12 +48,15 @@ export default function Container(props: any) {
     <div className="bg-gray-50 dark:bg-gray-900">
       <Head>
         <title>{meta.title}</title>
-        <meta name="robots" content="follow, index" />
-        <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://leerob.io${router.asPath}`} />
-        <link rel="canonical" href={`https://leerob.io${router.asPath}`} />
+        <meta name="robots" content="noindex" />
+        <meta name="description" content={meta.description} />
+        <meta
+          property="og:url"
+          content={`https://yuuki1036.com${router.asPath}`}
+        />
+        <link rel="canonical" href={`https://yuuki1036.com${router.asPath}`} />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="Lee Robinson" />
+        <meta property="og:site_name" content="yuuki1036" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
@@ -126,4 +127,6 @@ export default function Container(props: any) {
       </main>
     </div>
   );
-}
+};
+
+export default Container;

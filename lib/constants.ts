@@ -3,10 +3,6 @@ import { TFeatureWorks } from "./types";
 export const SITE_NAME: string = "yuuki1036";
 export const MY_NAME: string = "yuuki1036";
 
-export const IMAGE_BORDER_CLASS: string = "rounded-lg border-2 border-gray-300";
-export const DARK_IMAGE_CLASS: string =
-  "dark:saturate-[80%] dark:brightness-[80%]";
-
 export const FEATURE_WORKS: TFeatureWorks[] = [
   {
     slug: "hitokoto",
