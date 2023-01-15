@@ -1,4 +1,3 @@
-import { DARK_IMAGE_CLASS, IMAGE_BORDER_CLASS } from "lib/constants";
 import Image from "next/image";
 
 type Props = {
@@ -15,7 +14,7 @@ const WorksItemOtherImage = ({ title, slug }: Props) => {
         width={448}
         height={252}
         src={src}
-        className={`${IMAGE_BORDER_CLASS} ${DARK_IMAGE_CLASS}`}
+        className={"image-border dark-image-layer"}
       />
     </div>
   );
