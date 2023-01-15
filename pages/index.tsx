@@ -27,7 +27,7 @@ const Home: NextPage = () => (
               alt="Lee Robinson"
               height={176}
               width={176}
-              src="/avatar.png"
+              src="/images/avatar.png"
               sizes="30vw"
               priority
               className="rounded-full filter bg-magenta-icon dark-image-layer"

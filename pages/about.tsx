@@ -25,7 +25,7 @@ const About: NextPage = () => {
               alt={MY_NAME}
               height={35}
               width={35}
-              src="/avatar.png"
+              src="/images/avatar.png"
               priority
             />
           </div>
