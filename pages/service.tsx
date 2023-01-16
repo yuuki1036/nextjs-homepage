@@ -1,10 +1,10 @@
 import Container from "components/Container";
 import { NextPage } from "next";
 import { Suspense } from "react";
+import Image from "next/image";
 import homepageImg from "public/images/service/homepage.png";
 import ecImg from "public/images/service/ec.png";
 import systemImg from "public/images/service/system.png";
-import Image from "next/image";
 
 const Service: NextPage = () => {
   return (

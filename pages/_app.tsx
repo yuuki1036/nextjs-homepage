@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "@next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { usePageView } from "lib/usePageView";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,6 +12,8 @@ const inter = Inter({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  // GoogleAnalyticsのPVをカウントするhook
+  usePageView();
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY}

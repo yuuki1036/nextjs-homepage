@@ -51,7 +51,7 @@ const Container = (props: any) => {
     <div className="bg-gray-50 dark:bg-gray-900">
       <Head>
         <title>{meta.title}</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="index, follow" />
         <meta name="description" content={meta.description} />
         <meta property="og:url" content={`${URL}${router.asPath}`} />
         <link rel="canonical" href={`${URL}${router.asPath}`} />
