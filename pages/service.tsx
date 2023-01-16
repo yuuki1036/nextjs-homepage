@@ -1,7 +1,10 @@
 import Container from "components/Container";
 import { NextPage } from "next";
-import Image from "next/image";
 import { Suspense } from "react";
+import homepageImg from "public/images/service/homepage.png";
+import ecImg from "public/images/service/ec.png";
+import systemImg from "public/images/service/system.png";
+import Image from "next/image";
 
 const Service: NextPage = () => {
   return (
@@ -28,8 +31,9 @@ const Service: NextPage = () => {
             </p>
             <Image
               className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-              src={`/images/service/homepage.png`}
+              src={homepageImg}
               alt="homepage"
+              placeholder="blur"
               priority
               width={400}
               height={279}
@@ -56,8 +60,9 @@ const Service: NextPage = () => {
             </p>
             <Image
               className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-              src={`/images/service/shopping.png`}
+              src={ecImg}
               alt="shopping"
+              placeholder="blur"
               priority
               width={400}
               height={278}
@@ -84,8 +89,9 @@ const Service: NextPage = () => {
             </p>
             <Image
               className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
-              src={`/images/service/system.png`}
+              src={systemImg}
               alt="web system"
+              placeholder="blur"
               width={400}
               height={234}
             />

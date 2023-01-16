@@ -1,6 +1,6 @@
-import Image from "next/image";
 import ExternalLink from "./ExternalLink";
 import ExternalLinkIcon from "./ExternalLinkIcon";
+import Image from "./Image";
 
 type Props = {
   title: string;

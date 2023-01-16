@@ -215,12 +215,20 @@ table {
   margin: 0 !important;
 }
 
+.onload {
+  @apply opacity-0;
+}
+
+.onload-complete {
+  @apply  transition duration-75 opacity-100;
+}
+
 .image-border {
   @apply rounded-lg border-2 border-gray-300;
 }
 
 .dark-image-layer {
-  @apply dark:saturate-[80%] dark:brightness-[80%]
+  @apply dark:saturate-[90%] dark:brightness-[90%]
 }
 
 .contact-input {

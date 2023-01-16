@@ -6,6 +6,7 @@ import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import ExternalLink from "components/ExternalLink";
+import avatarImg from "public/images/avatar.png";
 
 const SkillMap = dynamic(() => import("components/SkillMap"), { ssr: false });
 
@@ -25,10 +26,10 @@ const About: NextPage = () => {
             <h3 className="my-0 mr-2">{MY_NAME}</h3>
             <Image
               className="rounded-full filter bg-gray-100 dark-image-layer"
+              src={avatarImg}
               alt={MY_NAME}
               height={35}
               width={35}
-              src="/images/avatar.png"
               priority
             />
           </div>

@@ -1,10 +1,11 @@
 import { Suspense } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Container from "components/Container";
 import ServiceCard from "components/ServiceCard";
 import { NextPage } from "next";
 import WorksFeatureCard from "components/WorksFeatuteCard";
+import avatarImg from "public/images/avatar.png";
+import Image from "components/Image";
 
 const Home: NextPage = () => (
   <Suspense fallback={null}>
@@ -24,13 +25,13 @@ const Home: NextPage = () => (
           </div>
           <div className="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
             <Image
+              className="rounded-full filter bg-magenta-icon dark-image-layer"
+              src={avatarImg}
               alt="Lee Robinson"
+              priority
               height={176}
               width={176}
-              src="/images/avatar.png"
               sizes="30vw"
-              priority
-              className="rounded-full filter bg-magenta-icon dark-image-layer"
             />
           </div>
         </div>

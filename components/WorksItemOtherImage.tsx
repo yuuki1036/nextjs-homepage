@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "./Image";
 
 type Props = {
   title: string;
@@ -10,11 +10,11 @@ const WorksItemOtherImage = ({ title, slug }: Props) => {
   return (
     <div className="mt-10">
       <Image
+        className={"image-border dark-image-layer"}
+        src={src}
         alt={title}
         width={448}
         height={252}
-        src={src}
-        className={"image-border dark-image-layer"}
       />
     </div>
   );
