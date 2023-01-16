@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://yuuki1036.com
+
+# Sitemaps
+Sitemap: https://yuuki1036.com/sitemap.xml
