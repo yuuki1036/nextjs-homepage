@@ -2,6 +2,7 @@ import { TFeatureWorks } from "./types";
 
 export const SITE_NAME: string = "yuuki1036";
 export const MY_NAME: string = "yuuki1036";
+export const URL: string = "https://yuuki1036.com";
 
 export const FEATURE_WORKS: TFeatureWorks[] = [
   {

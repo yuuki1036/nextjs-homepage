@@ -6,14 +6,17 @@ import { Suspense } from "react";
 const Service: NextPage = () => {
   return (
     <Suspense fallback={null}>
-      <Container title="Service – yuuki1036" description="">
+      <Container
+        pageName="Service"
+        description="お客様のご要望をもとに、設計・開発までを一貫して行います。"
+      >
         <div className="flex flex-col items-start justify-center max-w-2xl mx-auto mb-16">
           <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
             Service
           </h1>
 
           <p className="mb-14 text-gray-600 dark:text-gray-400">
-            お客様のご要望をもとに、設計・開発までを一貫して行います。
+            要望のヒアリングから設計・開発・保守まで一貫して行っています。
           </p>
 
           <div id="homepage" className="pt-2 mb-14">

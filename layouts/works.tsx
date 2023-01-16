@@ -13,9 +13,8 @@ type Props = {
 
 const WorksLayout = ({ post }: Props) => (
   <Container
-    title={`${post.title} – Lee Robinson`}
-    description={post.excerpt}
-    image={""}
+    pageName={post.title}
+    description={post.overView}
     date={new Date(post.date).toISOString()}
     type="article"
   >

@@ -20,7 +20,6 @@ ${req.body.inquiry}
 
   const subjectToCst: string = `【${MY_NAME}】お問い合わせありがとうございます`;
   const bodyToCst: string = `
-
 ${req.body.name} 様
 
 お世話になっております。
@@ -41,7 +40,7 @@ ${req.body.inquiry}
 
 ——————————————————————
 ${MY_NAME}
-${process.env.LAST_NAME}${process.env.FIRST_NAME}
+${process.env.LAST_NAME} ${process.env.FIRST_NAME}
 tel：${process.env.PHONE_NUMBER}
 mail：${process.env.MAIL_ADDRESS}
 website：https://yuuki1036.com

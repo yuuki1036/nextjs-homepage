@@ -6,6 +6,7 @@ import NextLink from "next/link";
 import cn from "classnames";
 import MobileMenu from "components/MobileMenu";
 import Footer from "./Footer";
+import { MY_NAME, SITE_NAME, URL } from "lib/constants";
 
 type TNavItem = { href: string; text: string };
 
@@ -37,9 +38,11 @@ const Container = (props: any) => {
   const { children, ...customMeta } = props;
   const router = useRouter();
   const meta = {
-    title: "yuuki1036 – Web engineer",
-    description: `WEBに特化したフリーランスエンジニアです。`,
-    image: "",
+    title: customMeta?.pageName
+      ? `${customMeta.pageName} - ${SITE_NAME}`
+      : `${SITE_NAME} – Web engineer`,
+    description: `北陸在住のフリーランスエンジニアです。WEBサイトの制作や業務用WEBシステムの開発を行っています。`,
+    image: `${URL}/api/og`,
     type: "website",
     ...customMeta
   };
@@ -50,21 +53,13 @@ const Container = (props: any) => {
         <title>{meta.title}</title>
         <meta name="robots" content="noindex" />
         <meta name="description" content={meta.description} />
-        <meta
-          property="og:url"
-          content={`https://yuuki1036.com${router.asPath}`}
-        />
-        <link rel="canonical" href={`https://yuuki1036.com${router.asPath}`} />
+        <meta property="og:url" content={`${URL}${router.asPath}`} />
+        <link rel="canonical" href={`${URL}${router.asPath}`} />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="yuuki1036" />
+        <meta property="og:site_name" content={MY_NAME} />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@leeerob" />
-        <meta name="twitter:title" content={meta.title} />
-        <meta name="twitter:description" content={meta.description} />
-        <meta name="twitter:image" content={meta.image} />
         {meta.date && (
           <meta property="article:published_time" content={meta.date} />
         )}

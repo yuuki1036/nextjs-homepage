@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MY_NAME } from "lib/constants";
+import { MY_NAME, URL } from "lib/constants";
 import Container from "components/Container";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
@@ -11,7 +11,10 @@ const SkillMap = dynamic(() => import("components/SkillMap"), { ssr: false });
 
 const About: NextPage = () => {
   return (
-    <Container title={`${MY_NAME} - about`}>
+    <Container
+      pageName="About"
+      description="フリーランスエンジニアyuuki1036について。"
+    >
       <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16 w-full">
         <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
           About Me
@@ -56,7 +59,7 @@ const About: NextPage = () => {
                 }
                 target={"_blank"}
               >
-                AWS Certified Solutions Architect – Associate
+                AWS認定ソリューションアーキテクト - アソシエイト
               </Link>
             </li>
           </ul>
@@ -77,9 +80,7 @@ const About: NextPage = () => {
             </li>
             <li>
               Website:{" "}
-              <ExternalLink href="https://yuuki1036.com">
-                https://yuuki1036.com
-              </ExternalLink>
+              <ExternalLink href="https://yuuki1036.com">{URL}</ExternalLink>
             </li>
           </ul>
         </div>
