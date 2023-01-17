@@ -1,7 +1,8 @@
 {
   "title": "HITOKOTO",
   "excerpt": "つぶやきSNS",
-  "featureTitle": "Twitter clone App.",
+  "excerptEn": "Tweet social networking",
+  "featureTitle": "Tweet social networking",
   "otherImage": true,
   "date": "2022-02-07",
   "launch": "https://react-auth0-laravel-twitter.herokuapp.com",

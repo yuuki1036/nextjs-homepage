@@ -18,6 +18,7 @@ export type TWorks = {
   title: string;
   featureTitle?: string;
   excerpt: string;
+  excerptEn: string;
   otherImage: boolean;
   date: string;
   launch?: string;

@@ -1,3 +1,4 @@
+import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
@@ -7,15 +8,27 @@ import { checkResponse } from "lib/util";
 import { contactFailedMsg, contactFormSchema } from "lib/validation";
 import { TForm, TFormState, TInput } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
+import { UseLocale } from "lib/hook/useLocale";
 
 const ContactForm = () => {
+  const { locale, t } = UseLocale();
+  const txt = t.CONTACT.FORM;
+  // validation schema
+  const schema = yup.object({
+    name: yup.string().required(txt.NAME.REQUIRED).max(60, txt.NAME.MAX),
+    email: yup.string().required(txt.MAIL.REQUIRED).email(txt.MAIL.FORMAT),
+    inquiry: yup
+      .string()
+      .required(txt.INQUIRY.REQUIRED)
+      .max(500, txt.INQUIRY.MAX)
+  });
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors }
   } = useForm<TInput>({
-    resolver: yupResolver(contactFormSchema)
+    resolver: yupResolver(schema)
   });
 
   const [form, setForm] = useState<TFormState>({ state: TForm.Initial });
@@ -100,7 +113,7 @@ const ContactForm = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-6">
             <label htmlFor="name" className="contact-label">
-              お名前
+              {txt.NAME.LABEL}
             </label>
             <input
               type="text"
@@ -115,7 +128,7 @@ const ContactForm = () => {
           </div>
           <div className="mb-6">
             <label htmlFor="email" className="contact-label">
-              メールアドレス
+              {txt.MAIL.LABEL}
             </label>
             <input
               type="text"
@@ -131,7 +144,7 @@ const ContactForm = () => {
           </div>
           <div className="">
             <label htmlFor="inquiry" className="contact-label">
-              お問い合わせ内容
+              {txt.INQUIRY.LABEL}
             </label>
             <textarea
               id="inquiry"

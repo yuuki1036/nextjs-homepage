@@ -5,21 +5,20 @@ import Image from "next/image";
 import homepageImg from "public/images/service/homepage.png";
 import ecImg from "public/images/service/ec.png";
 import systemImg from "public/images/service/system.png";
+import { UseLocale } from "lib/hook/useLocale";
 
 const Service: NextPage = () => {
+  const { locale, t } = UseLocale();
   return (
     <Suspense fallback={null}>
-      <Container
-        pageName="Service"
-        description="お客様のご要望をもとに、設計・開発までを一貫して行います。"
-      >
+      <Container pageName="Service" description={t.SERVICE.SUMMARY}>
         <div className="flex flex-col items-start justify-center max-w-2xl mx-auto mb-16">
           <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
             Service
           </h1>
 
           <p className="mb-14 text-gray-600 dark:text-gray-400">
-            要望のヒアリングから設計・開発・保守まで一貫して行っています。
+            {t.SERVICE.SUMMARY}
           </p>
 
           <div id="homepage" className="pt-2 mb-14">

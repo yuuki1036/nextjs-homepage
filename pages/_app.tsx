@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "@next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import { usePageView } from "lib/usePageView";
+import { usePageView } from "lib/hook/usePageView";
 
 const inter = Inter({
   subsets: ["latin"],
