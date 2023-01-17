@@ -15,7 +15,23 @@ export default {
     SUMMARY: "list of websites and applications we have created so far."
   },
   SERVICE: {
-    SUMMARY: "要望のヒアリングから設計・開発・保守まで一貫して行っています。"
+    SUMMARY:
+      "We provide consistent services from hearing of requests to design, development, and maintenance. We emphasize the following items in the development process.",
+    LIST: [
+      "Designed for easy maintenance and scalability",
+      "UI/UX (user experience) conscious design",
+      "Site performance (for web sites)"
+    ],
+    HOMEPAGE: {
+      TITLE: "ホームページ作成",
+      SUMMARY:
+        "用途や規模に応じたホームページを作成いたします。JavaScriptを使用した動きのあるサイトや問い合わせフォームなど、様々なサイトに対応しております。",
+      DETAIL: [
+        "モバイルファーストな現代に合わせてレスポンシブ（画面サイズに依らない）な画面設計を心がけています。",
+        "またWEBサイトの表示速度については閲覧者の離脱率やSEO（検索エンジンへの最適化）に大きく影響を与えますので可能な限りチューニングを行います。",
+        "WordPressやDrupalなどのCMSを導入し、サイト運用後のコンテンツ管理をお客様におまかせする事も可能です。"
+      ]
+    }
   },
   ABOUT: {
     DESCRIPT: "About freelance engineer yuuki1036.",
@@ -39,20 +55,19 @@ export default {
       },
       MAIL: {
         LABEL: "email",
-        REQUIRED: "メールアドレスを入力してください",
-        FORMAT: "メールアドレスの形式ではありません。"
+        REQUIRED: "Please enter your email address",
+        FORMAT: "Not in the form of an email address"
       },
       INQUIRY: {
         LABEL: "inquiry",
-        REQUIRED: "お問い合わせ内容を入力してください",
-        MAX: "500文字以内で入力してください"
+        REQUIRED: "Please enter your inquiry",
+        MAX: "Please enter up to 500 characters"
       },
       SUCCESS: [
-        "お問い合わせを送信しました。",
-        "後ほど折り返しご連絡いたします。今しばらくお待ちくださいませ。"
+        "Your inquiry has been sent.",
+        "We will contact you shortly. Please wait for a while."
       ],
-      FAILED:
-        "お問い合わせの送信に失敗しました。お手数ですがもう一度お試しください。"
+      FAILED: "Failed to send your inquiry. Please try again."
     }
   }
 };

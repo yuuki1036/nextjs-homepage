@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Link from "next/link";
 import { checkResponse } from "lib/util";
-import { contactFailedMsg, contactFormSchema } from "lib/validation";
 import { TForm, TFormState, TInput } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
 import { UseLocale } from "lib/hook/useLocale";
@@ -76,7 +75,7 @@ const ContactForm = () => {
           reset();
         } else {
           setForm({ state: TForm.Initial });
-          alert(contactFailedMsg);
+          alert(txt.FAILED);
           reset();
         }
       })
@@ -92,7 +91,7 @@ const ContactForm = () => {
     const decitionRecaptcha = await recaptchaHandler();
     if (!decitionRecaptcha) {
       setForm({ state: TForm.Initial });
-      alert(contactFailedMsg);
+      alert(txt.FAILED);
       reset();
       return;
     }
@@ -103,10 +102,11 @@ const ContactForm = () => {
   return (
     <div className="mb-16 w-full">
       {form.state === TForm.Success ? (
-        <div className="h-96 text-gray-600 dark:text-gray-400">
+        <div className="h-96 text-gray-600 dark:text-gray-400 transition-all">
           <p>
-            お問い合わせを送信しました。<br></br>
-            後ほど折り返しご連絡いたします。今しばらくお待ちくださいませ。
+            {txt.SUCCESS[0]}
+            <br></br>
+            {txt.SUCCESS[1]}
           </p>
         </div>
       ) : (
