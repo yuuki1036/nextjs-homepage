@@ -20,7 +20,7 @@ const Service: NextPage = () => {
             <p className="mb-14 text-gray-600 dark:text-gray-400">
               {t.SERVICE.SUMMARY}
             </p>
-            <ul>
+            <ul className="text-gray-600 dark:text-gray-400">
               {t.SERVICE.LIST.map((str, i) => (
                 <li key={i}>{str}</li>
               ))}

@@ -31,9 +31,11 @@ const About: NextPage = () => {
               priority
             />
           </div>
-          <p className="mt-1">{t.ABOUT.BIO.SUPPLEMENT}</p>
+          <p className="mt-1 text-gray-600 dark:text-gray-400">
+            {t.ABOUT.BIO.SUPPLEMENT}
+          </p>
           {t.ABOUT.BIO.DETAILS.map((str, i) => (
-            <p className="my-[0.1rem]" key={i}>
+            <p className="my-[0.1rem] text-gray-600 dark:text-gray-400" key={i}>
               {str}
             </p>
           ))}
