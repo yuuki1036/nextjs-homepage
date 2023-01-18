@@ -11,6 +11,9 @@
   "overView": [
     "Netflixを模したNext.js製映画情報サイト。映画情報API TMDb からジャンルごとの人気作を取得しジャケット画像を一覧で表示します。画像をクリックすると映画のあらすじが表示され、予告動画が存在する場合は自動再生されます。ページ上部のヒーローイメージは現在の人気作からランダムで選ばれます。"
   ],
+  "overViewEn": [
+    "Next.js movie information site modeled after Netflix. It retrieves popular movies by genre from the movie information API TMDb and displays a list of jacket images. Clicking on the image displays a synopsis of the movie and automatically plays the trailer if it exists. The hero image at the top of the page is randomly selected from the current popular movies."
+  ],
   "chronology": [
     "Netflixのようなアプリライクなサイトを作ってみたい",
     "画像や動画のfetchを学ぶ",

@@ -4,32 +4,50 @@ export default {
     SUMMARY:
       "A freelance engineer living in Japan, working on website production and development of web systems for business use.",
     SERVICE:
-      "We can flexibly handle everything from simple websites to web systems that support business operations. We accept requests from both companies and individuals.",
+      "We offer flexible services ranging from simple websites to web systems that support business operations. We accept requests from both companies and individuals.",
     SERVICE_CARDS: {
-      HOMEPAGE: "Web site creation",
-      EC: "EC site construction",
-      SYSTEM: "Businesss Web system construction"
+      HOMEPAGE: "Home Page",
+      EC: "E-commerce Site",
+      SYSTEM: "Businesss Web System"
     }
   },
   WORKS: {
-    SUMMARY: "list of websites and applications we have created so far."
+    SUMMARY: "list of websites and applications we have created so far.",
+    CONTENTS: {
+      OVERVIEW: "Overview",
+      SPEC: "Spec"
+    }
   },
   SERVICE: {
     SUMMARY:
-      "We provide consistent services from hearing of requests to design, development, and maintenance. We emphasize the following items in the development process.",
+      "We provide consistent services from hearing of requests to design, development, and maintenance, emphasize the following items in the development.",
     LIST: [
       "Designed for easy maintenance and scalability",
-      "UI/UX (user experience) conscious design",
-      "Site performance (for web sites)"
+      "UI/UX conscious design",
+      "Site performance"
     ],
     HOMEPAGE: {
-      TITLE: "ホームページ作成",
+      TITLE: "Home Page",
       SUMMARY:
-        "用途や規模に応じたホームページを作成いたします。JavaScriptを使用した動きのあるサイトや問い合わせフォームなど、様々なサイトに対応しております。",
+        "Produce websites according to the purpose and scale of the project.",
       DETAIL: [
-        "モバイルファーストな現代に合わせてレスポンシブ（画面サイズに依らない）な画面設計を心がけています。",
-        "またWEBサイトの表示速度については閲覧者の離脱率やSEO（検索エンジンへの最適化）に大きく影響を与えますので可能な限りチューニングを行います。",
-        "WordPressやDrupalなどのCMSを導入し、サイト運用後のコンテンツ管理をお客様におまかせする事も可能です。"
+        "Design mobile-first screens. Tune your site to improve site speed, SEO, and other performance aspects. We can also implement a CMS such as WordPress or Drupal."
+      ]
+    },
+    EC: {
+      TITLE: "E-commerce Site",
+      SUMMARY:
+        "Build e-commerce site that allows you to select products and make payments within the site. Implement account functions to enhance the convenience of your site.",
+      DETAIL: [
+        "Design and implementation will be based on experience in developing medium-sized e-commerce site with 150,000 PV per month. We build secure and robust sites for a variety of hacking methods. It is also possible to use Shopify to reduce development costs."
+      ]
+    },
+    SYSTEM: {
+      TITLE: "Business Web System",
+      SUMMARY:
+        "Build original web systems specialized for your business. We select the method and technology after hearing your requirements.",
+      DETAIL: [
+        "Build web systems that can be accessed by PC, tablet, and smartphone. We can also integrate with existing systems. Servers can be selected from on-premise, cloud, and other options depending on the application. Recommend cloud servers for flexibility as your business expands."
       ]
     }
   },

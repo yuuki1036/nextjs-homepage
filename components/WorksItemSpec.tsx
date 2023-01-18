@@ -1,15 +1,18 @@
 import { TSpec } from "lib/types";
 import { createRows } from "lib/util";
 
-type Props = { spec: TSpec };
+type Props = {
+  title: string;
+  spec: TSpec;
+};
 
-const WorksItemSpec = ({ spec }: Props) => {
+const WorksItemSpec = ({ title, spec }: Props) => {
   const rows = createRows(spec);
 
   return (
     <div className="mt-8 w-full">
       <h3 className="mb-2 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
-        {"仕様"}
+        {title}
       </h3>
 
       <div className="max-w-xl text-gray-600 dark:text-gray-400 text-sm md:text-base">

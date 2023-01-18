@@ -11,6 +11,9 @@
   "overView": [
     "LINEとAWS Lambda（サーバーレスコンピューティングサービス）を連携させたごみ捨てサポートボットです。曜日ごとに設定した内容を毎朝にLINEにてお知らせします。"
   ],
+  "overViewEn": [
+    "Garbage disposal support bot that links LINE and AWS Lambda. Set contents for each day of the week are notified on LINE every morning."
+  ],
   "chronology": [
     "LINEボットを作りたい",
     "AWSを用いたサーバレスアーキテクチャを学ぶ",

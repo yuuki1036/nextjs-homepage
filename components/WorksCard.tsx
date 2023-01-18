@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "./Image";
 import Tag from "./Tag";
 
@@ -12,7 +13,7 @@ const WorksCard = ({ slug, title, excerpt, tag }: Props) => {
   const href = `/works/${slug}`;
   const src = `/images/works/${slug}-preview.png`;
   return (
-    <a href={href} className="w-full">
+    <Link href={href} className="w-full">
       <div className="w-full mb-9 transform hover:scale-[1.01] transition-all">
         <div className="flex flex-col justify-between md:flex-row">
           <div>
@@ -35,7 +36,7 @@ const WorksCard = ({ slug, title, excerpt, tag }: Props) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 

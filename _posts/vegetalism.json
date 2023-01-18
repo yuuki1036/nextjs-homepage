@@ -10,6 +10,9 @@
   "overView": [
     "野菜販売ECサイトです。商品をカートに保存して注文すると入力したメールアドレスに注文完了メールが送信されます。条件検索、フリーワード検索、料理から野菜を絞り込む機能など、実際に想定されるような機能を実装しました。"
   ],
+  "overViewEn": [
+    "Vegetable sales e-commerce site. When a product is saved in the cart and an order is placed, an order completion email is sent to the email address entered. Functions such as conditional search, free word search, and the ability to narrow down vegetables by cuisine were implemented as would be expected in the real world."
+  ],
   "chronology": [
     "ECサイトを作ってみたい",
     "PHPを学ぶ",

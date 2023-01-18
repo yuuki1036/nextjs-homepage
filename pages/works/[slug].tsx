@@ -10,7 +10,6 @@ type Props = {
 };
 
 const WorksPage: NextPage<Props> = ({ post }) => {
-  // 404リダイレクト
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <Error statusCode={404} />;
@@ -23,14 +22,15 @@ export default WorksPage;
 
 export async function getStaticPaths() {
   const posts = getAllPosts();
+  const paths = posts.map((posts) => ({
+    params: {
+      slug: posts.slug
+    },
+    locale: "ja"
+  }));
+  paths.push(...paths.map((path) => ({ ...path, locale: "en" })));
   return {
-    paths: posts.map((posts) => {
-      return {
-        params: {
-          slug: posts.slug
-        }
-      };
-    }),
+    paths,
     fallback: false
   };
 }

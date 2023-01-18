@@ -10,6 +10,9 @@
   "overView": [
     "Python製ネイティブアプリ。MacOS上で動作します。ブラウザテストツールを使ってSNSにログインします。タイムラインやタグ検索による投稿に対して「いいね」をします。また、ユーザーのフォローなどのアクションを自動で実行します。"
   ],
+  "overViewEn": [
+    "Python desktop app, runs on MacOS. Log in to social networking services using the browser testing tool. Likes posts by timeline or tag search. It also automatically performs actions such as following users."
+  ],
   "chronology": [
     "友人がSNSを仕事で使っていて、毎日「いいね」をするのが大変と言っていた",
     "ブラウザテストツールを使ってみたい",

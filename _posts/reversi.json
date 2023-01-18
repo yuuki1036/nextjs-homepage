@@ -10,6 +10,9 @@
   "overView": [
     "Python製リバーシゲームアプリです。レスポンシブデザインなWEBアプリなのでPC, タブレット, スマートフォンに対応しています。対戦相手の強さを選択したり、ランキングでスコアを他ユーザーと競うことができます。"
   ],
+  "overViewEn": [
+    "Reversi game application made in Python. It is a web app with responsive design, so it is compatible with PC, tablet, and smart phone. You can choose the strength of your opponent and compete with other users in the ranking."
+  ],
   "chronology": [
     "ゲームアプリを作ってみたい",
     "フレームワークを用いたWEBアプリの開発を学ぶ",

@@ -38,7 +38,6 @@ const Service: NextPage = () => {
                 src={homepageImg}
                 alt="homepage"
                 placeholder="blur"
-                priority
                 width={400}
                 height={279}
               />
@@ -51,39 +50,32 @@ const Service: NextPage = () => {
 
             <div id="ec" className="pt-2 mb-14">
               <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
-                ECサイト構築
+                {t.SERVICE.EC.TITLE}
               </h3>
               <p className="mb-3 text-gray-600 dark:text-gray-400">
-                サイト内で商品を選択・決済可能なECサイト（ショッピングサイト）を構築いたします。アカウント機能を実装してサイトの利便性をより高めることも可能です。
+                {t.SERVICE.EC.SUMMARY}
               </p>
               <Image
                 className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
                 src={ecImg}
-                alt="shopping"
+                alt="ec site"
                 placeholder="blur"
-                priority
                 width={400}
                 height={278}
               />
               <div className="text-gray-600 dark:text-gray-400">
-                <p className="mb-2">
-                  月間15万PVの中規模ECサイト開発に携わっていた経験をもとに設計・実装を行います。
-                </p>
-                <p className="mb-2">
-                  ECサイトは個人情報を取り扱いますので、ハッカーなどの悪意のあるユーザーに狙われやすくなります。様々なハッキングの手口を念頭においた設計を行い、セキュアで堅牢なサイトを構築します。
-                </p>
-                <p className="">
-                  ECサイト構築サービスであるshopifyを利用して開発コストを下げることも可能です。
-                </p>
+                {t.SERVICE.EC.DETAIL.map((str, i) => (
+                  <p key={i}>{str}</p>
+                ))}
               </div>
             </div>
 
             <div id="system" className="pt-2 mb-14">
               <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
-                業務用WEBシステム構築
+                {t.SERVICE.SYSTEM.TITLE}
               </h3>
               <p className="mb-3 text-gray-600 dark:text-gray-400">
-                業務に特化したオリジナルのWEBシステムを構築いたします。要望をヒアリングした上で方法・技術を選択しますので、まずはお気軽にご相談ください。
+                {t.SERVICE.SYSTEM.SUMMARY}
               </p>
               <Image
                 className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
@@ -94,12 +86,9 @@ const Service: NextPage = () => {
                 height={234}
               />
               <div className="text-gray-600 dark:text-gray-400">
-                <p className="mb-2">
-                  PC・タブレット・スマートフォンでアクセス可能なWEBシステムを構築いたします。既存のシステムとの連携も可能です。
-                </p>
-                <p className="">
-                  サーバーはオンプレミス・クラウドなど用途に応じて選択可能です。事業の拡大に合わせてフレキシブルに対応できるクラウドサーバーをお勧めしています。
-                </p>
+                {t.SERVICE.SYSTEM.DETAIL.map((str, i) => (
+                  <p key={i}>{str}</p>
+                ))}
               </div>
             </div>
           </div>
