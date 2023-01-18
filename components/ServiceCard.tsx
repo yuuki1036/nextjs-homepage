@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Props = {
   id: string;
   title: string;
@@ -7,7 +9,7 @@ type Props = {
 const ServiceCard = ({ id, title, index }: Props) => {
   const href = `/service#${id}`;
   return (
-    <a className="w-full" href={href} aria-label={title}>
+    <Link className="w-full" href={href} aria-label={title}>
       <div className="w-full border-b border-gray-200 dark:border-gray-700 py-3 transform hover:scale-[1.01] transition-all">
         <div className="flex flex-col sm:flex-row justify-between items-baseline">
           <div className="flex items-center">
@@ -36,7 +38,7 @@ const ServiceCard = ({ id, title, index }: Props) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
