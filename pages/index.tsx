@@ -5,9 +5,9 @@ import ServiceCard from "components/ServiceCard";
 import { NextPage } from "next";
 import WorksFeatureCard from "components/WorksFeatuteCard";
 import avatarImg from "public/images/avatar.png";
-import Image from "components/Image";
 import { UseLocale } from "lib/hook/useLocale";
 import { MY_NAME, SITE_NAME } from "lib/constants";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   const { locale, t } = UseLocale();
