@@ -46,7 +46,7 @@ const Home: NextPage = () => {
             <WorksFeatureCard
               title={"Twitter clone App."}
               slug={"hitokoto"}
-              tag={["React", "Laravel"]}
+              tag={["Next.js", "TypeScript"]}
               gradient={"from-[#D8B4FE] to-[#818CF8]"}
             />
             <WorksFeatureCard

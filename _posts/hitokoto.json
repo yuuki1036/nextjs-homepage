@@ -1,37 +1,37 @@
 {
-  "title": "HITOKOTO",
-  "excerpt": "つぶやきSNS",
+  "title": "ひとこと",
+  "excerpt": "ひとことつぶやきSNS",
   "excerptEn": "Tweet social networking",
   "featureTitle": "Tweet social networking",
   "otherImage": true,
-  "date": "2022-02-07",
-  "launch": "https://react-auth0-laravel-twitter.herokuapp.com",
-  "source": "https://github.com/yuuki1036/react-auth0-laravel-twitter",
-  "tag": ["React", "TypeScript", "Laravel"],
+  "date": "2023-01-31",
+  "launch": "https://hitokoto-eosin.vercel.app",
+  "source": "https://github.com/yuuki1036/nextjs-twitter",
+  "tag": ["Next.js", "TypeScript", "Sanity"],
   "overView": [
-    "ReactとLaravelによるTwitterクローンアプリ。LaravelはAPIとして使用しています。認証はAuth0を採用、ソーシャルログインも可能です。Twitterとの違いはゲストでも投稿できるところです。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
+    "Next.js製Twitterクローンアプリ。TypeScriptで記述しました。ヘッドレスCMSのSanityにデータを保存します。認証はnext-Authを採用、本家Twitterからソーシャルログインできます。ログインしていなくても投稿やアクションが行えるように設計しました。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
   ],
   "overViewEn": [
     "Twitter clone app using React and Laravel, with Laravel as API. Authentication is Auth0 and social login is available. Replies, retweets, and likes can be performed for each post."
   ],
   "chronology": [
     "Twitterを作ってみたい",
-    "LaravelとReactによるSPAを学ぶ",
-    "Dockerを学ぶ"
+    "ReactによるSPAを学ぶ",
+    "非同期通信を学ぶ"
   ],
   "spec": {
-    "Platform": "web browser (PC)",
-    "Language": "TypeScript, PHP",
+    "Platform": "web browser",
+    "Language": "TypeScript",
     "FrontEnd": "React",
-    "BackEnd": "Laravel",
-    "Styling": "Material-UI",
+    "AppFrameWork": "Next.js",
+    "Styling": "Tailwind CSS",
     "DB": "PostgreSQL",
-    "Authentication": "Auth0",
-    "Container": "Docker",
-    "Pass": "Heroku"
+    "CMS": "Sanity",
+    "Authentication": "next-auth",
+    "Pass": "Vercel"
   },
   "others": [
-    "匿名投稿可能なので実際にはTwitterと動作が異なる",
-    "ログイン中に行ったアクションは記録され、再ログイン時に復元される"
+    "ツイートはスクロールをトリガーにして非同期で読み込む（無限スクロール）",
+    "レスポンシブデザイン"
   ]
 }
