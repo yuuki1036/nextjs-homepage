@@ -31,7 +31,7 @@ const NavItem = ({ href, text }: TNavItem) => {
 
 const Container = (props: any) => {
   const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme, systemTheme } = useTheme();
 
   // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
@@ -106,7 +106,7 @@ const Container = (props: any) => {
                   stroke="currentColor"
                   className="w-5 h-5 text-gray-800 dark:text-gray-200"
                 >
-                  {resolvedTheme === "dark" ? (
+                  {systemTheme === "dark" ? (
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
