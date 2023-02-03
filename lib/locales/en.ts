@@ -2,7 +2,7 @@
 export default {
   INDEX: {
     SUMMARY:
-      "A freelance engineer living in Japan, working on website production and development of web systems for business use.",
+      "A freelance engineer in Japan, working on website production and development of web systems for business use.",
     SERVICE:
       "We offer flexible services ranging from simple websites to web systems that support business operations. We accept requests from both companies and individuals.",
     SERVICE_CARDS: {
@@ -12,7 +12,7 @@ export default {
     }
   },
   WORKS: {
-    SUMMARY: "list of websites and applications we have created so far.",
+    SUMMARY: "Here is a list of personal development to date.",
     CONTENTS: {
       OVERVIEW: "Overview",
       SPEC: "Spec"

@@ -17,7 +17,7 @@ export default function Works({
             Works
           </h1>
           <p className="mb-16 text-gray-600 dark:text-gray-400">
-            {/* {t.WORKS.SUMMARY} */}
+            {t.WORKS.SUMMARY}
           </p>
           <Suspense fallback={null}>
             {posts.map((post) => (

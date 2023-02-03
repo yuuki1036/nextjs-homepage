@@ -1,6 +1,6 @@
 {
   "title": "ひとこと",
-  "excerpt": "ひとことつぶやきSNS",
+  "excerpt": "つぶやきSNS",
   "excerptEn": "Tweet social networking",
   "featureTitle": "Tweet social networking",
   "otherImage": true,
@@ -9,10 +9,10 @@
   "source": "https://github.com/yuuki1036/nextjs-twitter",
   "tag": ["Next.js", "TypeScript", "Sanity"],
   "overView": [
-    "Next.js製Twitterクローンアプリ。TypeScriptで記述しました。ヘッドレスCMSのSanityにデータを保存します。認証はnext-Authを採用、本家Twitterからソーシャルログインできます。ログインしていなくても投稿やアクションが行えるように設計しました。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
+    "React Twitterクローンアプリ。フレームワークはNext.jsを使用しています。ヘッドレスCMSのSanityにデータを保存します。認証はnext-Authを採用、本家Twitterからソーシャルログインできます。ログインしていなくても投稿やアクションが行えるように設計しました。リプライ・リツイート・いいねアクションをそれぞれの投稿に対して行えます。"
   ],
   "overViewEn": [
-    "Twitter clone app using React and Laravel, with Laravel as API. Authentication is Auth0 and social login is available. Replies, retweets, and likes can be performed for each post."
+    "React Twitter clone app. The framework is Next.js. Data is stored in Sanity, a headless CMS. Authentication uses next-Auth, allowing social login from the original Twitter. Designed so that posts and actions can be performed even if you are not logged in. Replies, retweets, and likes can be performed for each post."
   ],
   "chronology": [
     "Twitterを作ってみたい",
@@ -23,6 +23,7 @@
     "Platform": "web browser",
     "Language": "TypeScript",
     "FrontEnd": "React",
+    "BackEnd": "Node.js",
     "AppFrameWork": "Next.js",
     "Styling": "Tailwind CSS",
     "DB": "PostgreSQL",

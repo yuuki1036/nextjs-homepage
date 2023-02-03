@@ -12,7 +12,7 @@ export default {
     }
   },
   WORKS: {
-    SUMMARY: "これまでに作成したWebサイトやアプリの一覧です。",
+    SUMMARY: "これまでの個人開発一覧です。",
     CONTENTS: {
       OVERVIEW: "概要",
       SPEC: "仕様"
