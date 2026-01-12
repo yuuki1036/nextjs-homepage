@@ -6,6 +6,11 @@ import { MY_NAME } from "lib/constants";
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
+  if (!process.env.SENDGRID_API_KEY || !process.env.MAIL_FROM || !process.env.MAIL_ADDRESS) {
+    console.error("Missing required environment variables");
+    return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+  }
+
   const subjectToSys: string = "ホームページからの問い合わせ";
   const bodyToSys: string = `
 ホームページから問い合わせがありました。
