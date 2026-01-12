@@ -6,9 +6,7 @@ const createData = (name: string, value: string) => {
 
 // データ構造変換
 export const createRows = (specs: TSpec) => {
-  return [
-    ...Object.entries(specs).map(([name, value]) => createData(name, value))
-  ];
+  return Object.entries(specs).map(([name, value]) => createData(name, value));
 };
 
 // fetch レスポンス確認

@@ -10,7 +10,8 @@
     "dev": "next dev",
     "build": "next build && next-sitemap --config sitemap.config.js",
     "start": "next start",
-    "lint": "oxlint ."
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix ."
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.2.47",
