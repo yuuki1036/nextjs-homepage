@@ -8,24 +8,24 @@ Claude Code がこのリポジトリで作業する際のガイダンス。
 
 **タスク実行時は必ず以下のルールに従うこと:**
 
-1. **タスク開始時:** `.claude/plans/{task-name}.md` を作成し、Plan Mode でプランを生成する
+1. **タスク開始時:** `.claude/plans/feat/{plan-name}.md` を作成し、Plan Mode でプランを生成する
 2. **「plan更新」と言われたら:** 該当するプランファイルにセッションの進捗を反映させる
 3. **新規セッション開始時:** 現在のブランチ名から該当するプランファイルを読み出し、進捗を確認してから作業を再開する
 
 **ブランチ名 = タスク名** として扱う。
 
 ```
-.claude/plans/
-├── feature-dark-mode.md      # feature/dark-mode ブランチのプラン
-├── fix-contact-form.md       # fix/contact-form ブランチのプラン
-└── refactor-api.md           # refactor/api ブランチのプラン
+.claude/plans/feat/
+├── dark-mode.md      # feat/dark-mode ブランチのプラン
+├── contact-form.md   # feat/contact-form ブランチのプラン
+└── refactor-api.md   # feat/refactor-api ブランチのプラン
 ```
 
 ---
 
 ## プロジェクト概要
 
-Next.js 13 を使用したポートフォリオ・ビジネスサイト。フリーランスエンジニア (yuuki1036) の作品紹介とサービス提供を目的としたサイト。
+Next.js 16 を使用したポートフォリオ・ビジネスサイト。フリーランスエンジニア (yuuki1036) の作品紹介とサービス提供を目的としたサイト。
 
 **本番URL:** https://yuuki1036.com
 
@@ -40,14 +40,14 @@ npm run lint     # ESLint 実行
 
 ## 技術スタック
 
-- **フレームワーク:** Next.js 13.1.1 + React 18.2.0 + TypeScript 4.9.4
+- **フレームワーク:** Next.js 16.1.1 + React 19.0.0 + TypeScript 5.x
 - **スタイリング:** Tailwind CSS 3.2.4 + @tailwindcss/typography
-- **フォーム:** react-hook-form 7.41.5 + yup 0.32.11 バリデーション
+- **フォーム:** react-hook-form 7.71.0 + yup 0.32.11 バリデーション
 - **テーマ:** next-themes 0.2.1 (ダークモード)
 - **グラフ:** @amcharts/amcharts5 (スキルツリー表示)
 - **データ取得:** swr 2.0.0
 - **日付処理:** date-fns 2.29.3
-- **OG画像:** @vercel/og 0.0.27
+- **OG画像:** @vercel/og 0.8.6
 - **外部サービス:** SendGrid (メール), Google reCAPTCHA v3, Google Analytics, Vercel Analytics
 
 ## ディレクトリ構造
@@ -192,8 +192,9 @@ _posts/{slug}.json → lib/api.ts (getPostBySlug) → pages/works/[slug].tsx →
 ## コード規約
 
 - **Prettier:** ダブルクォート、Tab 幅 2、trailing comma なし
-- **ESLint:** next/core-web-vitals ルール
+- **Linter:** oxlint
 - **ダークモード:** Tailwind CSS class 方式 (next-themes)
+- **PR タイトル:** 英語で記述
 
 ## 画像配置ルール
 
@@ -226,7 +227,7 @@ PHONE_NUMBER                      # 電話番号
 
 | ファイル | 説明 |
 |---------|------|
-| `next.config.js` | Next.js 設定 (i18n, fontLoaders) |
+| `next.config.js` | Next.js 設定 (i18n) |
 | `tailwind.config.js` | Tailwind CSS 設定 (カスタムカラー, typography) |
 | `tsconfig.json` | TypeScript 設定 (strict: true) |
 | `sitemap.config.js` | サイトマップ生成設定 |
