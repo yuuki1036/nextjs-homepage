@@ -22,10 +22,7 @@ const ContactForm = ({ locale }: Props) => {
   const schema = yup.object({
     name: yup.string().required(txt.NAME.REQUIRED).max(60, txt.NAME.MAX),
     email: yup.string().required(txt.MAIL.REQUIRED).email(txt.MAIL.FORMAT),
-    inquiry: yup
-      .string()
-      .required(txt.INQUIRY.REQUIRED)
-      .max(500, txt.INQUIRY.MAX)
+    inquiry: yup.string().required(txt.INQUIRY.REQUIRED).max(500, txt.INQUIRY.MAX)
   });
   const {
     register,
@@ -129,9 +126,7 @@ const ContactForm = ({ locale }: Props) => {
               className="contact-input max-w-xs"
               {...register("name")}
             />
-            <p className="mt-2 text-sm text-red-600 dark:text-red-700">
-              {errors.name?.message}
-            </p>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-700">{errors.name?.message}</p>
           </div>
           <div className="mb-6">
             <label htmlFor="email" className="contact-label">
@@ -145,9 +140,7 @@ const ContactForm = ({ locale }: Props) => {
               {...register("email")}
             />
 
-            <p className="mt-2 text-sm text-red-600 dark:text-red-700">
-              {errors.email?.message}
-            </p>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-700">{errors.email?.message}</p>
           </div>
           <div className="">
             <label htmlFor="inquiry" className="contact-label">

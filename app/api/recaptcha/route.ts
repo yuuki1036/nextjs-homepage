@@ -11,25 +11,19 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const serverSecretKey = `secret=${process.env.RECAPTCHA_SERVER_SECRET_KEY}&response=${body.token}`;
 
-  const resRecaptcha = await fetch(
-    "https://www.google.com/recaptcha/api/siteverify",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: serverSecretKey
-    }
-  );
+  const resRecaptcha = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: serverSecretKey
+  });
 
   checkResponse(resRecaptcha);
   const resRecaptchaJson = await resRecaptcha.json();
 
   if (isBot(resRecaptchaJson)) {
-    return NextResponse.json(
-      { message: "the client may be a bot" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "the client may be a bot" }, { status: 500 });
   } else {
     return NextResponse.json(resRecaptchaJson);
   }

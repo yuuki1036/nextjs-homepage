@@ -28,8 +28,7 @@ export default {
     ],
     HOMEPAGE: {
       TITLE: "Home Page",
-      SUMMARY:
-        "Produce websites according to the purpose and scale of the project.",
+      SUMMARY: "Produce websites according to the purpose and scale of the project.",
       DETAIL: [
         "Design mobile-first screens. Tune your site to improve site speed, SEO, and other performance aspects. We can also implement a CMS such as WordPress or Drupal."
       ]
@@ -63,8 +62,7 @@ export default {
     CERTIFICATION: ["AWS Certified Solutions Architect – Associate"]
   },
   CONTACT: {
-    SUMMARY:
-      "Please contact us for development requests, consultation, questions about the web.",
+    SUMMARY: "Please contact us for development requests, consultation, questions about the web.",
     FORM: {
       NAME: {
         LABEL: "name",

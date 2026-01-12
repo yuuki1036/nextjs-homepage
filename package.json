@@ -2,16 +2,14 @@
   "name": "nextjs-homepage",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "npm@10.8.2",
-  "engines": {
-    "node": ">=24"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build && next-sitemap --config sitemap.config.js",
     "start": "next start",
     "lint": "oxlint .",
-    "lint:fix": "oxlint --fix ."
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check ."
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.2.47",
@@ -39,21 +37,26 @@
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.13",
     "next-sitemap": "^3.1.45",
+    "oxfmt": "^0.23.0",
     "oxlint": "^1.38.0",
     "postcss": "^8.4.20",
     "react-google-recaptcha-v3": "^1.11.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^5.0.0"
   },
+  "browserslist": [
+    "defaults",
+    "not dead",
+    "not ie 11"
+  ],
   "prettier": {
     "arrowParens": "always",
     "singleQuote": false,
     "tabWidth": 2,
     "trailingComma": "none"
   },
-  "browserslist": [
-    "defaults",
-    "not dead",
-    "not ie 11"
-  ]
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "npm@10.8.2"
 }

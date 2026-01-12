@@ -25,8 +25,5 @@
     "AWS Archtect": "Lambda, API Gateway",
     "DB": "DynamoDB"
   },
-  "others": [
-    "LINEの友だち追加で手軽に利用できる",
-    "全ての操作はLINEトーク画面上で完結する"
-  ]
+  "others": ["LINEの友だち追加で手軽に利用できる", "全ての操作はLINEトーク画面上で完結する"]
 }

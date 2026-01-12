@@ -10,8 +10,7 @@ export default function NotFound() {
         <p className="mb-10 text-gray-600 dark:text-gray-400">
           お探しのページは見つかりませんでした。URLが間違っている可能性があります。
           <br />
-          The cosmic object you are looking for has disappeared beyond the event
-          horizon.
+          The cosmic object you are looking for has disappeared beyond the event horizon.
         </p>
         <Link
           href="/ja"

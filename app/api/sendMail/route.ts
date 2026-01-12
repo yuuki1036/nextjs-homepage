@@ -6,13 +6,9 @@ import { MY_NAME } from "lib/constants";
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  // 開発環境: SendGrid API キーがない場合はモック動作
-  if (!process.env.SENDGRID_API_KEY) {
-    console.log("[DEV] Mail send mock - API key not configured");
-    console.log("[DEV] To:", body.email);
-    console.log("[DEV] Name:", body.name);
-    console.log("[DEV] Inquiry:", body.inquiry);
-    return NextResponse.json({ message: "dev mode - mail not sent" });
+  if (!process.env.SENDGRID_API_KEY || !process.env.MAIL_FROM || !process.env.MAIL_ADDRESS) {
+    console.error("Missing required environment variables");
+    return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
   }
 
   const subjectToSys: string = "ホームページからの問い合わせ";
@@ -82,7 +78,7 @@ website：https://yuuki1036.com
     console.log("mail send complete");
     return NextResponse.json(msgToSys);
   } catch (err) {
-    console.log("mail send failed");
+    console.error("mail send failed");
     return NextResponse.json(err, { status: 500 });
   }
 }

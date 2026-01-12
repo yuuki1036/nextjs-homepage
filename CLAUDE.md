@@ -121,10 +121,10 @@ nextjs-homepage/
 ### 型定義 (`lib/types.ts`)
 
 ```typescript
-TMeta, TCustomMeta; // メタ情報
+(TMeta, TCustomMeta); // メタ情報
 TSpec; // 仕様 (key-value)
-TWorks, TFeatureWorks; // 作品データ
-TForm, TFormState; // フォーム状態
+(TWorks, TFeatureWorks); // 作品データ
+(TForm, TFormState); // フォーム状態
 TInput; // フォーム入力
 ```
 
