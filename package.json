@@ -2,6 +2,10 @@
   "name": "nextjs-homepage",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@10.8.2",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build && next-sitemap --config sitemap.config.js",
@@ -15,6 +19,7 @@
     "@tailwindcss/typography": "^0.5.8",
     "@vercel/analytics": "^0.1.6",
     "@vercel/og": "^0.0.27",
+    "caniuse-lite": "^1.0.30001764",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
     "next": "13.1.1",
@@ -22,8 +27,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.41.5",
+    "sharp": "^0.34.5",
     "swr": "^2.0.0",
-    "use-delayed-render": "^0.0.7",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -46,5 +51,10 @@
     "singleQuote": false,
     "tabWidth": 2,
     "trailingComma": "none"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not dead",
+    "not ie 11"
+  ]
 }
