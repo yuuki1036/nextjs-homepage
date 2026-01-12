@@ -7,10 +7,11 @@ type Props = {
   title: string;
   excerpt: string;
   tag: string[];
+  locale?: string;
 };
 
-const WorksCard = ({ slug, title, excerpt, tag }: Props) => {
-  const href = `/works/${slug}`;
+const WorksCard = ({ slug, title, excerpt, tag, locale }: Props) => {
+  const href = locale ? `/${locale}/works/${slug}` : `/works/${slug}`;
   const src = `/images/works/${slug}-preview.png`;
   return (
     <Link href={href} className="w-full">

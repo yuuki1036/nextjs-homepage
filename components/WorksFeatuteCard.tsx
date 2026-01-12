@@ -7,11 +7,12 @@ type Props = {
   slug: string;
   tag: string[];
   gradient: string;
+  locale?: string;
 };
 
-const WorksFeatureCard = ({ title, slug, tag, gradient }: Props) => (
+const WorksFeatureCard = ({ title, slug, tag, gradient, locale }: Props) => (
   <Link
-    href={`/works/${slug}`}
+    href={locale ? `/${locale}/works/${slug}` : `/works/${slug}`}
     className={cn(
       "transform hover:scale-[1.01] transition-all",
       "rounded-xl w-full md:w-1/3 bg-gradient-to-r p-1",
