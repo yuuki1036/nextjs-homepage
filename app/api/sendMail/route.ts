@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import sgMail, { MailDataRequired } from "@sendgrid/mail";
+import sgMail from "@sendgrid/mail";
+import { MailDataRequired } from "@sendgrid/helpers/classes/mail";
 import { EmailData } from "@sendgrid/helpers/classes/email-address";
 import { MY_NAME } from "lib/constants";
 
