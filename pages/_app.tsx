@@ -1,7 +1,7 @@
 import "styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { usePageView } from "lib/hook/usePageView";
