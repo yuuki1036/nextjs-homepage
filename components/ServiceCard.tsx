@@ -4,10 +4,11 @@ type Props = {
   id: string;
   title: string;
   index: string;
+  locale?: string;
 };
 
-const ServiceCard = ({ id, title, index }: Props) => {
-  const href = `/service#${id}`;
+const ServiceCard = ({ id, title, index, locale }: Props) => {
+  const href = locale ? `/${locale}/service#${id}` : `/service#${id}`;
   return (
     <Link className="w-full" href={href} aria-label={title}>
       <div className="w-full border-b border-gray-200 dark:border-gray-700 py-3 transform hover:scale-[1.01] transition-all">

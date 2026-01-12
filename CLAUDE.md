@@ -8,18 +8,11 @@ Claude Code がこのリポジトリで作業する際のガイダンス。
 
 **タスク実行時は必ず以下のルールに従うこと:**
 
-1. **タスク開始時:** `.claude/plans/feat/{plan-name}.md` を作成し、Plan Mode でプランを生成する
-2. **「plan更新」と言われたら:** 該当するプランファイルにセッションの進捗を反映させる
+1. **タスク開始時:** `.claude/plans/{plan-name}.md` を作成し、Plan Mode でプランを生成する
+2. **「plan 更新」と言われたら:** 該当するプランファイルにセッションの進捗を反映させる
 3. **新規セッション開始時:** 現在のブランチ名から該当するプランファイルを読み出し、進捗を確認してから作業を再開する
 
-**ブランチ名 = タスク名** として扱う。
-
-```
-.claude/plans/feat/
-├── dark-mode.md      # feat/dark-mode ブランチのプラン
-├── contact-form.md   # feat/contact-form ブランチのプラン
-└── refactor-api.md   # feat/refactor-api ブランチのプラン
-```
+**ブランチ名の構成：{type}/{task-name}** として扱う。
 
 ---
 
@@ -27,7 +20,7 @@ Claude Code がこのリポジトリで作業する際のガイダンス。
 
 Next.js 16 を使用したポートフォリオ・ビジネスサイト。フリーランスエンジニア (yuuki1036) の作品紹介とサービス提供を目的としたサイト。
 
-**本番URL:** https://yuuki1036.com
+**本番 URL:** https://yuuki1036.com
 
 ## 開発コマンド
 
@@ -47,7 +40,7 @@ npm run lint     # ESLint 実行
 - **グラフ:** @amcharts/amcharts5 (スキルツリー表示)
 - **データ取得:** swr 2.0.0
 - **日付処理:** date-fns 2.29.3
-- **OG画像:** @vercel/og 0.8.6
+- **OG 画像:** @vercel/og 0.8.6
 - **外部サービス:** SendGrid (メール), Google reCAPTCHA v3, Google Analytics, Vercel Analytics
 
 ## ディレクトリ構造
@@ -74,36 +67,39 @@ nextjs-homepage/
 
 ## ページ一覧
 
-| パス | ファイル | 説明 |
-|------|---------|------|
-| `/` | `pages/index.tsx` | ホーム: プロフィール、特集作品3件、サービス紹介 |
-| `/about` | `pages/about.tsx` | 自己紹介: スキルマップ、資格、リンク |
-| `/works` | `pages/works.tsx` | 作品一覧: 全作品をカード表示 |
-| `/works/[slug]` | `pages/works/[slug].tsx` | 作品詳細: 動的ルート、静的生成 |
-| `/service` | `pages/service.tsx` | サービス詳細: HP作成、EC構築、業務システム |
-| `/contact` | `pages/contact.tsx` | お問い合わせフォーム |
-| `/404` | `pages/404.tsx` | 404 エラーページ |
+| パス            | ファイル                 | 説明                                              |
+| --------------- | ------------------------ | ------------------------------------------------- |
+| `/`             | `pages/index.tsx`        | ホーム: プロフィール、特集作品 3 件、サービス紹介 |
+| `/about`        | `pages/about.tsx`        | 自己紹介: スキルマップ、資格、リンク              |
+| `/works`        | `pages/works.tsx`        | 作品一覧: 全作品をカード表示                      |
+| `/works/[slug]` | `pages/works/[slug].tsx` | 作品詳細: 動的ルート、静的生成                    |
+| `/service`      | `pages/service.tsx`      | サービス詳細: HP 作成、EC 構築、業務システム      |
+| `/contact`      | `pages/contact.tsx`      | お問い合わせフォーム                              |
+| `/404`          | `pages/404.tsx`          | 404 エラーページ                                  |
 
 ## API Routes
 
-| エンドポイント | メソッド | 説明 |
-|---------------|---------|------|
-| `/api/sendMail` | POST | SendGrid でメール送信 |
-| `/api/recaptcha` | POST | reCAPTCHA v3 検証 |
-| `/api/og` | GET | OG 画像動的生成 |
+| エンドポイント   | メソッド | 説明                  |
+| ---------------- | -------- | --------------------- |
+| `/api/sendMail`  | POST     | SendGrid でメール送信 |
+| `/api/recaptcha` | POST     | reCAPTCHA v3 検証     |
+| `/api/og`        | GET      | OG 画像動的生成       |
 
 ## コンポーネント一覧
 
 ### レイアウト系
+
 - `Container.tsx` - メインレイアウト、ナビ、OGP 設定、言語切替
 - `Footer.tsx` - フッター
 - `MobileMenu.tsx` - モバイル用ドロワーメニュー
 
 ### フォーム系
+
 - `ContactForm.tsx` - お問い合わせフォーム (yup バリデーション、reCAPTCHA)
 - `LoadingSpinner.tsx` - ローディングスピナー
 
 ### 作品表示系
+
 - `WorksCard.tsx` - 作品一覧カード
 - `WorksFeatuteCard.tsx` - 特集作品カード (ホームページ用)
 - `WorksItemTitle.tsx` - 作品詳細タイトル
@@ -113,6 +109,7 @@ nextjs-homepage/
 - `WorksItemSpec.tsx` - 仕様テーブル
 
 ### その他
+
 - `ServiceCard.tsx` - サービス紹介カード
 - `SkillMap.tsx` - amcharts5 スキルツリー
 - `ExternalLink.tsx` / `ExternalLinkIcon.tsx` - 外部リンク
@@ -122,31 +119,36 @@ nextjs-homepage/
 ## lib/ 詳細
 
 ### 型定義 (`lib/types.ts`)
+
 ```typescript
-TMeta, TCustomMeta    // メタ情報
-TSpec                 // 仕様 (key-value)
-TWorks, TFeatureWorks // 作品データ
-TForm, TFormState     // フォーム状態
-TInput                // フォーム入力
+TMeta, TCustomMeta; // メタ情報
+TSpec; // 仕様 (key-value)
+TWorks, TFeatureWorks; // 作品データ
+TForm, TFormState; // フォーム状態
+TInput; // フォーム入力
 ```
 
 ### API 操作 (`lib/api.ts`)
-- `getPostSlugs()` - _posts のファイル一覧取得
+
+- `getPostSlugs()` - \_posts のファイル一覧取得
 - `getPostBySlug(slug)` - JSON 読み込み → TWorks
 - `getAllPosts()` - 全作品を date 降順ソート
 
 ### カスタムフック (`lib/hook/`)
+
 - `useLocale.ts` - ロケール (en/ja) と翻訳テキスト取得
 - `usePageView.ts` - GA ページビュー送信
 - `useDelayedRender.ts` - 遅延レンダリング
 
 ### 定数 (`lib/constants.ts`)
+
 - `SITE_NAME`, `MY_NAME`: "yuuki1036"
 - `URL`: "https://yuuki1036.com"
-- `FEATURE_WORKS`: 特集作品 3件
+- `FEATURE_WORKS`: 特集作品 3 件
 - `SKILL_MAP_DATA`: スキルツリーデータ
 
 ### 多言語 (`lib/locales/`)
+
 - `ja.ts` - 日本語翻訳
 - `en.ts` - 英語翻訳
 
@@ -199,6 +201,7 @@ _posts/{slug}.json → lib/api.ts (getPostBySlug) → pages/works/[slug].tsx →
 ## 画像配置ルール
 
 作品画像は `public/images/works/` に配置:
+
 - `{slug}-main.png` - メイン画像 (必須)
 - `{slug}-preview.png` - プレビュー画像 (必須)
 - `{slug}-add.png` - 追加画像 (`otherImage: true` の場合)
@@ -206,6 +209,7 @@ _posts/{slug}.json → lib/api.ts (getPostBySlug) → pages/works/[slug].tsx →
 ## 環境変数
 
 ### 本番環境で必要
+
 ```bash
 # reCAPTCHA
 NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY  # クライアントキー
@@ -225,9 +229,9 @@ PHONE_NUMBER                      # 電話番号
 
 ## 設定ファイル
 
-| ファイル | 説明 |
-|---------|------|
-| `next.config.js` | Next.js 設定 (i18n) |
+| ファイル             | 説明                                           |
+| -------------------- | ---------------------------------------------- |
+| `next.config.js`     | Next.js 設定 (i18n)                            |
 | `tailwind.config.js` | Tailwind CSS 設定 (カスタムカラー, typography) |
-| `tsconfig.json` | TypeScript 設定 (strict: true) |
-| `sitemap.config.js` | サイトマップ生成設定 |
+| `tsconfig.json`      | TypeScript 設定 (strict: true)                 |
+| `sitemap.config.js`  | サイトマップ生成設定                           |

@@ -6,7 +6,11 @@ import useDelayedRender from "lib/hook/useDelayedRender";
 import { useState, useEffect, ComponentProps } from "react";
 import styles from "styles/mobile-menu.module.css";
 
-export default function MobileMenu() {
+type Props = {
+  locale: string;
+};
+
+export default function MobileMenuClient({ locale }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { mounted: isMenuMounted, rendered: isMenuRendered } = useDelayedRender(
     isMenuOpen,
@@ -32,6 +36,14 @@ export default function MobileMenu() {
     };
   }, []);
 
+  const navItems = [
+    { href: "/", text: "Home", delay: "150ms" },
+    { href: "/works", text: "Works", delay: "200ms" },
+    { href: "/service", text: "Service", delay: "250ms" },
+    { href: "/about", text: "About", delay: "300ms" },
+    { href: "/contact", text: "Contact", delay: "350ms" }
+  ];
+
   return (
     <>
       <button
@@ -51,46 +63,24 @@ export default function MobileMenu() {
             isMenuRendered && styles.menuRendered
           )}
         >
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: "150ms" }}
-          >
-            <Link href="/" className="flex w-auto pb-4">
-              Home
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: "200ms" }}
-          >
-            <Link href="/works" className="flex w-auto pb-4">
-              Works
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: "250ms" }}
-          >
-            <Link href="/service" className="flex w-auto pb-4">
-              Service
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: "300ms" }}
-          >
-            <Link href="/about" className="flex w-auto pb-4">
-              About
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: "350ms" }}
-          >
-            <Link href="/contact" className="flex w-auto pb-4">
-              Contact
-            </Link>
-          </li>
+          {navItems.map((item) => (
+            <li
+              key={item.href}
+              className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
+              style={{ transitionDelay: item.delay }}
+            >
+              <Link
+                href={`/${locale}${item.href === "/" ? "" : item.href}`}
+                className="flex w-auto pb-4"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = "";
+                }}
+              >
+                {item.text}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </>

@@ -1,25 +1,35 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import "styles/globals.css";
+import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
+import { Providers } from "components/Providers";
 import { GA_ID } from "lib/gtag";
 
-export default function Document() {
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter"
+});
+
+export default function RootLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <Html lang="ja">
-      <Head>
-        {/* Google tag (gtag.js) */}
-        <script
-          async
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '${GA_ID}');
-  `
-          }}
+          strategy="afterInteractive"
         />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
         <link href="/favicons/favicon.ico" rel="shortcut icon" />
         <link href="/favicons/site.webmanifest" rel="manifest" />
         <link
@@ -54,11 +64,13 @@ export default function Document() {
           content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
           name="robots"
         />
-      </Head>
-      <body className="bg-white dark:bg-black text-white dark:text-black">
-        <Main />
-        <NextScript />
+      </head>
+      <body className={`${inter.variable} font-sans bg-white dark:bg-black text-black dark:text-white`}>
+        <Providers>
+          {children}
+          <Analytics />
+        </Providers>
       </body>
-    </Html>
+    </html>
   );
 }

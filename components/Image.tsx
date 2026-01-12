@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, useState } from "react";
 import { default as NextImage, ImageProps } from "next/image";
 import classNames from "classnames";

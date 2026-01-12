@@ -1,3 +1,5 @@
+"use client";
+
 import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,10 +9,14 @@ import Link from "next/link";
 import { checkResponse } from "lib/util";
 import { TForm, TFormState, TInput } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
-import { UseLocale } from "lib/hook/useLocale";
+import { getTranslations } from "lib/i18n";
 
-const ContactForm = () => {
-  const { locale, t } = UseLocale();
+type Props = {
+  locale: string;
+};
+
+const ContactForm = ({ locale }: Props) => {
+  const t = getTranslations(locale);
   const txt = t.CONTACT.FORM;
   // validation schema
   const schema = yup.object({
@@ -34,9 +40,10 @@ const ContactForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const recaptchaHandler = async () => {
+    // reCAPTCHA が設定されていない場合（開発環境など）はスキップ
     if (!executeRecaptcha) {
-      console.error("Execute recaptcha not yet available");
-      return false;
+      console.warn("reCAPTCHA not configured, skipping validation");
+      return true;
     }
     // クライアントサイドのトークンを発行
     const token = await executeRecaptcha("contact");
@@ -181,7 +188,8 @@ const ContactForm = () => {
 
           <button
             type="submit"
-            className="text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center hover:ring-2 ring-gray-300 "
+            disabled={form.state === TForm.Loading}
+            className="text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center hover:ring-2 ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {form.state === TForm.Loading ? <LoadingSpinner /> : "Send"}
           </button>

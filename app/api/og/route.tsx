@@ -1,10 +1,8 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
 
-export const config = {
-  runtime: "edge"
-};
+export const runtime = "edge";
 
-export default async function handler() {
+export async function GET() {
   return new ImageResponse(
     (
       <div
@@ -46,7 +44,7 @@ export default async function handler() {
         <div
           style={{
             fontSize: 60,
-            fontStyle: "nomal",
+            fontStyle: "normal",
             letterSpacing: "-0.025em",
             color: "black",
             marginTop: 30,
