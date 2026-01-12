@@ -1,13 +1,13 @@
 "use client";
 
-import * as yup from "yup";
+import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Link from "next/link";
 import { checkResponse } from "lib/util";
-import { TForm, TFormState, TInput } from "lib/types";
+import { TForm, TFormState } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
 import { getTranslations } from "lib/i18n";
 
@@ -19,18 +19,19 @@ const ContactForm = ({ locale }: Props) => {
   const t = getTranslations(locale);
   const txt = t.CONTACT.FORM;
   // validation schema
-  const schema = yup.object({
-    name: yup.string().required(txt.NAME.REQUIRED).max(60, txt.NAME.MAX),
-    email: yup.string().required(txt.MAIL.REQUIRED).email(txt.MAIL.FORMAT),
-    inquiry: yup.string().required(txt.INQUIRY.REQUIRED).max(500, txt.INQUIRY.MAX)
+  const schema = z.object({
+    name: z.string().min(1, txt.NAME.REQUIRED).max(60, txt.NAME.MAX),
+    email: z.string().min(1, txt.MAIL.REQUIRED).email(txt.MAIL.FORMAT),
+    inquiry: z.string().min(1, txt.INQUIRY.REQUIRED).max(500, txt.INQUIRY.MAX)
   });
+  type FormInput = z.infer<typeof schema>;
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<TInput>({
-    resolver: yupResolver(schema)
+  } = useForm<FormInput>({
+    resolver: zodResolver(schema)
   });
 
   const [form, setForm] = useState<TFormState>({ state: TForm.Initial });
@@ -63,7 +64,7 @@ const ContactForm = ({ locale }: Props) => {
     return decitionRecaptcha;
   };
 
-  const mailSendHandler = async (inputs: TInput) => {
+  const mailSendHandler = async (inputs: FormInput) => {
     await fetch("/api/sendMail", {
       method: "POST",
       headers: {
@@ -88,7 +89,7 @@ const ContactForm = ({ locale }: Props) => {
       });
   };
 
-  const onSubmit: SubmitHandler<TInput> = async (data) => {
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
     if (form.state === TForm.Loading) return;
     setForm({ state: TForm.Loading });
     // Google ReCaptchaによるbot判定
