@@ -25,9 +25,7 @@ export default async function ContactPage({ params }: Props) {
       <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
         Contact
       </h1>
-      <p className="mb-16 text-gray-600 dark:text-gray-400">
-        {t.CONTACT.SUMMARY}
-      </p>
+      <p className="mb-16 text-gray-600 dark:text-gray-400">{t.CONTACT.SUMMARY}</p>
       <ContactForm locale={locale} />
     </div>
   );

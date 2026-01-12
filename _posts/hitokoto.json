@@ -14,11 +14,7 @@
   "overViewEn": [
     "React Twitter clone app. The framework is Next.js. Data is stored in Sanity, a headless CMS. Authentication uses next-Auth, allowing social login from the original Twitter. Designed so that posts and actions can be performed even if you are not logged in. Replies, retweets, and likes can be performed for each post."
   ],
-  "chronology": [
-    "Twitterを作ってみたい",
-    "ReactによるSPAを学ぶ",
-    "非同期通信を学ぶ"
-  ],
+  "chronology": ["Twitterを作ってみたい", "ReactによるSPAを学ぶ", "非同期通信を学ぶ"],
   "spec": {
     "Platform": "web browser",
     "Language": "TypeScript",

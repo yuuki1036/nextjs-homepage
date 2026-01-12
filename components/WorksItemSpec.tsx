@@ -17,10 +17,7 @@ const WorksItemSpec = ({ title, spec }: Props) => {
 
       <div className="max-w-xl text-gray-600 dark:text-gray-400 text-sm md:text-base">
         {rows.map((row, i) => (
-          <div
-            key={i}
-            className="flex flex-row border-b border-gray-200 dark:border-gray-700"
-          >
+          <div key={i} className="flex flex-row border-b border-gray-200 dark:border-gray-700">
             <p className="basis-2/5 my-[0.3rem]">{row.name}</p>
             <p className="basis-3/5 my-[0.3rem]">{row.value}</p>
           </div>

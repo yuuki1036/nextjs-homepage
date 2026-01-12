@@ -7,12 +7,7 @@ type Props = {
 };
 
 const ExternalLink: FC<Props> = ({ children, href, className }) => (
-  <a
-    href={href}
-    className={className}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
+  <a href={href} className={className} target="_blank" rel="noopener noreferrer">
     {children}
   </a>
 );

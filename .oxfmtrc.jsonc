@@ -1,0 +1,7 @@
+{
+  // Prettierから移行した設定
+  "arrowParens": "always",
+  "singleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "none"
+}

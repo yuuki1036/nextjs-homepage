@@ -1,90 +1,90 @@
-const { spacing, fontFamily } = require('tailwindcss/defaultTheme');
+const { spacing, fontFamily } = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  content: ['./app/**/*.tsx', './components/**/*.tsx', './layouts/**/*.tsx'],
-  darkMode: 'class',
+  content: ["./app/**/*.tsx", "./components/**/*.tsx", "./layouts/**/*.tsx"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        'blue-opaque': 'rgb(13 42 148 / 18%)',
-        'magenta-icon': '#ff6666',
+        "blue-opaque": "rgb(13 42 148 / 18%)",
+        "magenta-icon": "#ff6666",
         gray: {
-          0: '#fff',
-          100: '#fafafa',
-          200: '#eaeaea',
-          300: '#999999',
-          400: '#888888',
-          500: '#666666',
-          600: '#444444',
-          700: '#333333',
-          800: '#222222',
-          900: '#111111'
+          0: "#fff",
+          100: "#fafafa",
+          200: "#eaeaea",
+          300: "#999999",
+          400: "#888888",
+          500: "#666666",
+          600: "#444444",
+          700: "#333333",
+          800: "#222222",
+          900: "#111111"
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', ...fontFamily.sans]
+        sans: ["var(--font-inter)", ...fontFamily.sans]
       },
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            color: theme('colors.gray.700'),
+            color: theme("colors.gray.700"),
             a: {
-              color: theme('colors.blue.500'),
-              '&:hover': {
-                color: theme('colors.blue.700')
+              color: theme("colors.blue.500"),
+              "&:hover": {
+                color: theme("colors.blue.700")
               },
-              code: { color: theme('colors.blue.400') }
+              code: { color: theme("colors.blue.400") }
             },
-            'h2,h3,h4': {
-              'scroll-margin-top': spacing[32]
+            "h2,h3,h4": {
+              "scroll-margin-top": spacing[32]
             },
             thead: {
-              borderBottomColor: theme('colors.gray.200')
+              borderBottomColor: theme("colors.gray.200")
             },
-            code: { color: theme('colors.pink.500') },
-            'blockquote p:first-of-type::before': false,
-            'blockquote p:last-of-type::after': false
+            code: { color: theme("colors.pink.500") },
+            "blockquote p:first-of-type::before": false,
+            "blockquote p:last-of-type::after": false
           }
         },
         dark: {
           css: {
-            color: theme('colors.gray.200'),
+            color: theme("colors.gray.200"),
             a: {
-              color: theme('colors.blue.400'),
-              '&:hover': {
-                color: theme('colors.blue.600')
+              color: theme("colors.blue.400"),
+              "&:hover": {
+                color: theme("colors.blue.600")
               },
-              code: { color: theme('colors.blue.400') }
+              code: { color: theme("colors.blue.400") }
             },
             blockquote: {
-              borderLeftColor: theme('colors.gray.700'),
-              color: theme('colors.gray.300')
+              borderLeftColor: theme("colors.gray.700"),
+              color: theme("colors.gray.300")
             },
-            'h2,h3,h4': {
-              color: theme('colors.gray.100'),
-              'scroll-margin-top': spacing[32]
+            "h2,h3,h4": {
+              color: theme("colors.gray.100"),
+              "scroll-margin-top": spacing[32]
             },
-            hr: { borderColor: theme('colors.gray.700') },
+            hr: { borderColor: theme("colors.gray.700") },
             ol: {
               li: {
-                '&:before': { color: theme('colors.gray.500') }
+                "&:before": { color: theme("colors.gray.500") }
               }
             },
             ul: {
               li: {
-                '&:before': { backgroundColor: theme('colors.gray.500') }
+                "&:before": { backgroundColor: theme("colors.gray.500") }
               }
             },
-            strong: { color: theme('colors.gray.100') },
+            strong: { color: theme("colors.gray.100") },
             thead: {
               th: {
-                color: theme('colors.gray.100')
+                color: theme("colors.gray.100")
               },
-              borderBottomColor: theme('colors.gray.600')
+              borderBottomColor: theme("colors.gray.600")
             },
             tbody: {
               tr: {
-                borderBottomColor: theme('colors.gray.700')
+                borderBottomColor: theme("colors.gray.700")
               }
             }
           }
@@ -93,7 +93,7 @@ module.exports = {
     }
   },
   variants: {
-    typography: ['dark']
+    typography: ["dark"]
   },
-  plugins: [require('@tailwindcss/typography')]
+  plugins: [require("@tailwindcss/typography")]
 };

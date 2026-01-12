@@ -9,10 +9,7 @@ const WorksItemTitle = ({ title, date }: Props) => {
       <h1 className="mb-1 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
         {title}
       </h1>
-      <time
-        dateTime={date}
-        className="text-sm text-gray-700 dark:text-gray-300"
-      >
+      <time dateTime={date} className="text-sm text-gray-700 dark:text-gray-300">
         {formatDate}
       </time>
     </div>

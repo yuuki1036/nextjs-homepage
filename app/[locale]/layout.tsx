@@ -53,10 +53,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <div lang={locale} className="bg-gray-50 dark:bg-gray-900">
       <NavBar locale={locale} />
-      <main
-        id="skip"
-        className="flex flex-col justify-center px-8 bg-gray-50 dark:bg-gray-900"
-      >
+      <main id="skip" className="flex flex-col justify-center px-8 bg-gray-50 dark:bg-gray-900">
         {children}
         <FooterClient locale={locale} />
       </main>

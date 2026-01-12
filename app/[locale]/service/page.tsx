@@ -29,9 +29,7 @@ export default async function ServicePage({ params }: Props) {
         Service
       </h1>
       <div className="mb-8 prose dark:prose-dark leading-6 w-full">
-        <p className="mb-14 text-gray-600 dark:text-gray-400">
-          {t.SERVICE.SUMMARY}
-        </p>
+        <p className="mb-14 text-gray-600 dark:text-gray-400">{t.SERVICE.SUMMARY}</p>
         <ul className="text-gray-600 dark:text-gray-400">
           {t.SERVICE.LIST.map((str, i) => (
             <li key={i}>{str}</li>
@@ -42,9 +40,7 @@ export default async function ServicePage({ params }: Props) {
           <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
             {t.SERVICE.HOMEPAGE.TITLE}
           </h3>
-          <p className="mb-3 text-gray-600 dark:text-gray-400">
-            {t.SERVICE.HOMEPAGE.SUMMARY}
-          </p>
+          <p className="mb-3 text-gray-600 dark:text-gray-400">{t.SERVICE.HOMEPAGE.SUMMARY}</p>
           <Image
             className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
             src={homepageImg}
@@ -64,9 +60,7 @@ export default async function ServicePage({ params }: Props) {
           <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
             {t.SERVICE.EC.TITLE}
           </h3>
-          <p className="mb-3 text-gray-600 dark:text-gray-400">
-            {t.SERVICE.EC.SUMMARY}
-          </p>
+          <p className="mb-3 text-gray-600 dark:text-gray-400">{t.SERVICE.EC.SUMMARY}</p>
           <Image
             className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
             src={ecImg}
@@ -86,9 +80,7 @@ export default async function ServicePage({ params }: Props) {
           <h3 className="mb-1 text-lg font-bold tracking-tight text-black md:text-2xl dark:text-white">
             {t.SERVICE.SYSTEM.TITLE}
           </h3>
-          <p className="mb-3 text-gray-600 dark:text-gray-400">
-            {t.SERVICE.SYSTEM.SUMMARY}
-          </p>
+          <p className="mb-3 text-gray-600 dark:text-gray-400">{t.SERVICE.SYSTEM.SUMMARY}</p>
           <Image
             className="mb-4 dark:saturate-[80%] dark:brightness-[80%] rounded-lg border-2 border-gray-300"
             src={systemImg}

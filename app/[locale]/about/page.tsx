@@ -42,9 +42,7 @@ export default async function AboutPage({ params }: Props) {
             priority
           />
         </div>
-        <p className="mt-1 text-gray-600 dark:text-gray-400">
-          {t.ABOUT.BIO.SUPPLEMENT}
-        </p>
+        <p className="mt-1 text-gray-600 dark:text-gray-400">{t.ABOUT.BIO.SUPPLEMENT}</p>
         {t.ABOUT.BIO.DETAILS.map((str, i) => (
           <p className="my-[0.1rem] text-gray-600 dark:text-gray-400" key={i}>
             {str}
@@ -58,9 +56,7 @@ export default async function AboutPage({ params }: Props) {
         <ul>
           <li>
             <ExternalLink
-              href={
-                "https://www.credly.com/badges/122e88cb-c759-469d-908b-d5a010882623/public_url"
-              }
+              href={"https://www.credly.com/badges/122e88cb-c759-469d-908b-d5a010882623/public_url"}
             >
               {t.ABOUT.CERTIFICATION[0]}
             </ExternalLink>
@@ -70,10 +66,7 @@ export default async function AboutPage({ params }: Props) {
         <h2>Links</h2>
         <ul>
           <li>
-            GitHub:{" "}
-            <ExternalLink href="https://github.com/yuuki1036">
-              @yuuki1036
-            </ExternalLink>
+            GitHub: <ExternalLink href="https://github.com/yuuki1036">@yuuki1036</ExternalLink>
           </li>
           <li>
             Stackshare:{" "}
@@ -82,8 +75,7 @@ export default async function AboutPage({ params }: Props) {
             </ExternalLink>
           </li>
           <li>
-            Website:{" "}
-            <ExternalLink href="https://yuuki1036.com">{SITE_URL}</ExternalLink>
+            Website: <ExternalLink href="https://yuuki1036.com">{SITE_URL}</ExternalLink>
           </li>
         </ul>
       </div>

@@ -21,12 +21,8 @@ export default async function HomePage({ params }: Props) {
           <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-1 text-black dark:text-white">
             {SITE_NAME}
           </h1>
-          <h2 className="text-gray-700 dark:text-gray-200 mb-4">
-            WEB/Application Engineer
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-16">
-            {t.INDEX.SUMMARY}
-          </p>
+          <h2 className="text-gray-700 dark:text-gray-200 mb-4">WEB/Application Engineer</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-16">{t.INDEX.SUMMARY}</p>
         </div>
         <div className="w-[80px] sm:w-[117px] relative mb-8 sm:mb-0 mr-auto">
           <Image
@@ -97,18 +93,8 @@ export default async function HomePage({ params }: Props) {
         title={t.INDEX.SERVICE_CARDS.HOMEPAGE}
         locale={locale}
       />
-      <ServiceCard
-        index="02"
-        id="ec"
-        title={t.INDEX.SERVICE_CARDS.EC}
-        locale={locale}
-      />
-      <ServiceCard
-        index="03"
-        id="system"
-        title={t.INDEX.SERVICE_CARDS.SYSTEM}
-        locale={locale}
-      />
+      <ServiceCard index="02" id="ec" title={t.INDEX.SERVICE_CARDS.EC} locale={locale} />
+      <ServiceCard index="03" id="system" title={t.INDEX.SERVICE_CARDS.SYSTEM} locale={locale} />
       <Link
         href={`/${locale}/service`}
         className="flex items-center mt-8 text-gray-600 dark:text-gray-400 leading-7 rounded-lg hover:text-gray-800 dark:hover:text-gray-200 transition-all h-6"

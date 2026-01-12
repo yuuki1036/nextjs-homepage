@@ -74,11 +74,7 @@ export default async function WorksDetailPage({ params }: Props) {
         />
 
         {post.chronology && locale === "ja" && (
-          <WorksItemNormal
-            title="開発経緯"
-            sentences={post.chronology}
-            isList={true}
-          />
+          <WorksItemNormal title="開発経緯" sentences={post.chronology} isList={true} />
         )}
 
         <WorksItemSpec title={t.WORKS.CONTENTS.SPEC} spec={post.spec} />

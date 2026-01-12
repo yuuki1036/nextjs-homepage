@@ -10,10 +10,7 @@ interface Result {
   rendered: boolean;
 }
 
-export default function useDelayedRender(
-  active: boolean,
-  options: Options = {}
-): Result {
+export default function useDelayedRender(active: boolean, options: Options = {}): Result {
   const { enterDelay = 0, exitDelay = 0 } = options;
   const [mounted, setMounted] = useState(false);
   const [rendered, setRendered] = useState(false);
