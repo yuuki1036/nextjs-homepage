@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ServiceCard from "components/ServiceCard";
 import WorksFeatureCard from "components/WorksFeatuteCard";
-import avatarImg from "public/images/avatar.png";
+import avatarImg from "public/images/avatar.jpg";
 import { getTranslations } from "lib/i18n";
 import { MY_NAME, SITE_NAME } from "lib/constants";
 
