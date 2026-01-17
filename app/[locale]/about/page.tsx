@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import ExternalLink from "components/ExternalLink";
 import SkillMapWrapper from "components/SkillMapWrapper";
-import avatarImg from "public/images/avatar.png";
+import avatarImg from "public/images/avatar.jpg";
 import { getTranslations } from "lib/i18n";
 import { MY_NAME, URL as SITE_URL } from "lib/constants";
 

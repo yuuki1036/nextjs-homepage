@@ -30,7 +30,7 @@ export async function GET() {
           <img
             alt="yuuki1036"
             height={220}
-            src="https://yuuki1036.com/images/avatar.png"
+            src="https://yuuki1036.com/images/avatar.jpg"
             style={{
               margin: "0 30px",
               borderRadius: "50%",
