@@ -2,6 +2,7 @@ import "styles/globals.css";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import { headers } from "next/headers";
 import { Providers } from "components/Providers";
 import { GA_ID } from "lib/gtag";
 
@@ -10,9 +11,12 @@ const inter = Inter({
   variable: "--font-inter"
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers();
+  const locale = headersList.get("x-locale") || "ja";
+
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

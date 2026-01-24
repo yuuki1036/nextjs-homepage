@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "lib/i18n";
+import { URL as SITE_URL } from "lib/constants";
 import ContactForm from "components/ContactForm";
 
 type Props = {
@@ -12,7 +13,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: "Contact",
-    description: t.CONTACT.SUMMARY
+    description: t.CONTACT.SUMMARY,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/contact`,
+      languages: {
+        ja: `${SITE_URL}/ja/contact`,
+        en: `${SITE_URL}/en/contact`
+      }
+    }
   };
 }
 

@@ -1,14 +1,35 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import ServiceCard from "components/ServiceCard";
 import WorksFeatureCard from "components/WorksFeatuteCard";
 import avatarImg from "public/images/avatar.jpg";
 import { getTranslations } from "lib/i18n";
-import { MY_NAME, SITE_NAME } from "lib/constants";
+import { MY_NAME, SITE_NAME, URL as SITE_URL } from "lib/constants";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = getTranslations(locale);
+
+  return {
+    title:
+      locale === "ja"
+        ? `${SITE_NAME} - フリーランスエンジニア`
+        : `${SITE_NAME} - Freelance Engineer`,
+    description: t.INDEX.SUMMARY,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}`,
+      languages: {
+        ja: `${SITE_URL}/ja`,
+        en: `${SITE_URL}/en`
+      }
+    }
+  };
+}
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;

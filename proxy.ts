@@ -13,7 +13,11 @@ export function proxy(request: NextRequest) {
   );
 
   if (pathnameHasLocale) {
-    return NextResponse.next();
+    // locale を検出してヘッダーにセット
+    const locale = pathname.startsWith("/en") ? "en" : "ja";
+    const response = NextResponse.next();
+    response.headers.set("x-locale", locale);
+    return response;
   }
 
   // locale がない場合はデフォルトにリダイレクト

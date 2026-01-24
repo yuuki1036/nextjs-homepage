@@ -39,6 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         locale === "ja"
           ? `${MY_NAME}のポートフォリオ・ビジネスサイト`
           : `Portfolio and business site of ${MY_NAME}`
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}`,
+      languages: {
+        ja: `${SITE_URL}/ja`,
+        en: `${SITE_URL}/en`
+      }
     }
   };
 }
@@ -50,8 +57,33 @@ export async function generateStaticParams() {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_NAME,
+        inLanguage: ["ja", "en"],
+        publisher: { "@id": `${SITE_URL}/#person` }
+      },
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: MY_NAME,
+        url: SITE_URL,
+        sameAs: ["https://github.com/yuuki1036", "https://stackshare.io/yuuki1036/my-stack"]
+      }
+    ]
+  };
+
   return (
     <div lang={locale} className="bg-gray-50 dark:bg-gray-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <NavBar locale={locale} />
       <main id="skip" className="flex flex-col justify-center px-8 bg-gray-50 dark:bg-gray-900">
         {children}
