@@ -60,7 +60,7 @@
     "trailingComma": "none"
   },
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "packageManager": "npm@10.8.2"
 }
