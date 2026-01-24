@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { getTranslations } from "lib/i18n";
+import { URL as SITE_URL } from "lib/constants";
 import homepageImg from "public/images/service/homepage.png";
 import ecImg from "public/images/service/ec.png";
 import systemImg from "public/images/service/system.png";
@@ -15,7 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: "Service",
-    description: t.SERVICE.SUMMARY
+    description: t.SERVICE.SUMMARY,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/service`,
+      languages: {
+        ja: `${SITE_URL}/ja/service`,
+        en: `${SITE_URL}/en/service`
+      }
+    }
   };
 }
 

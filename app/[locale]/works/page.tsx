@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllPosts } from "lib/api";
 import { getTranslations } from "lib/i18n";
+import { URL as SITE_URL } from "lib/constants";
 import WorksCard from "components/WorksCard";
 
 type Props = {
@@ -13,7 +14,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: "Works",
-    description: t.WORKS.SUMMARY
+    description: t.WORKS.SUMMARY,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/works`,
+      languages: {
+        ja: `${SITE_URL}/ja/works`,
+        en: `${SITE_URL}/en/works`
+      }
+    }
   };
 }
 

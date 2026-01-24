@@ -8,7 +8,9 @@ const Image: FC<ImageProps> = ({ className, onLoad, ...props }) => {
   const [isReady, setIsReady] = useState<boolean>(false);
   const onLoadCallback = (e: any) => {
     setIsReady(true);
-    typeof onLoad === "function" && onLoad(e);
+    if (typeof onLoad === "function") {
+      onLoad(e);
+    }
   };
 
   const imageClassName = {

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAllPosts, getPostBySlug } from "lib/api";
 import { getTranslations } from "lib/i18n";
+import { URL as SITE_URL, MY_NAME } from "lib/constants";
 import WorksItemNormal from "components/WorksItemNormal";
 import WorksItemSpec from "components/WorksItemSpec";
 import WorksItemTitle from "components/WorksItemTitle";
@@ -26,7 +27,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = getPostBySlug(slug);
 
   if (!post) {
@@ -40,7 +41,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.overView.join(" "),
       type: "article",
-      publishedTime: new Date(post.date).toISOString()
+      publishedTime: new Date(post.date).toISOString(),
+      images: [
+        {
+          url: `${SITE_URL}/images/works/${slug}-main.png`,
+          width: 896,
+          height: 504,
+          alt: post.title
+        }
+      ]
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/works/${slug}`,
+      languages: {
+        ja: `${SITE_URL}/ja/works/${slug}`,
+        en: `${SITE_URL}/en/works/${slug}`
+      }
     }
   };
 }
@@ -54,8 +70,26 @@ export default async function WorksDetailPage({ params }: Props) {
     notFound();
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.overView.join(" "),
+    datePublished: new Date(post.date).toISOString(),
+    author: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: MY_NAME
+    },
+    image: `${SITE_URL}/images/works/${slug}-main.png`
+  };
+
   return (
     <article className="flex flex-col items-start justify-center w-full max-w-2xl mx-auto mb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <WorksItemTitle title={post.title} date={post.date} />
       <div className="prose dark:prose-dark leading-6">
         <Suspense fallback={null}>
