@@ -1,8 +1,12 @@
 import { ImageResponse } from "next/og";
+import type { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const title = searchParams.get("title");
+
   return new ImageResponse(
     <div
       style={{
@@ -29,20 +33,20 @@ export async function GET() {
         <picture>
           <img
             alt="yuuki1036"
-            height={220}
+            height={title ? 160 : 220}
             src="https://yuuki1036.com/images/avatar.jpg"
             style={{
               margin: "0 30px",
               borderRadius: "50%",
               backgroundColor: "#ff6666"
             }}
-            width={220}
+            width={title ? 160 : 220}
           />
         </picture>
       </div>
       <div
         style={{
-          fontSize: 60,
+          fontSize: title ? 48 : 60,
           fontStyle: "normal",
           letterSpacing: "-0.025em",
           color: "black",
@@ -54,6 +58,19 @@ export async function GET() {
       >
         yuuki1036
       </div>
+      {title && (
+        <div
+          style={{
+            fontSize: 36,
+            fontStyle: "normal",
+            color: "#666",
+            marginTop: 16,
+            padding: "0 60px"
+          }}
+        >
+          {title}
+        </div>
+      )}
     </div>,
     {
       width: 1200,

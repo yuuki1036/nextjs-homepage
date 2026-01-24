@@ -41,7 +41,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.overView.join(" "),
       type: "article",
-      publishedTime: new Date(post.date).toISOString()
+      publishedTime: new Date(post.date).toISOString(),
+      images: [
+        {
+          url: `${SITE_URL}/images/works/${slug}-main.png`,
+          width: 896,
+          height: 504,
+          alt: post.title
+        }
+      ]
     },
     alternates: {
       canonical: `${SITE_URL}/${locale}/works/${slug}`,
