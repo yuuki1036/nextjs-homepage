@@ -22,7 +22,7 @@
     "@vercel/og": "^0.8.6",
     "caniuse-lite": "^1.0.30001764",
     "classnames": "^2.3.2",
-    "date-fns": "^2.29.3",
+    "date-fns": "^4.1.0",
     "next": "^16.1.1",
     "next-themes": "^0.2.1",
     "react": "^19.0.0",
