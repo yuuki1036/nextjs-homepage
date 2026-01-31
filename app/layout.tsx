@@ -30,15 +30,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             gtag('config', '${GA_ID}');
           `}
         </Script>
-        <link href="/favicons/favicon.ico" rel="shortcut icon" />
-        <link href="/favicons/site.webmanifest" rel="manifest" />
-        <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-        <link href="/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-        <link href="/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-        <link color="#4a9885" href="/favicons/safari-pinned-tab.svg" rel="mask-icon" />
-        <meta content="#ffffff" name="theme-color" />
-        <meta content="#ffffff" name="msapplication-TileColor" />
-        <meta content="/favicons/browserconfig.xml" name="msapplication-config" />
+        <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
+        <link rel="shortcut icon" href="/favicons/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+        <link rel="manifest" href="/favicons/site.webmanifest" />
+        <meta name="theme-color" content="#ffffff" />
         <meta
           content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
           name="robots"
