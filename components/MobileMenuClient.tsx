@@ -4,7 +4,6 @@ import cn from "classnames";
 import Link from "next/link";
 import useDelayedRender from "lib/hook/useDelayedRender";
 import { useState, useEffect, ComponentProps } from "react";
-import styles from "styles/mobile-menu.module.css";
 
 type Props = {
   locale: string;
@@ -44,26 +43,33 @@ export default function MobileMenuClient({ locale }: Props) {
   return (
     <>
       <button
-        className={cn(styles.burger, "visible md:hidden")}
+        className="visible md:hidden transition-opacity duration-300 ease-in-out border-0 bg-transparent w-10 h-10 relative"
         aria-label="Toggle menu"
         type="button"
         onClick={toggleMenu}
       >
-        <MenuIcon data-hide={isMenuOpen} />
-        <CrossIcon data-hide={!isMenuOpen} />
+        <MenuIcon hidden={isMenuOpen} />
+        <CrossIcon hidden={!isMenuOpen} />
       </button>
       {isMenuMounted && (
         <ul
           className={cn(
-            styles.menu,
             "flex flex-col absolute bg-gray-100 dark:bg-gray-900",
-            isMenuRendered && styles.menuRendered
+            "pt-6 pr-7 pl-1 m-0 w-full h-screen z-[1000] left-0",
+            "transition-all duration-300 ease-in-out space-y-6",
+            isMenuRendered ? "opacity-100" : "opacity-0"
           )}
         >
           {navItems.map((item) => (
             <li
               key={item.href}
-              className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
+              className={cn(
+                "border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold",
+                "transition-all duration-300 ease-in-out whitespace-nowrap",
+                isMenuRendered
+                  ? "translate-x-0 opacity-100 w-full border-gray-200 dark:border-gray-600"
+                  : "-translate-x-4 opacity-0 w-0"
+              )}
               style={{ transitionDelay: item.delay }}
             >
               <Link
@@ -84,10 +90,15 @@ export default function MobileMenuClient({ locale }: Props) {
   );
 }
 
-function MenuIcon(props: ComponentProps<"svg">) {
+function MenuIcon({ hidden, ...props }: ComponentProps<"svg"> & { hidden: boolean }) {
   return (
     <svg
-      className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
+      className={cn(
+        "h-5 w-5 absolute text-gray-900 dark:text-gray-100",
+        "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+        "transition-all duration-300 ease-in-out",
+        hidden ? "opacity-0 scale-0" : "opacity-100 scale-100"
+      )}
       width="20"
       height="20"
       viewBox="0 0 20 20"
@@ -112,10 +123,15 @@ function MenuIcon(props: ComponentProps<"svg">) {
   );
 }
 
-function CrossIcon(props: ComponentProps<"svg">) {
+function CrossIcon({ hidden, ...props }: ComponentProps<"svg"> & { hidden: boolean }) {
   return (
     <svg
-      className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
+      className={cn(
+        "h-5 w-5 absolute text-gray-900 dark:text-gray-100",
+        "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+        "transition-all duration-300 ease-in-out",
+        hidden ? "opacity-0 scale-0" : "opacity-100 scale-100"
+      )}
       viewBox="0 0 24 24"
       width="24"
       height="24"
