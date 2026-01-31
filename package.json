@@ -39,7 +39,7 @@
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.0.0",
     "@typescript/native-preview": "^7.0.0-dev.20260112.1",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.24",
     "next-sitemap": "^3.1.45",
     "oxfmt": "^0.23.0",
     "oxlint": "^1.38.0",
