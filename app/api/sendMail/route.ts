@@ -5,8 +5,8 @@ import { EmailData } from "@sendgrid/helpers/classes/email-address";
 import { z } from "zod";
 import { MY_NAME } from "lib/constants";
 import { sanitizeInput } from "lib/util";
+import { checkRateLimit, sendMailRateLimit, getClientIp } from "lib/rate-limit";
 
-// 入力バリデーションスキーマ
 const inputSchema = z.object({
   name: z.string().min(1).max(60),
   email: z.string().min(1).email(),
@@ -14,7 +14,23 @@ const inputSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
-  // リクエストボディのパース
+  const ip = getClientIp(request);
+  const { success, remaining, reset } = checkRateLimit(ip, "sendmail", sendMailRateLimit);
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "リクエストが多すぎます。しばらく経ってからお試しください。" },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Remaining": remaining.toString(),
+          "X-RateLimit-Reset": reset.toString(),
+          "Retry-After": Math.ceil((reset - Date.now()) / 1000).toString()
+        }
+      }
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -22,7 +38,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  // 入力バリデーション
   const result = inputSchema.safeParse(body);
   if (!result.success) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
@@ -30,13 +45,11 @@ export async function POST(request: NextRequest) {
 
   const { name, email, inquiry } = result.data;
 
-  // 環境変数チェック
   if (!process.env.SENDGRID_API_KEY || !process.env.MAIL_FROM || !process.env.MAIL_ADDRESS) {
     console.error("Missing required environment variables");
     return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
   }
 
-  // 入力値をサニタイズ
   const safeName = sanitizeInput(name);
   const safeEmail = sanitizeInput(email);
   const safeInquiry = sanitizeInput(inquiry);
