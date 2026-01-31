@@ -16,3 +16,13 @@ export const checkResponse = (res: Response) => {
   console.log("statusText:", res.statusText);
   throw new Error(res.statusText);
 };
+
+// 入力値サニタイズ（HTMLエンティティエスケープ）
+export const sanitizeInput = (input: string): string => {
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+};

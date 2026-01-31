@@ -2,30 +2,59 @@ import { NextRequest, NextResponse } from "next/server";
 import sgMail from "@sendgrid/mail";
 import { MailDataRequired } from "@sendgrid/helpers/classes/mail";
 import { EmailData } from "@sendgrid/helpers/classes/email-address";
+import { z } from "zod";
 import { MY_NAME } from "lib/constants";
+import { sanitizeInput } from "lib/util";
+
+// 入力バリデーションスキーマ
+const inputSchema = z.object({
+  name: z.string().min(1).max(60),
+  email: z.string().min(1).email(),
+  inquiry: z.string().min(1).max(500)
+});
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  // リクエストボディのパース
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
 
+  // 入力バリデーション
+  const result = inputSchema.safeParse(body);
+  if (!result.success) {
+    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+  }
+
+  const { name, email, inquiry } = result.data;
+
+  // 環境変数チェック
   if (!process.env.SENDGRID_API_KEY || !process.env.MAIL_FROM || !process.env.MAIL_ADDRESS) {
     console.error("Missing required environment variables");
     return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
   }
+
+  // 入力値をサニタイズ
+  const safeName = sanitizeInput(name);
+  const safeEmail = sanitizeInput(email);
+  const safeInquiry = sanitizeInput(inquiry);
 
   const subjectToSys: string = "ホームページからの問い合わせ";
   const bodyToSys: string = `
 ホームページから問い合わせがありました。
 返信をお願いします。
 
-お名前　　　　：${body.name} 様
-メールアドレス：${body.email}
+お名前　　　　：${safeName} 様
+メールアドレス：${safeEmail}
 問い合わせ内容：
-${body.inquiry}
+${safeInquiry}
 `;
 
   const subjectToCst: string = `【${MY_NAME}】お問い合わせありがとうございます`;
   const bodyToCst: string = `
-${body.name} 様
+${safeName} 様
 
 お世話になっております。
 ${MY_NAME}へのお問い合わせありがとうございました。
@@ -35,10 +64,10 @@ ${MY_NAME}へのお問い合わせありがとうございました。
 今しばらくお待ちくださいませ。
 
 ━━━━━━　お問い合わせ内容　━━━━━━
-名前　　　　　：${body.name}
-メールアドレス：${body.email}
+名前　　　　　：${safeName}
+メールアドレス：${safeEmail}
 問い合わせ内容：
-${body.inquiry}
+${safeInquiry}
 ━━━━━━━━━━━━━━━━━━━━━━
 
 このメールは配信専用です。返信しないようお願いいたします。
@@ -54,7 +83,7 @@ website：https://yuuki1036.com
 
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msgToCst: MailDataRequired = {
-    to: body.email,
+    to: email,
     from: {
       email: process.env.MAIL_FROM,
       name: MY_NAME
@@ -77,9 +106,12 @@ website：https://yuuki1036.com
     await sgMail.send(msgToCst);
     await sgMail.send(msgToSys);
     console.log("mail send complete");
-    return NextResponse.json(msgToSys);
+    return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("mail send failed");
-    return NextResponse.json(err, { status: 500 });
+    console.error("mail send failed:", err);
+    return NextResponse.json(
+      { error: "メール送信に失敗しました。しばらく経ってからお試しください。" },
+      { status: 500 }
+    );
   }
 }
