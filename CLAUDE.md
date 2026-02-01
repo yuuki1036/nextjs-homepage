@@ -29,11 +29,13 @@ npm run format:check  # oxfmt --check
 npm run typecheck     # tsgo --noEmit
 ```
 
-### After Code Changes
+### Before Commit (Required)
 
 ```bash
-npm run lint && npm run format && npm run build
+npm run pre-commit-check
 ```
+
+Run this command before every commit to verify lint, format, and type check.
 
 ## Tech Stack
 
