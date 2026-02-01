@@ -14,6 +14,7 @@ const inter = Inter({
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const headersList = await headers();
   const locale = headersList.get("x-locale") || "ja";
+  const nonce = headersList.get("x-nonce") || "";
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -21,8 +22,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
+          nonce={nonce}
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

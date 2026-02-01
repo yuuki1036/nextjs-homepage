@@ -1,237 +1,128 @@
 # CLAUDE.md
 
-Claude Code がこのリポジトリで作業する際のガイダンス。
+## Important: Plan Management
+
+**Follow these rules when executing tasks:**
+
+1. **Task start:** Create `.claude/plans/{plan-name}.md` and generate a plan in Plan Mode
+2. **On "update plan":** Reflect session progress in the corresponding plan file
+3. **New session start:** Read the plan file matching the current branch name and resume work
+
+**Branch naming:** `{type}/{task-name}`
 
 ---
 
-## 最重要事項: プラン管理
+## Project Overview
 
-**タスク実行時は必ず以下のルールに従うこと:**
+Portfolio and business website built with Next.js 16 for a freelance engineer.
 
-1. **タスク開始時:** `.claude/plans/{plan-name}.md` を作成し、Plan Mode でプランを生成する
-2. **「plan 更新」と言われたら:** 該当するプランファイルにセッションの進捗を反映させる
-3. **新規セッション開始時:** 現在のブランチ名から該当するプランファイルを読み出し、進捗を確認してから作業を再開する
-
-**ブランチ名の構成：{type}/{task-name}** として扱う。
-
----
-
-## プロジェクト概要
-
-Next.js 16 を使用したポートフォリオ・ビジネスサイト。フリーランスエンジニア (yuuki1036) の作品紹介とサービス提供を目的としたサイト。
-
-**本番 URL:** https://yuuki1036.com
-
-## 開発コマンド
+## Development Commands
 
 ```bash
-npm run dev      # 開発サーバー起動 (localhost:3000)
-npm run build    # 本番ビルド + サイトマップ生成
-npm run start    # 本番サーバー起動
-npm run lint     # ESLint 実行
+npm run dev           # Dev server (localhost:3000)
+npm run build         # Production build + sitemap
+npm run start         # Production server
+npm run lint          # oxlint
+npm run lint:fix      # oxlint --fix
+npm run format        # oxfmt --write
+npm run format:check  # oxfmt --check
+npm run typecheck     # tsgo --noEmit
 ```
 
-## 技術スタック
+### After Code Changes
 
-- **フレームワーク:** Next.js 16.1.1 + React 19.0.0 + TypeScript 5.x
-- **スタイリング:** Tailwind CSS 3.2.4 + @tailwindcss/typography
-- **フォーム:** react-hook-form 7.71.0 + yup 0.32.11 バリデーション
-- **テーマ:** next-themes 0.2.1 (ダークモード)
-- **グラフ:** @amcharts/amcharts5 (スキルツリー表示)
-- **データ取得:** swr 2.0.0
-- **日付処理:** date-fns 2.29.3
-- **OG 画像:** @vercel/og 0.8.6
-- **外部サービス:** SendGrid (メール), Google reCAPTCHA v3, Google Analytics, Vercel Analytics
-
-## ディレクトリ構造
-
+```bash
+npm run lint && npm run format && npm run build
 ```
+
+## Tech Stack
+
+- **Framework:** Next.js 16 + React 19 + TypeScript 5 (tsgo)
+- **Styling:** Tailwind CSS 4 + @tailwindcss/typography
+- **Form:** react-hook-form + zod validation
+- **Theme:** next-themes (dark mode)
+- **Charts:** @amcharts/amcharts5 (skill tree)
+- **Data Fetching:** swr
+- **Date:** date-fns
+- **OG Image:** @vercel/og
+- **Linter/Formatter:** oxlint + oxfmt
+- **External Services:** SendGrid, Google reCAPTCHA v3, Google Analytics, Vercel Analytics
+
+## Directory Structure
+
+```text
 nextjs-homepage/
-├── pages/              # Next.js ページ
+├── app/                # Next.js App Router
+│   ├── [locale]/       # i18n routing
+│   │   ├── page.tsx    # Home
+│   │   ├── about/
+│   │   ├── contact/
+│   │   ├── service/
+│   │   └── works/
 │   ├── api/            # API Routes
-│   ├── works/          # 作品詳細ページ (動的ルート)
-│   └── *.tsx           # 各ページ
-├── components/         # React コンポーネント
-├── layouts/            # レイアウトコンポーネント
-├── lib/                # ユーティリティ、型、フック
-│   ├── hook/           # カスタムフック
-│   └── locales/        # 多言語翻訳データ
-├── _posts/             # 作品データ (JSON)
-├── public/             # 静的アセット
-│   ├── images/         # 画像ファイル
-│   │   ├── works/      # 作品画像 ({slug}-main.png, {slug}-preview.png, {slug}-add.png)
-│   │   └── service/    # サービス紹介画像
-│   └── favicons/       # ファビコン
-└── styles/             # グローバルCSS
+│   │   ├── sendMail/
+│   │   ├── recaptcha/
+│   │   └── og/
+│   └── layout.tsx      # Root layout
+├── components/         # React components
+├── lib/                # Utilities, types, hooks
+│   ├── hook/           # Custom hooks
+│   └── locales/        # i18n translations
+├── _posts/             # Works data (JSON)
+├── public/             # Static assets
+│   ├── images/
+│   └── favicons/
+├── styles/             # Global CSS
+└── proxy.ts            # Next.js 16 Proxy (formerly middleware.ts)
 ```
 
-## ページ一覧
+## Next.js 16 Notes
 
-| パス            | ファイル                 | 説明                                              |
-| --------------- | ------------------------ | ------------------------------------------------- |
-| `/`             | `pages/index.tsx`        | ホーム: プロフィール、特集作品 3 件、サービス紹介 |
-| `/about`        | `pages/about.tsx`        | 自己紹介: スキルマップ、資格、リンク              |
-| `/works`        | `pages/works.tsx`        | 作品一覧: 全作品をカード表示                      |
-| `/works/[slug]` | `pages/works/[slug].tsx` | 作品詳細: 動的ルート、静的生成                    |
-| `/service`      | `pages/service.tsx`      | サービス詳細: HP 作成、EC 構築、業務システム      |
-| `/contact`      | `pages/contact.tsx`      | お問い合わせフォーム                              |
-| `/404`          | `pages/404.tsx`          | 404 エラーページ                                  |
+- `middleware.ts` renamed to `proxy.ts`
+- Export `proxy()` function
+
+## Pages
+
+| Path            | File                                 | Description    |
+| --------------- | ------------------------------------ | -------------- |
+| `/`             | `app/[locale]/page.tsx`              | Home           |
+| `/about`        | `app/[locale]/about/page.tsx`        | About          |
+| `/works`        | `app/[locale]/works/page.tsx`        | Works list     |
+| `/works/[slug]` | `app/[locale]/works/[slug]/page.tsx` | Work detail    |
+| `/service`      | `app/[locale]/service/page.tsx`      | Service detail |
+| `/contact`      | `app/[locale]/contact/page.tsx`      | Contact form   |
 
 ## API Routes
 
-| エンドポイント   | メソッド | 説明                  |
-| ---------------- | -------- | --------------------- |
-| `/api/sendMail`  | POST     | SendGrid でメール送信 |
-| `/api/recaptcha` | POST     | reCAPTCHA v3 検証     |
-| `/api/og`        | GET      | OG 画像動的生成       |
+| Endpoint         | Method | Description                 |
+| ---------------- | ------ | --------------------------- |
+| `/api/sendMail`  | POST   | Send email via SendGrid     |
+| `/api/recaptcha` | POST   | reCAPTCHA v3 verification   |
+| `/api/og`        | GET    | Dynamic OG image generation |
 
-## コンポーネント一覧
+## Security
 
-### レイアウト系
+- **CSP:** Nonce-based Content-Security-Policy in `proxy.ts`
+- **Rate Limiting:** `lib/rate-limit.ts` (in-memory)
+- **Input Validation:** zod
+- **Sanitization:** `sanitizeInput()` in `lib/util.ts`
+- **Security Headers:** `headers()` in `next.config.js`
 
-- `Container.tsx` - メインレイアウト、ナビ、OGP 設定、言語切替
-- `Footer.tsx` - フッター
-- `MobileMenu.tsx` - モバイル用ドロワーメニュー
+## Code Standards
 
-### フォーム系
-
-- `ContactForm.tsx` - お問い合わせフォーム (yup バリデーション、reCAPTCHA)
-- `LoadingSpinner.tsx` - ローディングスピナー
-
-### 作品表示系
-
-- `WorksCard.tsx` - 作品一覧カード
-- `WorksFeatuteCard.tsx` - 特集作品カード (ホームページ用)
-- `WorksItemTitle.tsx` - 作品詳細タイトル
-- `WorksItemMainImage.tsx` - メイン画像 (launch/source リンク付き)
-- `WorksItemNormal.tsx` - 概要・開発経緯セクション
-- `WorksItemOtherImage.tsx` - 追加画像
-- `WorksItemSpec.tsx` - 仕様テーブル
-
-### その他
-
-- `ServiceCard.tsx` - サービス紹介カード
-- `SkillMap.tsx` - amcharts5 スキルツリー
-- `ExternalLink.tsx` / `ExternalLinkIcon.tsx` - 外部リンク
-- `Image.tsx` - Next.js Image ラッパー
-- `Tag.tsx` - タグ表示
-
-## lib/ 詳細
-
-### 型定義 (`lib/types.ts`)
-
-```typescript
-(TMeta, TCustomMeta); // メタ情報
-TSpec; // 仕様 (key-value)
-(TWorks, TFeatureWorks); // 作品データ
-(TForm, TFormState); // フォーム状態
-TInput; // フォーム入力
-```
-
-### API 操作 (`lib/api.ts`)
-
-- `getPostSlugs()` - \_posts のファイル一覧取得
-- `getPostBySlug(slug)` - JSON 読み込み → TWorks
-- `getAllPosts()` - 全作品を date 降順ソート
-
-### カスタムフック (`lib/hook/`)
-
-- `useLocale.ts` - ロケール (en/ja) と翻訳テキスト取得
-- `usePageView.ts` - GA ページビュー送信
-- `useDelayedRender.ts` - 遅延レンダリング
-
-### 定数 (`lib/constants.ts`)
-
-- `SITE_NAME`, `MY_NAME`: "yuuki1036"
-- `URL`: "https://yuuki1036.com"
-- `FEATURE_WORKS`: 特集作品 3 件
-- `SKILL_MAP_DATA`: スキルツリーデータ
-
-### 多言語 (`lib/locales/`)
-
-- `ja.ts` - 日本語翻訳
-- `en.ts` - 英語翻訳
-
-## 作品データ構造 (`_posts/*.json`)
-
-```typescript
-{
-  title: string             // タイトル
-  excerpt: string           // 概要 (日本語)
-  excerptEn: string         // 概要 (英語)
-  featureTitle?: string     // 特集用タイトル
-  otherImage: boolean       // 追加画像の有無
-  date: string              // 作成日 (YYYY-MM-DD)
-  launch?: string           // 公開 URL
-  source?: string           // GitHub URL
-  tag: string[]             // タグ配列
-  overView: string[]        // 概要 (複数段落)
-  overViewEn: string[]      // 概要 英語
-  chronology?: string[]     // 開発経緯
-  spec: { [key]: string }   // 仕様 (Platform, Language 等)
-  others?: string[]         // その他情報
-  gradient?: string         // 特集カード用グラデーション
-}
-```
-
-## 多言語対応
-
-- Next.js i18n ルーター (`next.config.js`)
-- デフォルト: `ja` (日本語)
-- 対応言語: `ja`, `en`
-- 使用方法: `useLocale()` フックで `{ locale, t }` 取得
-
-## データフロー
-
-```
-作品一覧:
-_posts/*.json → lib/api.ts (getAllPosts) → pages/works.tsx → WorksCard.tsx
-
-作品詳細:
-_posts/{slug}.json → lib/api.ts (getPostBySlug) → pages/works/[slug].tsx → layouts/works.tsx → WorksItem*.tsx
-```
-
-## コード規約
-
-- **Prettier:** ダブルクォート、Tab 幅 2、trailing comma なし
+- **Formatter:** oxfmt (double quotes, tab width 2, no trailing comma)
 - **Linter:** oxlint
-- **ダークモード:** Tailwind CSS class 方式 (next-themes)
-- **PR タイトル:** 英語で記述
+- **Dark Mode:** Tailwind CSS class strategy (next-themes)
+- **PR Titles:** English
 
-## 画像配置ルール
+## Image Rules
 
-作品画像は `public/images/works/` に配置:
+Work images in `public/images/works/`:
 
-- `{slug}-main.png` - メイン画像 (必須)
-- `{slug}-preview.png` - プレビュー画像 (必須)
-- `{slug}-add.png` - 追加画像 (`otherImage: true` の場合)
+- `{slug}-main.png` - Main image (required)
+- `{slug}-preview.png` - Preview image (required)
+- `{slug}-add.png` - Additional image (if `otherImage: true`)
 
-## 環境変数
+## Environment Variables
 
-### 本番環境で必要
-
-```bash
-# reCAPTCHA
-NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY  # クライアントキー
-RECAPTCHA_SERVER_SECRET_KEY       # サーバーシークレット
-
-# Google Analytics
-NEXT_PUBLIC_GA_ID                 # GA ID
-
-# SendGrid メール
-SENDGRID_API_KEY                  # API キー
-MAIL_FROM                         # 送信元アドレス
-MAIL_ADDRESS                      # 送信先アドレス
-LAST_NAME                         # 送信者姓
-FIRST_NAME                        # 送信者名
-PHONE_NUMBER                      # 電話番号
-```
-
-## 設定ファイル
-
-| ファイル             | 説明                                           |
-| -------------------- | ---------------------------------------------- |
-| `next.config.js`     | Next.js 設定 (i18n)                            |
-| `tailwind.config.js` | Tailwind CSS 設定 (カスタムカラー, typography) |
-| `tsconfig.json`      | TypeScript 設定 (strict: true)                 |
-| `sitemap.config.js`  | サイトマップ生成設定                           |
+See `.env.example`.
