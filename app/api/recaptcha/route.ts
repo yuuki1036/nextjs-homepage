@@ -8,7 +8,7 @@ const inputSchema = z.object({
 });
 
 // ボット判定 1-10の数値. 数値が大きいほど判定が厳しくなる
-const isBot = (response: { score: number }) => response.score * 10 <= 5;
+const isBot = (response: { score: number }) => response.score * 10 <= 7;
 
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);

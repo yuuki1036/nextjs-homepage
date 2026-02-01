@@ -59,7 +59,9 @@ const ContactForm = ({ locale }: Props) => {
         if (res.status === 200) decitionRecaptcha = true;
       })
       .catch((err) => {
-        console.log("recaptcha fetch error", err);
+        if (process.env.NODE_ENV !== "production") {
+          console.log("recaptcha fetch error", err);
+        }
       });
     return decitionRecaptcha;
   };
@@ -85,7 +87,9 @@ const ContactForm = ({ locale }: Props) => {
         }
       })
       .catch((err) => {
-        console.log("mail send fetch error ", err);
+        if (process.env.NODE_ENV !== "production") {
+          console.log("mail send fetch error", err);
+        }
       });
   };
 
