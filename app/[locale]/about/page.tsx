@@ -38,8 +38,8 @@ export default async function AboutPage({ params }: Props) {
       </h1>
       <div className="mb-8 prose dark:prose-dark leading-6 w-full">
         <h2>Bio</h2>
-        <div className="flex items-end">
-          <h3 className="my-0 mr-2">{MY_NAME}</h3>
+        <div className="not-prose flex items-center">
+          <span className="mr-2 text-xl font-bold">{MY_NAME}</span>
           <Image
             className="rounded-full filter bg-gray-100 dark-image-layer"
             src={avatarImg}
