@@ -80,22 +80,22 @@ nextjs-homepage/
 
 ## ページ
 
-| パス | ファイル | 説明 |
-| --------------- | ------------------------------------ | -------------- |
-| `/` | `app/[locale]/page.tsx` | ホーム |
-| `/about` | `app/[locale]/about/page.tsx` | About |
-| `/works` | `app/[locale]/works/page.tsx` | Works 一覧 |
-| `/works/[slug]` | `app/[locale]/works/[slug]/page.tsx` | Works 詳細 |
-| `/service` | `app/[locale]/service/page.tsx` | サービス詳細 |
-| `/contact` | `app/[locale]/contact/page.tsx` | お問い合わせ |
+| パス            | ファイル                             | 説明         |
+| --------------- | ------------------------------------ | ------------ |
+| `/`             | `app/[locale]/page.tsx`              | ホーム       |
+| `/about`        | `app/[locale]/about/page.tsx`        | About        |
+| `/works`        | `app/[locale]/works/page.tsx`        | Works 一覧   |
+| `/works/[slug]` | `app/[locale]/works/[slug]/page.tsx` | Works 詳細   |
+| `/service`      | `app/[locale]/service/page.tsx`      | サービス詳細 |
+| `/contact`      | `app/[locale]/contact/page.tsx`      | お問い合わせ |
 
 ## API Routes
 
-| エンドポイント | メソッド | 説明 |
-| ---------------- | ------ | --------------------------- |
-| `/api/sendMail` | POST | SendGrid でメール送信 |
-| `/api/recaptcha` | POST | reCAPTCHA v3 検証 |
-| `/api/og` | GET | 動的 OG 画像生成 |
+| エンドポイント   | メソッド | 説明                  |
+| ---------------- | -------- | --------------------- |
+| `/api/sendMail`  | POST     | SendGrid でメール送信 |
+| `/api/recaptcha` | POST     | reCAPTCHA v3 検証     |
+| `/api/og`        | GET      | 動的 OG 画像生成      |
 
 ## セキュリティ
 
