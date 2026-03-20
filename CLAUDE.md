@@ -1,14 +1,18 @@
 # CLAUDE.md
 
-## Important: Plan Management
+## Important: indie-workflow によるタスク管理
 
-**Follow these rules when executing tasks:**
+**indie-workflow プラグインでタスクを管理する。**
 
-1. **Task start:** Create `.claude/plans/{plan-name}.md` and generate a plan in Plan Mode
-2. **On "update plan":** Reflect session progress in the corresponding plan file
-3. **New session start:** Read the plan file matching the current branch name and resume work
+- **Issue ファイル:** `.claude/indie/hp/issues/HP-N.md`
+- **ブランチ命名:** `{type}/HP-N-{description}`
+- **セッション開始:** `/session-start` でコンテキスト読み込み
+- **Issue 作成:** `/issue-create` で新規タスク作成（slug: `hp`）
+- **セッション終了前:** `/issue-maintain` で Issue ファイルを更新
+- **定期メンテナンス:** `/indie-maintain` でプロジェクト棚卸し
 
-**Branch naming:** `{type}/{task-name}`
+**過去のプランファイル（`.claude/plans/`）は参照用アーカイブ。新規作成しない。**
+再利用可能な知見は `.claude/indie/hp/knowledge/` に移行済み。
 
 ---
 
