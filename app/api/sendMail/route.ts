@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sgMail from "@sendgrid/mail";
-import { MailDataRequired } from "@sendgrid/helpers/classes/mail";
-import { EmailData } from "@sendgrid/helpers/classes/email-address";
+import { Resend } from "resend";
 import { z } from "zod";
 import { MY_NAME } from "lib/constants";
 import { sanitizeInput } from "lib/util";
@@ -45,7 +43,14 @@ export async function POST(request: NextRequest) {
 
   const { name, email, inquiry } = result.data;
 
-  if (!process.env.SENDGRID_API_KEY || !process.env.MAIL_FROM || !process.env.MAIL_ADDRESS) {
+  if (
+    !process.env.RESEND_API_KEY ||
+    !process.env.MAIL_FROM ||
+    !process.env.MAIL_ADDRESS ||
+    !process.env.LAST_NAME ||
+    !process.env.FIRST_NAME ||
+    !process.env.PHONE_NUMBER
+  ) {
     console.error("Missing required environment variables");
     return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
   }
@@ -94,30 +99,37 @@ website：https://yuuki1036.com
 ———————————————————————
 `;
 
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  const msgToCst: MailDataRequired = {
-    to: email,
-    from: {
-      email: process.env.MAIL_FROM,
-      name: MY_NAME
-    } as EmailData,
-    subject: subjectToCst,
-    text: bodyToCst
-  };
-
-  const msgToSys: MailDataRequired = {
-    to: process.env.MAIL_ADDRESS,
-    from: {
-      email: process.env.MAIL_FROM,
-      name: `${MY_NAME} - system`
-    } as EmailData,
-    subject: subjectToSys,
-    text: bodyToSys
-  };
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    await sgMail.send(msgToCst);
-    await sgMail.send(msgToSys);
+    const { error: cstError } = await resend.emails.send({
+      from: `${MY_NAME} <${process.env.MAIL_FROM}>`,
+      to: email,
+      subject: subjectToCst,
+      text: bodyToCst
+    });
+    if (cstError) {
+      console.error("mail send failed (to customer):", cstError);
+      return NextResponse.json(
+        { error: "メール送信に失敗しました。しばらく経ってからお試しください。" },
+        { status: 500 }
+      );
+    }
+
+    const { error: sysError } = await resend.emails.send({
+      from: `${MY_NAME} - system <${process.env.MAIL_FROM}>`,
+      to: process.env.MAIL_ADDRESS,
+      subject: subjectToSys,
+      text: bodyToSys
+    });
+    if (sysError) {
+      console.error("mail send failed (to system):", sysError);
+      return NextResponse.json(
+        { error: "メール送信に失敗しました。しばらく経ってからお試しください。" },
+        { status: 500 }
+      );
+    }
+
     console.log("mail send complete");
     return NextResponse.json({ success: true });
   } catch (err) {
