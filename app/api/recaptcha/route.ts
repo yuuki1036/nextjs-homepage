@@ -4,7 +4,7 @@ import { checkResponse } from "lib/util";
 import { checkRateLimit, recaptchaRateLimit, getClientIp } from "lib/rate-limit";
 
 const inputSchema = z.object({
-  token: z.string().min(1).max(2048)
+  token: z.string().min(1).max(4096)
 });
 
 // ボット判定 1-10の数値. 数値が大きいほど判定が厳しくなる
