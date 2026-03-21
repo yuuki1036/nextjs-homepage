@@ -42,7 +42,7 @@ npm run pre-commit-check
 - **日付:** date-fns
 - **OG画像:** @vercel/og
 - **Linter/Formatter:** oxlint + oxfmt
-- **外部サービス:** SendGrid, Google reCAPTCHA v3, Google Analytics, Vercel Analytics
+- **外部サービス:** Resend, Google reCAPTCHA v3, Google Analytics, Vercel Analytics
 
 ## ディレクトリ構造
 
