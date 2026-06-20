@@ -15,7 +15,7 @@
     "pre-commit-check": "oxlint . && oxfmt --check . && tsgo --noEmit"
   },
   "dependencies": {
-    "@amcharts/amcharts5": "^5.18.0",
+    "@amcharts/amcharts5": "^5.19.1",
     "@hookform/resolvers": "^5.4.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.8",
