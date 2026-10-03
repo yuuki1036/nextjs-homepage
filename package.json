@@ -28,7 +28,7 @@
     "next-themes": "^0.2.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-hook-form": "^7.88.0",
+    "react-hook-form": "^7.89.0",
     "resend": "^6.31.0",
     "sharp": "^0.35.1",
     "swr": "^2.5.0",
