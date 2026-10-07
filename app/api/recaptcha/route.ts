@@ -1,72 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { checkResponse } from "lib/util";
-import { checkRateLimit, recaptchaRateLimit, getClientIp } from "lib/rate-limit";
+import { NextResponse } from "next/server";
 
-const inputSchema = z.object({
-  token: z.string().min(1).max(4096)
-});
-
-// ボット判定 1-10の数値. 数値が大きいほど判定が厳しくなる
-const isBot = (response: { score: number }) => response.score * 10 <= 7;
-
-export async function POST(request: NextRequest) {
-  const ip = getClientIp(request);
-  const { success, remaining, reset } = checkRateLimit(ip, "recaptcha", recaptchaRateLimit);
-
-  if (!success) {
-    return NextResponse.json(
-      { error: "Too many requests" },
-      {
-        status: 429,
-        headers: {
-          "X-RateLimit-Remaining": remaining.toString(),
-          "X-RateLimit-Reset": reset.toString()
-        }
-      }
-    );
-  }
-
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
-  const result = inputSchema.safeParse(body);
-  if (!result.success) {
-    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
-  }
-
-  const { token } = result.data;
-
-  if (!process.env.RECAPTCHA_SERVER_SECRET_KEY) {
-    console.error("Missing RECAPTCHA_SERVER_SECRET_KEY");
-    return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
-  }
-
-  const serverSecretKey = `secret=${process.env.RECAPTCHA_SERVER_SECRET_KEY}&response=${token}`;
-
-  try {
-    const resRecaptcha = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: serverSecretKey
-    });
-
-    checkResponse(resRecaptcha);
-    const resRecaptchaJson = await resRecaptcha.json();
-
-    if (isBot(resRecaptchaJson)) {
-      return NextResponse.json({ message: "the client may be a bot" }, { status: 403 });
-    }
-
-    return NextResponse.json(resRecaptchaJson);
-  } catch (error) {
-    console.error("reCAPTCHA verification failed:", error);
-    return NextResponse.json({ error: "Verification failed" }, { status: 500 });
-  }
+// 互換スタブ: bot 判定は /api/sendMail に移した。デプロイ前に開いたままのタブ
+// （このエンドポイントを呼んでから送信する旧クライアント）が送信できるよう、判定せず 200 を返す。
+// 旧クライアントが残っていない頃合い（デプロイの 2 週間後）に、lib/rate-limit.ts の recaptchaRateLimit と一緒に削除する
+export async function POST() {
+  return NextResponse.json({ success: true });
 }
