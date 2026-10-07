@@ -3,19 +3,21 @@
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Link from "next/link";
-import { checkResponse } from "lib/util";
+import { contactErrorKey, getRecaptchaToken } from "lib/util";
+import { RECAPTCHA_TOKEN_FIELD } from "lib/recaptcha";
 import { TForm, TFormState } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
 import { getTranslations } from "lib/i18n";
 
 type Props = {
   locale: string;
+  honeypotField: string;
 };
 
-const ContactForm = ({ locale }: Props) => {
+const ContactForm = ({ locale, honeypotField }: Props) => {
   const t = getTranslations(locale);
   const txt = t.CONTACT.FORM;
   // validation schema
@@ -35,77 +37,52 @@ const ContactForm = ({ locale }: Props) => {
   });
 
   const [form, setForm] = useState<TFormState>({ state: TForm.Initial });
+  const [sentEmail, setSentEmail] = useState("");
+  const submittingRef = useRef(false);
+  const honeypotRef = useRef<HTMLInputElement>(null);
+
+  // reCAPTCHA の準備待ちの間に最新の executeRecaptcha を参照できるよう ref に入れる
   const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const recaptchaHandler = async () => {
-    // reCAPTCHA が設定されていない場合（開発環境など）はスキップ
-    if (!executeRecaptcha) {
-      console.warn("reCAPTCHA not configured, skipping validation");
-      return true;
-    }
-    // クライアントサイドのトークンを発行
-    const token = await executeRecaptcha("contact");
-    let decitionRecaptcha = false;
-    // サーバーサイドへ
-    await fetch("/api/recaptcha", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ token })
-    })
-      .then((res) => {
-        checkResponse(res);
-        if (res.status === 200) decitionRecaptcha = true;
-      })
-      .catch((err) => {
-        if (process.env.NODE_ENV !== "production") {
-          console.log("recaptcha fetch error", err);
-        }
-      });
-    return decitionRecaptcha;
-  };
-
-  const mailSendHandler = async (inputs: FormInput) => {
-    await fetch("/api/sendMail", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(inputs)
-    })
-      .then((res) => {
-        checkResponse(res);
-        if (res.status === 200) {
-          setForm({ state: TForm.Success });
-          reset();
-        } else {
-          setForm({ state: TForm.Initial });
-          alert(txt.FAILED);
-          reset();
-        }
-      })
-      .catch((err) => {
-        if (process.env.NODE_ENV !== "production") {
-          console.log("mail send fetch error", err);
-        }
-      });
-  };
+  const executeRef = useRef(executeRecaptcha);
+  useEffect(() => {
+    executeRef.current = executeRecaptcha;
+  }, [executeRecaptcha]);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    if (form.state === TForm.Loading) return;
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setForm({ state: TForm.Loading });
-    // Google ReCaptchaによるbot判定
-    const decitionRecaptcha = await recaptchaHandler();
-    if (!decitionRecaptcha) {
-      setForm({ state: TForm.Initial });
-      alert(txt.FAILED);
-      reset();
-      return;
+    try {
+      const token = await getRecaptchaToken(() => executeRef.current);
+      let status: number | null = null;
+      try {
+        const res = await fetch("/api/sendMail", {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ...data,
+            [RECAPTCHA_TOKEN_FIELD]: token,
+            [honeypotField]: honeypotRef.current?.value ?? ""
+          })
+        });
+        status = res.status;
+        if (res.ok) {
+          setSentEmail(data.email);
+          setForm({ state: TForm.Success });
+          reset();
+          return;
+        }
+      } catch {
+        status = null;
+      }
+      // 入力内容は消さずに残し、そのまま再送できるようにする
+      setForm({ state: TForm.Error, message: txt.ERROR[contactErrorKey(status)] });
+    } finally {
+      submittingRef.current = false;
     }
-    // メール送信
-    await mailSendHandler(data);
   };
 
   return (
@@ -117,9 +94,14 @@ const ContactForm = ({ locale }: Props) => {
             <br></br>
             {txt.SUCCESS[1]}
           </p>
+          <p className="mt-6">
+            {txt.SENT_TO}
+            {sentEmail}
+          </p>
+          <p className="mt-2 text-sm">{txt.SENT_TO_NOTE}</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="mb-6">
             <label htmlFor="name" className="contact-label">
               {txt.NAME.LABEL}
@@ -128,24 +110,26 @@ const ContactForm = ({ locale }: Props) => {
               type="text"
               id="name"
               placeholder=" "
+              autoComplete="name"
               className="contact-input max-w-xs"
               {...register("name")}
             />
-            <p className="mt-2 text-sm text-red-600 dark:text-red-700">{errors.name?.message}</p>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.name?.message}</p>
           </div>
           <div className="mb-6">
             <label htmlFor="email" className="contact-label">
               {txt.MAIL.LABEL}
             </label>
             <input
-              type="text"
+              type="email"
               id="email"
               placeholder=" "
+              autoComplete="email"
               className="contact-input max-w-xs"
               {...register("email")}
             />
 
-            <p className="mt-2 text-sm text-red-600 dark:text-red-700">{errors.email?.message}</p>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.email?.message}</p>
           </div>
           <div className="">
             <label htmlFor="inquiry" className="contact-label">
@@ -159,9 +143,21 @@ const ContactForm = ({ locale }: Props) => {
               {...register("inquiry")}
             />
 
-            <p className="mt-2 mb-2 text-sm text-red-600 dark:text-red-700">
+            <p className="mt-2 mb-2 text-sm text-red-600 dark:text-red-400">
               {errors.inquiry?.message}
             </p>
+          </div>
+
+          {/* bot 判定用のハニーポット。人には見えず、キーボードでも辿れない */}
+          <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+            <input
+              type="text"
+              name={honeypotField}
+              tabIndex={-1}
+              autoComplete="off"
+              defaultValue=""
+              ref={honeypotRef}
+            />
           </div>
 
           <div className="mb-12 text-gray-600 dark:text-gray-400 text-xs">
@@ -183,6 +179,12 @@ const ContactForm = ({ locale }: Props) => {
             </Link>{" "}
             apply.
           </div>
+
+          {form.state === TForm.Error && (
+            <p role="alert" className="mb-4 text-sm text-red-600 dark:text-red-400">
+              {form.message}
+            </p>
+          )}
 
           <button
             type="submit"
