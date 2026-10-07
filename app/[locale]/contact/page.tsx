@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "lib/i18n";
 import { URL as SITE_URL } from "lib/constants";
 import ContactForm from "components/ContactForm";
+import { resolveHoneypotField } from "lib/contact-guard";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -34,7 +35,7 @@ export default async function ContactPage({ params }: Props) {
         Contact
       </h1>
       <p className="mb-16 text-gray-600 dark:text-gray-400">{t.CONTACT.SUMMARY}</p>
-      <ContactForm locale={locale} />
+      <ContactForm locale={locale} honeypotField={resolveHoneypotField(process.env)} />
     </div>
   );
 }
