@@ -42,7 +42,7 @@ npm run pre-commit-check
 - **日付:** date-fns
 - **OG画像:** @vercel/og
 - **Linter/Formatter:** oxlint + oxfmt
-- **外部サービス:** Resend, Google reCAPTCHA v3, Google Analytics, Vercel Analytics
+- **外部サービス:** Resend, Google reCAPTCHA v3, Upstash Redis（自動返信・隔離通知の送信上限）, Google Analytics, Vercel Analytics
 
 ## ディレクトリ構造
 
@@ -65,6 +65,7 @@ nextjs-homepage/
 │   ├── hook/           # カスタムフック
 │   └── locales/        # i18n 翻訳ファイル
 ├── _posts/             # Works データ (JSON)
+├── features/           # BDD spec（epic.md / spec.md）
 ├── public/             # 静的アセット
 │   ├── images/
 │   └── favicons/
@@ -91,18 +92,18 @@ nextjs-homepage/
 
 ## API Routes
 
-| エンドポイント   | メソッド | 説明                  |
-| ---------------- | -------- | --------------------- |
-| `/api/sendMail`  | POST     | SendGrid でメール送信 |
-| `/api/recaptcha` | POST     | reCAPTCHA v3 検証     |
-| `/api/og`        | GET      | 動的 OG 画像生成      |
+| エンドポイント   | メソッド | 説明                           |
+| ---------------- | -------- | ------------------------------ |
+| `/api/sendMail`  | POST     | bot 判定 + Resend でメール送信 |
+| `/api/recaptcha` | POST     | 互換スタブ（削除予定）         |
+| `/api/og`        | GET      | 動的 OG 画像生成               |
 
 ## セキュリティ
 
 - **CSP:** nonce ベース（`proxy.ts`）
-- **レート制限:** `lib/rate-limit.ts`（インメモリ）
+- **レート制限:** `lib/rate-limit.ts`（IP 単位・インメモリ）。自動返信と隔離通知の 1 日の送信上限は Upstash で数え、Upstash が使えないときは自動返信を送らない
 - **入力検証:** zod
-- **サニタイズ:** `sanitizeInput()`（`lib/util.ts`）
+- **bot 判定:** `lib/contact-guard.ts` / `lib/recaptcha.ts`（理由コードが付いた問い合わせは拒否せず隔離。仕様は `features/` の BDD spec）
 - **セキュリティヘッダー:** `headers()`（`next.config.js`）
 
 ## コーディング規約
@@ -122,4 +123,12 @@ Works 画像は `public/images/works/` に配置:
 
 ## 環境変数
 
-`.env.example` を参照。
+`.env.example` を参照。問い合わせフォームの bot 判定と送信上限は次を読む（`lib/contact-guard.ts`）:
+
+| 変数                                                                                                    | 既定値                            | 用途                                                                                    |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------- | --------------------------------------------------------------------------------------- |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN`（または `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`） | なし                              | 送信上限のカウンタ。未設定だと自動返信が止まる                                          |
+| `RECAPTCHA_ALLOWED_HOSTNAMES`                                                                           | `yuuki1036.com,www.yuuki1036.com` | siteverify の hostname の許可リスト。Preview やローカルで合格経路を通すときに上書きする |
+| `RECAPTCHA_MIN_SCORE`                                                                                   | `0.5`                             | reCAPTCHA の合格スコア                                                                  |
+| `CONTACT_HONEYPOT_FIELD`                                                                                | `subject`                         | ハニーポット欄の name                                                                   |
+| `CONTACT_RANDOM_ALPHA_MIN_LENGTH` / `CONTACT_RANDOM_ALPHA_MIN_CASE`                                     | `12` / `3`                        | ランダム英字判定のしきい値                                                              |
