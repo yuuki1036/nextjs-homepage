@@ -65,7 +65,7 @@ nextjs-homepage/
 │   ├── hook/           # カスタムフック
 │   └── locales/        # i18n 翻訳ファイル
 ├── _posts/             # Works データ (JSON)
-├── features/           # BDD spec（epic.md / spec.md）
+├── features/           # BDD spec（epic.md / spec.md。gitignore・ローカルのみ）
 ├── public/             # 静的アセット
 │   ├── images/
 │   └── favicons/
@@ -103,7 +103,7 @@ nextjs-homepage/
 - **CSP:** nonce ベース（`proxy.ts`）
 - **レート制限:** `lib/rate-limit.ts`（IP 単位・インメモリ）。自動返信と隔離通知の 1 日の送信上限は Upstash で数え、Upstash が使えないときは自動返信を送らない
 - **入力検証:** zod
-- **bot 判定:** `lib/contact-guard.ts` / `lib/recaptcha.ts`（理由コードが付いた問い合わせは拒否せず隔離。仕様は `features/` の BDD spec）
+- **bot 判定:** `lib/contact-guard.ts` / `lib/recaptcha.ts`（理由コードが付いた問い合わせは拒否せず隔離）
 - **セキュリティヘッダー:** `headers()`（`next.config.js`）
 
 ## コーディング規約

@@ -4,7 +4,6 @@ import { RECAPTCHA_TOKEN_FIELD, verifyRecaptcha } from "./recaptcha";
 // 問い合わせの bot 判定と、自動返信・隔離通知の送信上限。
 // 判定の結果は理由コードで表し、1 個以上付いた問い合わせは拒否せず隔離する
 // （[要確認:理由コード] 件名で管理者に届け、自動返信は送らない）。
-// 仕様: features/Userは、サイト運営者として、問い合わせフォームをbotと自動返信の悪用から守りたい/spec.md
 
 // 並び順は件名に載せる優先順（spec の理由コード一覧の順）
 export const REASON_CODES = [
