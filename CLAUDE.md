@@ -57,7 +57,6 @@ nextjs-homepage/
 │   │   └── works/
 │   ├── api/            # API Routes
 │   │   ├── sendMail/
-│   │   ├── recaptcha/
 │   │   └── og/
 │   └── layout.tsx      # ルートレイアウト
 ├── components/         # React コンポーネント
@@ -92,11 +91,10 @@ nextjs-homepage/
 
 ## API Routes
 
-| エンドポイント   | メソッド | 説明                           |
-| ---------------- | -------- | ------------------------------ |
-| `/api/sendMail`  | POST     | bot 判定 + Resend でメール送信 |
-| `/api/recaptcha` | POST     | 互換スタブ（削除予定）         |
-| `/api/og`        | GET      | 動的 OG 画像生成               |
+| エンドポイント  | メソッド | 説明                           |
+| --------------- | -------- | ------------------------------ |
+| `/api/sendMail` | POST     | bot 判定 + Resend でメール送信 |
+| `/api/og`       | GET      | 動的 OG 画像生成               |
 
 ## セキュリティ
 
