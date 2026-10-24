@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.21.1",
-    "@hookform/resolvers": "^5.9.1",
+    "@hookform/resolvers": "^6.0.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.8",
     "@vercel/analytics": "^1.6.1",
