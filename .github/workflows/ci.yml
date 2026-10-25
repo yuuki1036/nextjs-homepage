@@ -48,7 +48,7 @@ jobs:
       version: ${{ steps.read.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           sparse-checkout: package.json
           sparse-checkout-cone-mode: false
@@ -75,7 +75,7 @@ jobs:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Prefer IPAPGothic for Japanese
         run: |
