@@ -22,7 +22,6 @@
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/og": "^0.11.1",
     "caniuse-lite": "^1.0.30001818",
     "classnames": "^2.3.2",
     "date-fns": "^4.4.0",
