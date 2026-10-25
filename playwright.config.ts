@@ -51,7 +51,6 @@ export default defineConfig({
     }
   ],
   webServer: {
-    // npm run build は next-sitemap が git 管理下の public/sitemap*.xml を書き換えるので使わない
     command: `npx next build && npx next start --port ${PORT}`,
     url: `http://localhost:${PORT}/ja`,
     reuseExistingServer: false,
