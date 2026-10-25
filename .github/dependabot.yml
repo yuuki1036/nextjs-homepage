@@ -16,9 +16,22 @@ updates:
           - "@playwright/test"
         update-types:
           - "patch"
+    ignore:
+      # TypeScript 7 には lib/gtag.ts を消してから手で上げ、そのときにプレビュー版の tsgo も外す
+      - dependency-name: "@typescript/native-preview"
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
+      # 実行環境の Node（engines の 24.x）に合わせて手で上げる
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
 
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directories:
+      - "/"
+      # composite action は "/" の対象に入らない
+      - "/.github/actions/setup-node"
     schedule:
       interval: "weekly"
     labels:

@@ -17,11 +17,16 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      # まとめた PR では、含まれる更新のうち最も大きい update-type が返る
-      - name: Enable auto-merge for patch and minor updates
+      # まとめた PR では、含まれる更新のうち最も大きい update-type が返る。
+      # major は、壊れれば必須チェックで落ちる GitHub Actions と devDependencies だけを自動にし、
+      # dependencies の major は手で merge する（フォームや計測の動きは必須チェックで確かめられない）
+      - name: Enable auto-merge
         if: >-
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+          steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+          (steps.metadata.outputs.update-type == 'version-update:semver-major' &&
+          (steps.metadata.outputs.package-ecosystem == 'github_actions' ||
+          steps.metadata.outputs.dependency-type == 'direct:development'))
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
