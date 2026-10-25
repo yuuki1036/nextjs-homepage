@@ -7,10 +7,15 @@ updates:
     labels:
       - "dependencies"
     open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
+    groups:
+      patch:
+        patterns:
+          - "*"
+        # 版が CI の visual ジョブのイメージと基準画像に結び付いているので、単独の PR にする
+        exclude-patterns:
+          - "@playwright/test"
         update-types:
-          - "version-update:semver-patch"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -19,7 +24,9 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
-    ignore:
-      - dependency-name: "*"
+    groups:
+      patch:
+        patterns:
+          - "*"
         update-types:
-          - "version-update:semver-patch"
+          - "patch"

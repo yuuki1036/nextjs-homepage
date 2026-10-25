@@ -96,7 +96,7 @@ nextjs-homepage/
 
 - 基準画像は手元の `npm run test:visual:update` でだけ作る。macOS の Chromium で直接走らせると config が止める。CI は基準画像を書かない
 - CI で落ちたときは、artifact の `playwright-report` を取ってきて `npx playwright show-report <展開したディレクトリ>` で見る
-- `@playwright/test` は `^` なしで固定する（イメージのタグと揃える）。上げる PR（Dependabot を含む）では、そのブランチで `npm ci` してから基準画像を作り直す
+- `@playwright/test` は `^` なしで固定する（イメージのタグと揃える）。上げる PR で `visual` が落ちたら、そのブランチで `npm ci` してから基準画像を作り直す。Dependabot の patch は単独の PR で届き、`visual` が通れば自動で merge される（通ったなら基準画像は変わらない）
 - ページを足すときは `site.ts` の `PAGES` に足して update する。ページを消したら、その基準画像も消す
 - spec は `tests/visual/support/fixtures` の `test` を使う。コンソール検査で既知のエラーを除外する仕組みは作らない（例外は、status 404 のページでページ自体の 404 を Chromium が console error で知らせる 1 行だけ）
 
