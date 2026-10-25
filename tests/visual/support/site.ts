@@ -50,9 +50,10 @@ export const PAGES: readonly SitePage[] = [
   localePage("service", "/service"),
   localePage("about", "/about", [SKILL_MAP]),
   localePage("contact", "/contact"),
-  // /works/ の下の存在しない slug は 404 ではなく 500 を返すので使わない。
   // . を含むパスは proxy の matcher から外れて CSP が付かないので使わない
-  { id: "not-found", path: "/not-found-check", status: 404, ready: [], masks: [] }
+  { id: "not-found", path: "/not-found-check", status: 404, ready: [], masks: [] },
+  // 存在しない slug が 500 ではなく 404 を返すかを見張る（Works データの移行で崩れやすい）
+  { id: "works-not-found", path: "/works/no-such-work", status: 404, ready: [], masks: [] }
 ];
 
 // locale は URL のパスだけで決まる（proxy.ts）
