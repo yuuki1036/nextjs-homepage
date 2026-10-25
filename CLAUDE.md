@@ -82,7 +82,7 @@ nextjs-homepage/
 
 今の見た目を基準画像で固定し、内部実装の入れ替えで見た目がずれたら CI で落とす。
 
-- 対象: 12 ページ × ja/en × light/dark × desktop/mobile の 96 枚（Chromium、DPR 1）と、desktop だけで回すコンソール検査 48 回。ページの目録は `tests/visual/support/site.ts`、撮影前の待ち合わせは `tests/visual/support/fixtures.ts` の `visit()`
+- 対象: 13 ページ × ja/en × light/dark × desktop/mobile の 104 枚（Chromium、DPR 1）と、desktop だけで回すコンソール検査 52 回・status 検査（`status.spec.ts`）。ページの目録は `tests/visual/support/site.ts`、撮影前の待ち合わせは `tests/visual/support/fixtures.ts` の `visit()`
 - 仕組み: `next build` と `next start`（:3100）は手元で動かし、ブラウザだけを Playwright 公式イメージのコンテナ（run-server :3101）で動かす。CI は `ubuntu-24.04-arm` でジョブ全体を同じイメージの中で動かす（`visual` ジョブ）
 - 前提: Apple Silicon の Mac で、Docker Desktop が起動していて、`npm ci` 済みであること（基準画像は arm64 の Chromium で作り、CI も `ubuntu-24.04-arm` で揃える）
 - 日本語フォント: 公式イメージの既定は中国語の字形なので、`tests/visual/docker/local.conf` で IPA P ゴシックを優先させている
