@@ -42,7 +42,7 @@ npm run pre-commit-check
 - **チャート:** @amcharts/amcharts5（スキルツリー）
 - **データ取得:** swr
 - **日付:** date-fns
-- **OG画像:** @vercel/og
+- **OG画像:** next/og
 - **Linter/Formatter:** oxlint + oxfmt
 - **スクリーンショット比較:** @playwright/test（ブラウザは公式 Docker イメージ）
 - **外部サービス:** Resend, Google reCAPTCHA v3, Upstash Redis（自動返信・隔離通知の送信上限）, Google Analytics, Vercel Analytics
