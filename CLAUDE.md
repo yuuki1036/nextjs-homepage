@@ -23,6 +23,8 @@ npm run lint:fix      # oxlint --fix
 npm run format        # oxfmt --write
 npm run format:check  # oxfmt --check
 npm run typecheck     # tsgo --noEmit
+npm run test:visual   # スクリーンショット比較 + コンソール検査（Docker 必須。next build から走る）
+npm run test:visual:update  # 基準画像を更新する
 ```
 
 ### コミット前（必須）
@@ -42,6 +44,7 @@ npm run pre-commit-check
 - **日付:** date-fns
 - **OG画像:** @vercel/og
 - **Linter/Formatter:** oxlint + oxfmt
+- **スクリーンショット比較:** @playwright/test（ブラウザは公式 Docker イメージ）
 - **外部サービス:** Resend, Google reCAPTCHA v3, Upstash Redis（自動返信・隔離通知の送信上限）, Google Analytics, Vercel Analytics
 
 ## ディレクトリ構造
@@ -69,8 +72,31 @@ nextjs-homepage/
 │   ├── images/
 │   └── favicons/
 ├── styles/             # グローバル CSS
+├── tests/visual/       # スクリーンショット比較・コンソール検査（Playwright）
 └── proxy.ts            # Next.js 16 Proxy（旧 middleware.ts）
 ```
+
+## スクリーンショット比較（tests/visual/）
+
+今の見た目を基準画像で固定し、内部実装の入れ替えで見た目がずれたら CI で落とす。
+
+- 対象: 12 ページ × ja/en × light/dark × desktop/mobile の 96 枚（Chromium、DPR 1）と、desktop だけで回すコンソール検査 48 回。ページの目録は `tests/visual/support/site.ts`、撮影前の待ち合わせは `tests/visual/support/fixtures.ts` の `visit()`
+- 仕組み: `next build` と `next start`（:3100）は手元で動かし、ブラウザだけを Playwright 公式イメージのコンテナ（run-server :3101）で動かす。CI は `ubuntu-24.04-arm` でジョブ全体を同じイメージの中で動かす（`visual` ジョブ）
+- 前提: Apple Silicon の Mac で、Docker Desktop が起動していて、`npm ci` 済みであること（基準画像は arm64 の Chromium で作り、CI も `ubuntu-24.04-arm` で揃える）
+- 日本語フォント: 公式イメージの既定は中国語の字形なので、`tests/visual/docker/local.conf` で IPA P ゴシックを優先させている
+
+### 基準画像の更新手順
+
+1. `npm run test:visual` で落ちたら、`npx playwright show-report` で差分を見る
+2. 意図した変更なら `npm run test:visual:update` で書き直す。範囲を絞るときは `npm run test:visual:update -- --grep about` のように `--` の後ろに足す
+3. `git status tests/visual/__screenshots__` で、変わった画像が意図した範囲だけか確かめる
+4. 基準画像は変更と同じ PR に入れる
+
+- 基準画像は手元の `npm run test:visual:update` でだけ作る。macOS の Chromium で直接走らせると config が止める。CI は基準画像を書かない
+- CI で落ちたときは、artifact の `playwright-report` を取ってきて `npx playwright show-report <展開したディレクトリ>` で見る
+- `@playwright/test` は `^` なしで固定する（イメージのタグと揃える）。上げる PR（Dependabot を含む）では、そのブランチで `npm ci` してから基準画像を作り直す
+- ページを足すときは `site.ts` の `PAGES` に足して update する。ページを消したら、その基準画像も消す
+- spec は `tests/visual/support/fixtures` の `test` を使う。コンソール検査で既知のエラーを除外する仕組みは作らない（例外は、status 404 のページでページ自体の 404 を Chromium が console error で知らせる 1 行だけ）
 
 ## Next.js 16 固有
 
