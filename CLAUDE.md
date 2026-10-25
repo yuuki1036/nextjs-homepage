@@ -105,6 +105,7 @@ nextjs-homepage/
 - `middleware.ts` は `proxy.ts` にリネーム
 - `proxy()` 関数をエクスポート
 - CSP nonce 生成 + 言語リダイレクト + `x-locale` ヘッダー設定を担当
+- API や規約は学習データと違うことがあるので、`node_modules/next/dist/docs/` の同梱 docs で確かめる（インストール済みの版と一致するので context7 より優先する。`next.config.js` の `agentRules: false` で、`next dev` が同じ案内の `AGENTS.md` を作るのを止めている）
 
 ## ページ
 

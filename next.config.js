@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // next dev に AGENTS.md を作らせない（エージェント向けの指示は CLAUDE.md に置く）
+  agentRules: false,
 
   async headers() {
     return [
