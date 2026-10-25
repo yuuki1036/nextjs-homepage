@@ -1,15 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
-import { MY_NAME } from "lib/constants";
-import { sanitizeInput } from "lib/util";
+import { MY_NAME, URL as SITE_URL } from "lib/constants";
+import { loadGuardConfig, processSubmission, type OutgoingMail } from "lib/contact-guard";
 import { checkRateLimit, sendMailRateLimit, getClientIp } from "lib/rate-limit";
 
+// bot 判定用の欄（reCAPTCHA トークン・ハニーポット）はここに足さない。
+// 欄の異常で問い合わせ全体が 400 にならないよう、判定側で本文から緩く読む
 const inputSchema = z.object({
   name: z.string().min(1).max(60),
   email: z.string().min(1).email(),
   inquiry: z.string().min(1).max(500)
 });
+
+const SITE_HOSTNAME = new URL(SITE_URL).hostname;
 
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
@@ -41,102 +45,51 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  const { name, email, inquiry } = result.data;
-
-  if (
-    !process.env.RESEND_API_KEY ||
-    !process.env.MAIL_FROM ||
-    !process.env.MAIL_ADDRESS ||
-    !process.env.LAST_NAME ||
-    !process.env.FIRST_NAME ||
-    !process.env.PHONE_NUMBER
-  ) {
+  const { RESEND_API_KEY, MAIL_FROM, MAIL_ADDRESS } = process.env;
+  if (!RESEND_API_KEY || !MAIL_FROM || !MAIL_ADDRESS) {
     console.error("Missing required environment variables");
     return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
   }
 
-  const safeName = sanitizeInput(name);
-  const safeEmail = sanitizeInput(email);
-  const safeInquiry = sanitizeInput(inquiry);
+  const resend = new Resend(RESEND_API_KEY);
+  const sendMail = async (mail: OutgoingMail) => {
+    const { error } = await resend.emails.send(mail);
+    if (error) throw new Error(error.message);
+  };
 
-  const subjectToSys: string = "ホームページからの問い合わせ";
-  const bodyToSys: string = `
-ホームページから問い合わせがありました。
-返信をお願いします。
-
-お名前　　　　：${safeName} 様
-メールアドレス：${safeEmail}
-問い合わせ内容：
-${safeInquiry}
-`;
-
-  const subjectToCst: string = `【${MY_NAME}】お問い合わせありがとうございます`;
-  const bodyToCst: string = `
-${safeName} 様
-
-お世話になっております。
-${MY_NAME}へのお問い合わせありがとうございました。
-
-以下の内容でお問い合わせを受け付けいたしました。
-担当者 ${process.env.LAST_NAME} より折り返しご連絡いたしますので
-今しばらくお待ちくださいませ。
-
-━━━━━━　お問い合わせ内容　━━━━━━
-名前　　　　　：${safeName}
-メールアドレス：${safeEmail}
-問い合わせ内容：
-${safeInquiry}
-━━━━━━━━━━━━━━━━━━━━━━
-
-このメールは配信専用です。返信しないようお願いいたします。
-
-——————————————————————
-${MY_NAME}
-${process.env.LAST_NAME} ${process.env.FIRST_NAME}
-tel：${process.env.PHONE_NUMBER}
-mail：${process.env.MAIL_ADDRESS}
-website：https://yuuki1036.com
-———————————————————————
-`;
-
-  const resend = new Resend(process.env.RESEND_API_KEY);
-
-  try {
-    const { error: cstError } = await resend.emails.send({
-      from: `${MY_NAME} <${process.env.MAIL_FROM}>`,
-      to: email,
-      subject: subjectToCst,
-      text: bodyToCst
-    });
-    if (cstError) {
-      console.error("mail send failed (to customer):", cstError);
-      return NextResponse.json(
-        { error: "メール送信に失敗しました。しばらく経ってからお試しください。" },
-        { status: 500 }
-      );
+  const outcome = await processSubmission(
+    {
+      ...result.data,
+      raw: body as Record<string, unknown>,
+      headers: request.headers,
+      host: request.headers.get("host") ?? request.nextUrl.host
+    },
+    {
+      config: loadGuardConfig(process.env, SITE_HOSTNAME),
+      fetchFn: fetch,
+      sendMail,
+      now: Date.now,
+      mailFrom: MAIL_FROM,
+      adminAddress: MAIL_ADDRESS,
+      site: { siteName: MY_NAME, siteUrl: SITE_URL },
+      // Vercel のログでレベルを絞り込めるよう、失敗は error、取りこぼしにつながるものは warn で出す
+      log: (event, fields) => {
+        const line = JSON.stringify({ event, ...fields });
+        if (event.endsWith("_failed")) console.error(line);
+        else if (event === "contact_store_unavailable" || event === "contact_quarantine_dropped") {
+          console.warn(line);
+        } else console.log(line);
+      }
     }
+  );
 
-    const { error: sysError } = await resend.emails.send({
-      from: `${MY_NAME} - system <${process.env.MAIL_FROM}>`,
-      to: process.env.MAIL_ADDRESS,
-      subject: subjectToSys,
-      text: bodyToSys
-    });
-    if (sysError) {
-      console.error("mail send failed (to system):", sysError);
-      return NextResponse.json(
-        { error: "メール送信に失敗しました。しばらく経ってからお試しください。" },
-        { status: 500 }
-      );
-    }
-
-    console.log("mail send complete");
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("mail send failed:", err);
+  if (outcome.status === 500) {
     return NextResponse.json(
       { error: "メール送信に失敗しました。しばらく経ってからお試しください。" },
       { status: 500 }
     );
   }
+  // 自動返信は応答の後に送る（合格と隔離で応答時間に差を出さないため）
+  if (outcome.deferred) after(outcome.deferred);
+  return NextResponse.json({ success: true });
 }

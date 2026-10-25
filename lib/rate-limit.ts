@@ -52,7 +52,6 @@ export function checkRateLimit(
 }
 
 export const sendMailRateLimit = { windowMs: 60 * 1000, maxRequests: 3 };
-export const recaptchaRateLimit = { windowMs: 60 * 1000, maxRequests: 10 };
 
 export function getClientIp(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");

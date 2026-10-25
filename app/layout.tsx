@@ -46,7 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body
         className={`${inter.variable} font-sans bg-white dark:bg-black text-black dark:text-white`}
       >
-        <Providers>
+        <Providers nonce={nonce}>
           {children}
           <Analytics />
         </Providers>

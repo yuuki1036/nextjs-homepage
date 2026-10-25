@@ -83,7 +83,13 @@ export default {
         "Your inquiry has been sent.",
         "We will contact you shortly. Please wait for a while."
       ],
-      FAILED: "Failed to send your inquiry. Please try again."
+      SENT_TO: "Email address you entered: ",
+      SENT_TO_NOTE: "If the address is incorrect, please send your inquiry again.",
+      ERROR: {
+        VAL: "There is an error in your input.",
+        RATE: "Too many submissions. Please wait a moment and try again.",
+        SYS: "Failed to send your inquiry. Please try again later."
+      }
     }
   }
 };

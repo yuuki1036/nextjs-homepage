@@ -40,3 +40,67 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  # container.image はジョブの前に決まる必要があるので、版を先に読んで渡す
+  playwright-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.read.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: package.json
+          sparse-checkout-cone-mode: false
+
+      - name: Read @playwright/test version
+        id: read
+        run: |
+          version="$(jq -r '.devDependencies["@playwright/test"]' package.json)"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "@playwright/test は ^ なしの x.y.z で固定する（今: $version）" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  # スクリーンショット比較とコンソール検査。基準画像を作った手元（Apple Silicon）と CPU を揃える
+  visual:
+    needs: playwright-version
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.playwright-version.outputs.version }}-noble
+      options: --init --ipc=host
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prefer IPAPGothic for Japanese
+        run: |
+          cp tests/visual/docker/local.conf /etc/fonts/local.conf
+          fc-cache -f
+          fc-match "sans-serif:lang=ja" | grep IPAPGothic
+
+      # setup-node の composite は使わない（イメージに Node が入っており、
+      # composite の node_modules のキャッシュキーには CPU が入っていない）
+      - name: Cache npm
+        uses: actions/cache@v6
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Visual test
+        run: npx playwright test
+
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
