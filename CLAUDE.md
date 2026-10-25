@@ -16,7 +16,7 @@ Issue: `.claude/indie/hp/issues/HP-N.md` | Knowledge: `.claude/indie/hp/knowledg
 
 ```bash
 npm run dev           # 開発サーバー (localhost:3000)
-npm run build         # 本番ビルド + サイトマップ生成
+npm run build         # 本番ビルド
 npm run start         # 本番サーバー
 npm run lint          # oxlint
 npm run lint:fix      # oxlint --fix
@@ -61,7 +61,9 @@ nextjs-homepage/
 │   ├── api/            # API Routes
 │   │   ├── sendMail/
 │   │   └── og/
-│   └── layout.tsx      # ルートレイアウト
+│   ├── layout.tsx      # ルートレイアウト
+│   ├── robots.ts       # /robots.txt
+│   └── sitemap.ts      # /sitemap.xml（静的ページは STATIC_PATHS を手で保守する）
 ├── components/         # React コンポーネント
 ├── lib/                # ユーティリティ、型、フック
 │   ├── hook/           # カスタムフック
@@ -114,6 +116,8 @@ nextjs-homepage/
 | `/works/[slug]` | `app/[locale]/works/[slug]/page.tsx` | Works 詳細   |
 | `/service`      | `app/[locale]/service/page.tsx`      | サービス詳細 |
 | `/contact`      | `app/[locale]/contact/page.tsx`      | お問い合わせ |
+
+ページを足す・消す・パスを変えるときは、`app/sitemap.ts` の `STATIC_PATHS` と `tests/visual/support/site.ts` の `PAGES` の両方を直す（`STATIC_PATHS` は `/sitemap.xml` に載せるため。Works 詳細は `_posts/` から自動で入る）。
 
 ## API Routes
 
