@@ -46,7 +46,7 @@ export default defineConfig({
     },
     {
       name: "mobile",
-      testIgnore: /console\.spec\.ts$/,
+      testIgnore: /(console|status)\.spec\.ts$/,
       use: { ...devices["Pixel 5"], deviceScaleFactor: 1 }
     }
   ],

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { SITE_NAME, MY_NAME, URL as SITE_URL } from "lib/constants";
+import { isValidLocale } from "lib/i18n";
 import NavBar from "components/NavBar";
 import FooterClient from "components/FooterClient";
 
@@ -10,6 +12,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  if (!isValidLocale(locale)) notFound();
 
   return {
     title: {
@@ -64,6 +67,8 @@ export async function generateStaticParams() {
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
+  // proxy の matcher から外れたパス（/foo.xml など）は、先頭の区切りがそのまま locale として届く
+  if (!isValidLocale(locale)) notFound();
 
   const jsonLd = {
     "@context": "https://schema.org",
