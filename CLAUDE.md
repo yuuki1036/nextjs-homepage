@@ -40,7 +40,6 @@ npm run pre-commit-check
 - **フォーム:** react-hook-form + zod
 - **テーマ:** next-themes（ダークモード）
 - **チャート:** @amcharts/amcharts5（スキルツリー）
-- **データ取得:** swr
 - **日付:** date-fns
 - **OG画像:** next/og
 - **Linter/Formatter:** oxlint + oxfmt

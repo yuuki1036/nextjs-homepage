@@ -57,8 +57,9 @@ export default defineConfig({
     timeout: 300_000,
     stdout: "ignore",
     stderr: "pipe",
-    // .env.local の値を build に取り込ませない（GA の ID と reCAPTCHA のキーを空にする。
-    // gtag のスクリプト自体は読み込まれ、fixtures が空の応答を返す）
-    env: { NEXT_PUBLIC_GA_ID: "", NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY: "" }
+    // .env.local の値を build に取り込ませない（reCAPTCHA のキーは空にする）。
+    // GA は ID があるときだけ出るので、ダミーの ID で出してコンソール検査で CSP を確かめる
+    // （gtag のスクリプトには fixtures が空の応答を返す）
+    env: { NEXT_PUBLIC_GA_ID: "G-TEST", NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY: "" }
   }
 });
