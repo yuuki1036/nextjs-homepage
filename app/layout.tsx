@@ -1,10 +1,11 @@
 import "styles/globals.css";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import Script from "next/script";
 import { headers } from "next/headers";
 import { Providers } from "components/Providers";
-import { GA_ID } from "lib/gtag";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,19 +20,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-          nonce={nonce}
-        />
-        <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}');
-          `}
-        </Script>
         <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
         <link rel="shortcut icon" href="/favicons/favicon.ico" />
@@ -51,6 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Analytics />
         </Providers>
       </body>
+      {gaId && <GoogleAnalytics gaId={gaId} nonce={nonce} />}
     </html>
   );
 }

@@ -17,7 +17,7 @@ updates:
         update-types:
           - "patch"
     ignore:
-      # TypeScript 7 には lib/gtag.ts を消してから手で上げ、そのときにプレビュー版の tsgo も外す
+      # TypeScript 7 には手で上げ、そのときにプレビュー版の tsgo も外す
       - dependency-name: "@typescript/native-preview"
       - dependency-name: "typescript"
         update-types:
