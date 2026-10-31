@@ -17,13 +17,13 @@
     "pre-commit-check": "oxlint . && oxfmt --check . && tsgo --noEmit"
   },
   "dependencies": {
-    "@amcharts/amcharts5": "^5.21.3",
-    "@hookform/resolvers": "^6.0.0",
+    "@amcharts/amcharts5": "^5.21.5",
+    "@hookform/resolvers": "^6.0.1",
     "@next/third-parties": "^16.4.3",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
     "@vercel/analytics": "^2.0.1",
-    "caniuse-lite": "^1.0.30001818",
+    "caniuse-lite": "^1.0.30001819",
     "classnames": "^2.3.2",
     "date-fns": "^4.4.0",
     "next": "^16.4.3",
@@ -43,7 +43,7 @@
     "@typescript/native-preview": "^7.0.0-dev.20260112.1",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
-    "postcss": "^8.5.31",
+    "postcss": "^8.5.32",
     "tailwindcss": "^4.3.0",
     "typescript": "^5.0.0"
   },
