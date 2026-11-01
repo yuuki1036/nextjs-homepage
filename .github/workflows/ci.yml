@@ -29,6 +29,20 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
+  # 単体テスト（Vitest）。tests/visual/ のスクリーンショット比較は visual ジョブ
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
+
+      - name: Unit test
+        run: npm test
+
   build:
     runs-on: ubuntu-latest
     steps:
