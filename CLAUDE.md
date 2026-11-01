@@ -23,6 +23,8 @@ npm run lint:fix      # oxlint --fix
 npm run format        # oxfmt --write
 npm run format:check  # oxfmt --check
 npm run typecheck     # tsgo --noEmit
+npm run test          # 単体テスト（Vitest）
+npm run test:watch    # 単体テストを watch で回す
 npm run test:visual   # スクリーンショット比較 + コンソール検査（Docker 必須。next build から走る）
 npm run test:visual:update  # 基準画像を更新する
 ```
@@ -30,7 +32,7 @@ npm run test:visual:update  # 基準画像を更新する
 ### コミット前（必須）
 
 ```bash
-npm run pre-commit-check
+npm run pre-commit-check  # lint・format・型検査・単体テスト
 ```
 
 ## 技術スタック
@@ -43,6 +45,7 @@ npm run pre-commit-check
 - **日付:** date-fns
 - **OG画像:** next/og
 - **Linter/Formatter:** oxlint + oxfmt
+- **単体テスト:** Vitest（node 環境）
 - **スクリーンショット比較:** @playwright/test（ブラウザは公式 Docker イメージ）
 - **外部サービス:** Resend, Google reCAPTCHA v3, Upstash Redis（自動返信・隔離通知の送信上限）, Google Analytics, Vercel Analytics
 
@@ -66,7 +69,8 @@ nextjs-homepage/
 ├── components/         # React コンポーネント
 ├── lib/                # ユーティリティ、型、フック
 │   ├── hook/           # カスタムフック
-│   └── locales/        # i18n 翻訳ファイル
+│   ├── locales/        # i18n 翻訳ファイル
+│   └── testing/        # 単体テスト用の偽物（*.test.ts からだけ import する）
 ├── _posts/             # Works データ (JSON)
 ├── features/           # BDD spec（epic.md / spec.md。gitignore・ローカルのみ）
 ├── public/             # 静的アセット
@@ -76,6 +80,17 @@ nextjs-homepage/
 ├── tests/visual/       # スクリーンショット比較・コンソール検査（Playwright）
 └── proxy.ts            # Next.js 16 Proxy（旧 middleware.ts）
 ```
+
+## 単体テスト（Vitest）
+
+問い合わせの bot 判定・送信上限と、sitemap / robots の出力を固める。CI は `test` ジョブで回す。
+
+- 置き場所: テストはソースの隣に `*.test.ts` で置く（例: `lib/contact-guard.test.ts`、`app/api/sendMail/route.test.ts`）。`tests/visual/` の `*.spec.ts` は Playwright の担当なので、`vitest.config.mts` で対象から外している
+- 外部サービス: `processSubmission` と route を通すテストの siteverify・Upstash REST の偽物は `lib/testing/contact-backend.ts` の 1 か所に置く。`verifyRecaptcha` の単体テストは、応答だけ返すスタブを `fetchFn` に直接渡す。Resend は `processSubmission` には `sendMail` を注入し、route では `vi.mock("resend")` で差し替える
+- 時計: siteverify の応答は、判定と同じ時計で作る（`processSubmission` のテストは固定の `NOW`、route は `Date.now()`）。固定時刻の応答を route に流すと stale で隔離される
+- 時間切れ: `verifyRecaptcha` は `timeoutMs` を注入して縮める。`processSubmission` を通す siteverify の 3 秒と Upstash の 1 秒は注入口が無く、fake timers も `AbortSignal.timeout` に効かないので実時間で待つ
+- route: `lib/rate-limit` は IP ごとの状態を持つので、リクエストごとに `x-forwarded-for` を変える
+- 期待値: 境界の数字（60/61 文字、20/50 件など）は spec の値をテストに直接書き、実装の定数を import しない
 
 ## スクリーンショット比較（tests/visual/）
 
@@ -117,7 +132,7 @@ nextjs-homepage/
 | `/service`      | `app/[locale]/service/page.tsx`      | サービス詳細 |
 | `/contact`      | `app/[locale]/contact/page.tsx`      | お問い合わせ |
 
-ページを足す・消す・パスを変えるときは、`app/sitemap.ts` の `STATIC_PATHS` と `tests/visual/support/site.ts` の `PAGES` の両方を直す（`STATIC_PATHS` は `/sitemap.xml` に載せるため。Works 詳細は `_posts/` から自動で入る）。
+ページを足す・消す・パスを変えるときは、`app/sitemap.ts` の `STATIC_PATHS`、`app/sitemap.test.ts` の `STATIC_PATHS`、`tests/visual/support/site.ts` の `PAGES` の 3 か所を直す（`STATIC_PATHS` は `/sitemap.xml` に載せるため）。`app/sitemap.test.ts` は固定ページの URL（トップ・`/about`・`/contact`・`/service`・`/works`）と Works の `hitokoto`・`netfjix` も `it.each` で名前を挙げて確かめている。それらを消す・パスを変えるときは同じファイルの `it.each` も直す。Works 詳細は sitemap には `_posts/` から自動で入るが、`tests/visual/support/site.ts` の `WORKS_SLUGS` は手で書いているので、Works を足す・消すときはここも直して `test:visual:update` する。
 
 ## API Routes
 
