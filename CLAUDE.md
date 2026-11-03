@@ -83,7 +83,7 @@ nextjs-homepage/
 
 ## 単体テスト（Vitest）
 
-問い合わせの bot 判定・送信上限と、sitemap / robots の出力を固める。CI は `test` ジョブで回す。
+問い合わせの入力の制約・bot 判定・送信上限と、sitemap / robots の出力を固める。CI は `test` ジョブで回す。
 
 - 置き場所: テストはソースの隣に `*.test.ts` で置く（例: `lib/contact-guard.test.ts`、`app/api/sendMail/route.test.ts`）。`tests/visual/` の `*.spec.ts` は Playwright の担当なので、`vitest.config.mts` で対象から外している
 - 外部サービス: `processSubmission` と route を通すテストの siteverify・Upstash REST の偽物は `lib/testing/contact-backend.ts` の 1 か所に置く。`verifyRecaptcha` の単体テストは、応答だけ返すスタブを `fetchFn` に直接渡す。Resend は `processSubmission` には `sendMail` を注入し、route では `vi.mock("resend")` で差し替える
@@ -145,7 +145,7 @@ nextjs-homepage/
 
 - **CSP:** nonce ベース（`proxy.ts`）
 - **レート制限:** `lib/rate-limit.ts`（IP 単位・インメモリ）。自動返信と隔離通知の 1 日の送信上限は Upstash で数え、Upstash が使えないときは自動返信を送らない
-- **入力検証:** zod
+- **入力検証:** zod。問い合わせの入力の制約は `lib/contact-schema.ts` の 1 つのスキーマを、フォームと `/api/sendMail` で共有する
 - **bot 判定:** `lib/contact-guard.ts` / `lib/recaptcha.ts`（理由コードが付いた問い合わせは拒否せず隔離）
 - **セキュリティヘッダー:** `headers()`（`next.config.js`）
 
