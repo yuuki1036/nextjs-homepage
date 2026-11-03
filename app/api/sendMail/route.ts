@@ -1,17 +1,9 @@
 import { after, NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { z } from "zod";
 import { MY_NAME, URL as SITE_URL } from "lib/constants";
+import { contactSchema } from "lib/contact-schema";
 import { loadGuardConfig, processSubmission, type OutgoingMail } from "lib/contact-guard";
 import { checkRateLimit, sendMailRateLimit, getClientIp } from "lib/rate-limit";
-
-// bot 判定用の欄（reCAPTCHA トークン・ハニーポット）はここに足さない。
-// 欄の異常で問い合わせ全体が 400 にならないよう、判定側で本文から緩く読む
-const inputSchema = z.object({
-  name: z.string().min(1).max(60),
-  email: z.string().min(1).email(),
-  inquiry: z.string().min(1).max(500)
-});
 
 const SITE_HOSTNAME = new URL(SITE_URL).hostname;
 
@@ -40,7 +32,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const result = inputSchema.safeParse(body);
+  const result = contactSchema.safeParse(body);
   if (!result.success) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }

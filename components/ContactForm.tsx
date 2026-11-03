@@ -1,6 +1,5 @@
 "use client";
 
-import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
@@ -11,6 +10,9 @@ import { RECAPTCHA_TOKEN_FIELD } from "lib/recaptcha";
 import { TForm, TFormState } from "lib/types";
 import LoadingSpinner from "./LoadingSpinner";
 import { getTranslations } from "lib/i18n";
+import { contactFieldErrorText, contactSchema, type ContactFields } from "lib/contact-schema";
+
+const resolver = zodResolver(contactSchema);
 
 type Props = {
   locale: string;
@@ -20,21 +22,12 @@ type Props = {
 const ContactForm = ({ locale, honeypotField }: Props) => {
   const t = getTranslations(locale);
   const txt = t.CONTACT.FORM;
-  // validation schema
-  const schema = z.object({
-    name: z.string().min(1, txt.NAME.REQUIRED).max(60, txt.NAME.MAX),
-    email: z.string().min(1, txt.MAIL.REQUIRED).email(txt.MAIL.FORMAT),
-    inquiry: z.string().min(1, txt.INQUIRY.REQUIRED).max(500, txt.INQUIRY.MAX)
-  });
-  type FormInput = z.infer<typeof schema>;
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<FormInput>({
-    resolver: zodResolver(schema)
-  });
+  } = useForm<ContactFields>({ resolver });
 
   const [form, setForm] = useState<TFormState>({ state: TForm.Initial });
   const [sentEmail, setSentEmail] = useState("");
@@ -48,7 +41,7 @@ const ContactForm = ({ locale, honeypotField }: Props) => {
     executeRef.current = executeRecaptcha;
   }, [executeRecaptcha]);
 
-  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+  const onSubmit: SubmitHandler<ContactFields> = async (data) => {
     if (submittingRef.current) return;
     submittingRef.current = true;
     setForm({ state: TForm.Loading });
@@ -114,7 +107,9 @@ const ContactForm = ({ locale, honeypotField }: Props) => {
               className="contact-input max-w-xs"
               {...register("name")}
             />
-            <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.name?.message}</p>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+              {contactFieldErrorText(txt, errors.name?.message)}
+            </p>
           </div>
           <div className="mb-6">
             <label htmlFor="email" className="contact-label">
@@ -129,7 +124,9 @@ const ContactForm = ({ locale, honeypotField }: Props) => {
               {...register("email")}
             />
 
-            <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.email?.message}</p>
+            <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+              {contactFieldErrorText(txt, errors.email?.message)}
+            </p>
           </div>
           <div className="">
             <label htmlFor="inquiry" className="contact-label">
@@ -144,7 +141,7 @@ const ContactForm = ({ locale, honeypotField }: Props) => {
             />
 
             <p className="mt-2 mb-2 text-sm text-red-600 dark:text-red-400">
-              {errors.inquiry?.message}
+              {contactFieldErrorText(txt, errors.inquiry?.message)}
             </p>
           </div>
 
