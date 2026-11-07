@@ -23,7 +23,13 @@ export default defineConfig({
   // 基準画像は --update-snapshots（npm run test:visual:update）を付けたときだけ書く
   updateSnapshots: "none",
   reporter: isCI
-    ? [["list"], ["github"], ["html", { open: "never" }]]
+    ? [
+        ["list"],
+        ["github"],
+        ["html", { open: "never" }],
+        // ci.yml の visual-summary が、変わった画像と画素数を PR にコメントする材料
+        ["json", { outputFile: "test-results/results.json" }]
+      ]
     : [["list"], ["html", { open: "never" }]],
   expect: {
     timeout: 10_000,

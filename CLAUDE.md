@@ -108,8 +108,22 @@ nextjs-homepage/
 3. `git status tests/visual/__screenshots__` で、変わった画像が意図した範囲だけか確かめる
 4. 基準画像は変更と同じ PR に入れる
 
-- 基準画像は手元の `npm run test:visual:update` でだけ作る。macOS の Chromium で直接走らせると config が止める。CI は基準画像を書かない
-- CI で落ちたときは、artifact の `playwright-report` を取ってきて `npx playwright show-report <展開したディレクトリ>` で見る
+- 基準画像は、手元の `npm run test:visual:update` か、下の「PR からの作り直し」でだけ作る。macOS の Chromium で直接走らせると config が止める。PR の `visual` は基準画像を書かない
+- CI で落ちたときは、PR に付く「visual の差分」のコメント（`ci.yml` の `visual-summary`）で、変わった画像と画素数を差分の大きい順に見る。画像そのものは artifact の `playwright-report` を取ってきて `npx playwright show-report <展開したディレクトリ>` で見る
+
+### PR からの作り直し（依存の更新の PR など）
+
+手元にブランチを取り出さずに、基準画像を作り直して PR に push する（`.github/workflows/visual-refresh.yml`）。
+
+1. PR の「visual の差分」のコメントと `playwright-report` で差分を見て、受け入れるか決める
+2. 受け入れるなら、Actions の Visual refresh を Run workflow で PR 番号を入れて走らせる（`gh workflow run visual-refresh.yml -f pr=<番号>`）
+3. 作り直したコミットが PR に push され、続けて CI が PR のブランチで走り直す。必須チェックが揃えば、auto-merge の付いた PR はそのまま merge される想定（`workflow_dispatch` の結果で必須チェックが揃うかは、最初に使う PR で確かめる）
+
+- 走らせられるのは repo の owner だけで、扱う PR は、Dependabot か owner がこの repo のブランチから出したものだけ。閾値は 0 のままにし、作り直しは自動では走らせない（2026-11-07 決定）
+- main より古い PR は、main を merge してから作り直す（必須チェックの `test` ジョブや `ci.yml` の `workflow_dispatch` が無い PR があるため）。衝突したら止まるので、PR を rebase（Dependabot は `@dependabot rebase`）してから走らせ直す
+- 画像の比較以外（コンソール検査・status 検査）でも落ちる PR は作り直さない。変わった画像が無ければ push しない
+- `GITHUB_TOKEN` の push では `pull_request` のワークフローが起きないので、作り直しの最後に `ci.yml` を PR のブランチで `workflow_dispatch` で呼ぶ
+- PR のコードを動かすジョブ（`regenerate`）は読み取りの権限だけで動かし、push するジョブはコードを動かさず、受け取った tar が基準画像の png だけかを確かめてから commit する
 - `@playwright/test` は `^` なしで固定する（イメージのタグと揃える）。上げる PR で `visual` が落ちたら、そのブランチで `npm ci` してから基準画像を作り直す。Dependabot の patch は単独の PR で届き、`visual` が通れば自動で merge される（通ったなら基準画像は変わらない）
 - ページを足すときは `site.ts` の `PAGES` に足して update する。ページを消したら、その基準画像も消す
 - spec は `tests/visual/support/fixtures` の `test` を使う。コンソール検査で既知のエラーを除外する仕組みは作らない（例外は、status 404 のページでページ自体の 404 を Chromium が console error で知らせる 1 行だけ）

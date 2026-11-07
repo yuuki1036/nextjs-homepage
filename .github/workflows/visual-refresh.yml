@@ -1,0 +1,251 @@
+name: Visual refresh
+
+# visual が落ちた PR の基準画像を作り直し、PR のブランチに push して必須チェックを走らせ直す。
+# 差分を見て受け入れると決めた人が、Run workflow で PR 番号を入れて走らせる（自動では走らせない）。
+# PR のコード（依存の更新を含む）を動かすジョブには書き込みの権限を渡さず、
+# push するジョブではコードを動かさずに、基準画像だけを受け取る。
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: 基準画像を作り直す PR の番号
+        required: true
+        type: number
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.pr }}
+  cancel-in-progress: false
+
+jobs:
+  # 走らせてよい PR かを確かめ、作り直す木（PR の head に main を merge したもの）を決める
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      branch: ${{ steps.pr.outputs.branch }}
+      head-sha: ${{ steps.pr.outputs.head-sha }}
+      base-sha: ${{ steps.merge.outputs.base-sha }}
+      merge: ${{ steps.merge.outputs.merge }}
+      playwright-version: ${{ steps.version.outputs.version }}
+    steps:
+      # 個人の repo なので、admin は owner だけ
+      - name: Check actor
+        env:
+          ACTOR: ${{ github.triggering_actor }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          if [[ "$ACTOR" != "$OWNER" ]]; then
+            echo "走らせられるのは repo の owner（$OWNER）だけ（今: $ACTOR）" >&2
+            exit 1
+          fi
+
+      - name: Check PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ inputs.pr }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          pr_json="$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" \
+            --json state,isCrossRepository,author,headRefName,headRefOid,baseRefName)"
+          state="$(jq -r .state <<<"$pr_json")"
+          cross="$(jq -r .isCrossRepository <<<"$pr_json")"
+          author="$(jq -r .author.login <<<"$pr_json")"
+          base="$(jq -r .baseRefName <<<"$pr_json")"
+          if [[ "$state" != "OPEN" || "$cross" != "false" || "$base" != "main" ]]; then
+            echo "open で、この repo のブランチから main への PR だけを扱う（state=$state cross=$cross base=$base）" >&2
+            exit 1
+          fi
+          if [[ "$author" != "app/dependabot" && "$author" != "$OWNER" ]]; then
+            echo "Dependabot か owner の PR だけを扱う（今: $author）" >&2
+            exit 1
+          fi
+          {
+            echo "branch=$(jq -r .headRefName <<<"$pr_json")"
+            echo "head-sha=$(jq -r .headRefOid <<<"$pr_json")"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.pr.outputs.head-sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      # main より古い PR（必須チェックの test ジョブや、ci.yml の workflow_dispatch が無いもの）は、
+      # main を merge してから作り直す。衝突したら止める（PR を rebase してから走らせ直す）
+      - name: Merge main if behind
+        id: merge
+        run: |
+          git fetch --no-tags origin main
+          base_sha="$(git rev-parse origin/main)"
+          echo "base-sha=$base_sha" >> "$GITHUB_OUTPUT"
+          if git merge-base --is-ancestor "$base_sha" HEAD; then
+            echo "merge=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git -c user.name=ci -c user.email=ci@localhost merge --no-ff --no-edit "$base_sha" || {
+            echo "main との merge が衝突した。PR を rebase してから走らせ直す（Dependabot の PR は @dependabot rebase）" >&2
+            exit 1
+          }
+          echo "merge=true" >> "$GITHUB_OUTPUT"
+
+      # container.image はジョブの前に決まる必要があるので、merge した後の版を読んで渡す
+      - name: Read @playwright/test version
+        id: version
+        run: |
+          version="$(jq -r '.devDependencies["@playwright/test"]' package.json)"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "@playwright/test は ^ なしの x.y.z で固定する（今: $version）" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  # ci.yml の visual と同じイメージ・同じ CPU で基準画像を作り直す。書き込みの権限は持たない
+  regenerate:
+    needs: gate
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.gate.outputs.playwright-version }}-noble
+      options: --init --ipc=host
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    outputs:
+      changed: ${{ steps.collect.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.gate.outputs.head-sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Merge main
+        if: needs.gate.outputs.merge == 'true'
+        env:
+          BASE_SHA: ${{ needs.gate.outputs.base-sha }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git -c user.name=ci -c user.email=ci@localhost merge --no-ff --no-edit "$BASE_SHA"
+
+      - name: Prefer IPAPGothic for Japanese
+        run: |
+          cp tests/visual/docker/local.conf /etc/fonts/local.conf
+          fc-cache -f
+          fc-match "sans-serif:lang=ja" | grep IPAPGothic
+
+      - name: Cache npm
+        uses: actions/cache@v6
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      # コンソール検査と status 検査も回す。画像の比較以外で落ちたら作り直さない
+      - name: Update snapshots
+        run: npx playwright test --update-snapshots=changed
+
+      - name: Collect changed snapshots
+        id: collect
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git status --porcelain --untracked-files=all -- tests/visual/__screenshots__ \
+            | cut -c4- > changed.txt
+          if [[ ! -s changed.txt ]]; then
+            echo "変わった基準画像が無い（落ちたのは一時的なものか、別の理由）" >> "$GITHUB_STEP_SUMMARY"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          tar -czf snapshots.tgz -T changed.txt
+          {
+            echo "作り直した基準画像（$(wc -l < changed.txt) 枚）:"
+            echo
+            sed 's/^/- /' changed.txt
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Upload snapshots
+        if: steps.collect.outputs.changed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: snapshots
+          path: snapshots.tgz
+          retention-days: 3
+
+  # PR のコードは動かさない。受け取った tar が基準画像の png だけかを確かめてから commit する
+  push:
+    needs: [gate, regenerate]
+    if: needs.regenerate.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.gate.outputs.head-sha }}
+          fetch-depth: 0
+
+      - name: Download snapshots
+        uses: actions/download-artifact@v8
+        with:
+          name: snapshots
+          path: ${{ runner.temp }}/snapshots
+
+      - name: Check snapshots
+        env:
+          ARCHIVE: ${{ runner.temp }}/snapshots/snapshots.tgz
+        run: |
+          # 通常のファイルだけ（リンクやディレクトリを含めない）
+          if tar -tvzf "$ARCHIVE" | grep -v '^-'; then
+            echo "tar に通常のファイル以外が入っている" >&2
+            exit 1
+          fi
+          if tar -tzf "$ARCHIVE" | grep -Ev '^tests/visual/__screenshots__/[A-Za-z0-9._-]+\.spec\.ts/(desktop|mobile)/[A-Za-z0-9._-]+\.png$'; then
+            echo "tar に基準画像の png 以外が入っている" >&2
+            exit 1
+          fi
+
+      - name: Commit and push
+        env:
+          ARCHIVE: ${{ runner.temp }}/snapshots/snapshots.tgz
+          BRANCH: ${{ needs.gate.outputs.branch }}
+          BASE_SHA: ${{ needs.gate.outputs.base-sha }}
+          MERGE: ${{ needs.gate.outputs.merge }}
+          PR: ${{ inputs.pr }}
+          ACTOR: ${{ github.triggering_actor }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ "$MERGE" == "true" ]]; then
+            git merge --no-ff --no-edit -m "Merge main into $BRANCH" "$BASE_SHA"
+          fi
+          tar -xzf "$ARCHIVE"
+          git add -- tests/visual/__screenshots__
+          count="$(git diff --cached --name-only | wc -l)"
+          git commit -m "test(visual): #$PR の基準画像を作り直す（$count 枚）" \
+            -m "差分を見て受け入れた $ACTOR が Visual refresh で作り直した: $RUN_URL"
+          # PR のブランチが作り直しの間に進んでいたら、fast-forward にならず push は断られる
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "$BRANCH に $(git rev-parse --short HEAD) を push した（$count 枚）" >> "$GITHUB_STEP_SUMMARY"
+
+      # GITHUB_TOKEN の push では pull_request のワークフローが起きないので、CI を PR のブランチで呼ぶ。
+      # head のコミットに付いたこの実行の結果で、必須チェックが揃う想定（最初に使う PR で確かめる）
+      - name: Run CI on the branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ needs.gate.outputs.branch }}
+        run: gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH"
