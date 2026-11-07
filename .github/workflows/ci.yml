@@ -159,6 +159,8 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version-file: package.json
+          # package-lock.json を取り出していないので、packageManager からの自動キャッシュを止める
+          package-manager-cache: false
 
       - name: Download results
         if: needs.visual.result == 'failure'
